@@ -1,33 +1,47 @@
 # DeceasedCraft Create Machines
 
-A small website with compact, resource-efficient Create builds for the DeceasedCraft modpack (Beta DH 5.10.17, Forge 1.20.1, Create 6.0.6):
+A website with compact, resource-efficient Create builds for the DeceasedCraft modpack (Beta DH 5.10.17, Forge 1.20.1, Create 6.0.6):
 
-- **Ammo & gun parts** – ammo line, parts ring and Metalworks, with 3D layouts and layer-by-layer grids
-- **Rotational power** – early, mid and late game SU: windmills, coal boilers, max boiler, 20-engine diesel plant
-- **Electricity** – early, mid and late game FE: thermoelectric rows, alternator banks, reactors and storage
+- **Production**: ammo line, gun-part ring and Metalworks, with 3D models and layer-by-layer grids
+- **Rotational power**: water wheels and windmill, coal boiler, level 18 boiler, and a full 20-engine diesel plant with pumpjack and distillation
+- **Electricity**: thermoelectric row, alternator banks and an Extreme Reactor
+- **Reference**: a combined shopping list, every item and recipe with its crafting station, and the pack rules that change things
+
+Every build lists its parts, the raw materials behind them (crafts are batched, so leftovers are shared), and a crafting plan in an order that works.
 
 Live site: https://iamn4m3l3ss.github.io/deceasedcraft-create-machines/
 
-## How the site works
+## How it's built
 
-It's plain HTML, CSS and JavaScript, with no build step needed to host it. GitHub Pages serves the files in this repo as they are.
+Vue 3 + Vite + TypeScript, with three.js for the 3D views. The built site is in `docs/`, which GitHub Pages serves.
 
 | Path | What it is |
 | --- | --- |
-| `index.html`, `ammo.html`, `kinetic.html`, `electricity.html` | The four pages |
-| `assets/site.css` | All styling (light and dark theme) |
-| `assets/viewer.js` | The 3D models, the layer grids and the tabs |
-| `assets/vendor/` | three.js r128 (MIT licence) |
-| `tools/` | Optional: the page sources and a script that rebuilds the four HTML files |
+| `src/data/items.ts` | Every item: name, mod, stand-in icon |
+| `src/data/recipes.ts` | Recipes as they are in the pack (KubeJS overrides plus the mods' own) |
+| `src/data/builds.ts` | The builds: parts, steps, stats, layer grids |
+| `src/data/sections.ts` | The overview pages and comparison tables |
+| `src/lib/bom.ts` | Turns a parts list into raw materials and a crafting plan |
+| `src/three/viewer.js` | The 3D models |
+| `tools/extract_icons.py` | Optional: copies real item textures from your own jars for local use |
+| `docs/` | The built site (don't edit by hand) |
 
-## Editing
+## Working on it
 
-You can edit the HTML files directly. If you'd rather keep the shared header and footer in one place, edit the files in `tools/src/` and run:
+You need Node.js 18 or newer.
 
 ```
-python3 tools/build.py .
+npm install
+npm run dev      # local preview with live reload
+npm run build    # type-check and rebuild docs/
 ```
 
-## Turning on GitHub Pages
+Commit the updated `docs/` folder together with your source changes; that's what goes live.
 
-Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **main**, folder **/ (root)** → Save. The site appears at the address above about a minute later.
+## GitHub Pages
+
+Settings → Pages → Build and deployment → Source: **Deploy from a branch** → Branch: **main**, folder **/docs** → Save. The site appears at the address above about a minute later.
+
+## Textures
+
+The icons and 3D blocks are hand-drawn stand-ins. To see the real textures locally, see `public/icons/README.md`. Those files are ignored by git, so no Mojang or mod textures are published from this repo.

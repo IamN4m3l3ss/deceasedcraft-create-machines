@@ -1,106 +1,18 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>DeceasedCraft Create Machines</title>
-<meta name="description" content="Compact, resource-efficient Create builds for the DeceasedCraft modpack: ammo, gun parts, rotational power and electricity.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="assets/site.css">
-</head>
-<body>
-<header class="binder">
-  <div class="wrap">
-    <a class="brand" href="index.html">DeceasedCraft <span>Create Machines</span></a>
-    <nav class="tabs-site" aria-label="Pages"><a href="index.html" aria-current="page">Overview</a><a href="ammo.html">Ammo & gun parts</a><a href="kinetic.html">Rotational power</a><a href="electricity.html">Electricity</a></nav>
-    <button type="button" class="theme-toggle" id="themeToggle">Dark mode</button>
-  </div>
-</header>
-<main class="wrap">
-<section class="hero">
-  <div style="display:flex;flex-direction:column;gap:16px">
-    <span class="kicker">For DeceasedCraft Beta DH 5.10.17</span>
-    <h1>Create Machines</h1>
-    <p class="lede">Small, cheap factory builds for the pack's own recipes: automated ammo and gun parts, plus the rotational power and electricity to run them. Every build has a 3D model you can turn around and cut into layers.</p>
-  </div>
-  <div class="hero-side">
-    <h3>New world? Start here</h3>
-    <p class="small">Put up a 64-sail windmill for power. Then build the Metalworks line for plates and springs, and the ammo line. A row of thermoelectric generators between lava and water gives you electricity for the IE Metal Press without any fuel.</p>
-  </div>
-</section>
-
-<section aria-label="Pages">
-  <div class="doors">
-    <a class="door" href="ammo.html">
-      <span class="num">9<small>deployers</small></span>
-      <h3>Ammo &amp; gun parts</h3>
-      <p>One 3-station line for 15 kinds of rounds. One looping ring for all 7 gun-part kits and attachments. A saw-and-press line for plates and recoil springs.</p>
-      <span class="go">Open the builds</span>
-    </a>
-    <a class="door" href="kinetic.html">
-      <span class="num">327,680<small>SU max</small></span>
-      <h3>Rotational power</h3>
-      <p>Windmills and water wheels early on, then coal-fired boilers, then a level 18 boiler or a 20-engine diesel plant. No lake needed.</p>
-      <span class="go">Open power</span>
-    </a>
-    <a class="door" href="electricity.html">
-      <span class="num">31<small>FE/t per pair, no fuel</small></span>
-      <h3>Electricity</h3>
-      <p>Thermoelectric generators between lava and water early on, alternators on your boiler later, and what to store it in.</p>
-      <span class="go">Open electricity</span>
-    </a>
-  </div>
-</section>
-
-<section>
-  <h2>How it fits together</h2>
-  <ol class="steps">
-    <li>
-      <span class="when">Early</span>
-      <ul>
-        <li>64-sail windmill: 4,096 SU, no fuel</li>
-        <li>Thermoelectric row on lava and water: 31–62 FE/t per generator</li>
-        <li>Metalworks, then the ammo line</li>
-      </ul>
-    </li>
-    <li>
-      <span class="when">Mid</span>
-      <ul>
-        <li>Level 4 coal boiler: 65,536 SU for 180 coal an hour</li>
-        <li>8 alternators on that boiler: 1,440 FE/t</li>
-        <li>Parts ring for gun-part kits</li>
-      </ul>
-    </li>
-    <li>
-      <span class="when">Late</span>
-      <ul>
-        <li>Level 18 boiler (294,912 SU) or 20 huge diesel engines (327,680 SU)</li>
-        <li>Big alternator bank, uranium thermoelectrics or an Extreme Reactor</li>
-      </ul>
-    </li>
-  </ol>
-</section>
-
-<section>
-  <h2>Pack rules that change things</h2>
-  <div class="warns">
-    <div class="warn"><b>Deployers cost an IE Electronic Component</b><p>The pack swaps Create's Electron Tube for IE's Electronic Component in every recipe, so deployers, brass funnels and mechanical crafters cost more than usual.</p></div>
-    <div class="warn"><b>An empty deployer stops the belt</b><p>Items wait forever under a deployer with nothing in its hand. Keep every station stocked, or put a lever on it to switch it off.</p></div>
-    <div class="warn"><b>Small water wheels make half</b><p>The pack's config cuts the small wheel to 128 SU. The large wheel still makes 512 SU.</p></div>
-    <div class="warn"><b>You don't need a lake</b><p>A pump pulling from a 2×2 water pool never empties it: vanilla refills the source block straight away, and Create counts that as endless water.</p></div>
-    <div class="warn"><b>Burners take fuel by hand only</b><p>Blaze burners don't accept fuel from funnels, hoppers or chutes. Feed them yourself, or use a deployer or a Mechanical Arm.</p></div>
-  </div>
-</section>
-
-</main>
-<footer class="site">
-  <div class="wrap">
-    <p>Built for DeceasedCraft Beta DH 5.10.17 (Forge 1.20.1, Create 6.0.6). Recipes come from the pack's KubeJS scripts. Machine numbers come from the pack's configs and the source code of Create, Immersive Engineering, Create Crafts &amp; Additions, Create Diesel Generators and Create Big Cannons. If JEI shows something different, trust JEI.</p>
-    <p>The 3D views use hand-drawn stand-in textures, not the mods' own.</p>
-  </div>
-</footer>
-<script src="assets/viewer.js"></script>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <title>Create Machines · DeceasedCraft</title>
+    <meta name="description" content="Compact, resource-efficient Create builds for the DeceasedCraft modpack: ammo and gun-part lines, rotational power and electricity, with 3D models, parts lists, raw-material totals and every recipe." />
+    <meta name="theme-color" content="#111317" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><rect width='16' height='16' rx='3' fill='%23241d10'/><circle cx='8' cy='8' r='4.5' fill='none' stroke='%23e8a93a' stroke-width='2'/><circle cx='8' cy='8' r='1.5' fill='%23e8a93a'/></svg>" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>

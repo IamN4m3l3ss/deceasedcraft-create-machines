@@ -1,0 +1,121 @@
+<section class="hero">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span class="kicker">Forge Energy (FE) for IE machines and Crafts &amp; Additions</span>
+    <h1>Electricity</h1>
+    <p class="lede">You need electricity for the IE Metal Press that makes bullet casings, and for most IE and Refined Storage machines. The cheapest source in this pack has no moving parts and no fuel: a thermoelectric generator between something hot and something cold.</p>
+  </div>
+  <div class="hero-side">
+    <h3>The one formula to know</h3>
+    <p class="small">A thermoelectric generator gives √(temperature difference) FE/t for every pair of opposite faces where one side is hot and the other cold. That's with the pack's ×2 setting. Lava is 1300 K and water 300 K, so one pair gives 31 FE/t, and a generator can have up to 3 pairs.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Three stages</h2>
+  <div class="tiers">
+    <article class="tier">
+      <div class="head"><span>Early game</span><span class="meter" aria-label="Stage 1 of 3"><i class="on"></i><i></i><i></i></span></div>
+      <h3>Thermoelectric row</h3>
+      <div class="big">62<small>FE/t per generator</small></div>
+      <ul>
+        <li><b>Recipe:</b> 3 steel ingots, 5 constantan plates and 1 LV wire coil. No fuel. The lava and water are never used up.</li>
+        <li><b>Row:</b> water, generator, lava, generator, water… Each generator gets 31 FE/t from its side neighbours. Add hot above and cold below, switching every other generator, and it gets 62.</li>
+        <li><b>Solid blocks work too:</b> a magma block counts as 1300 K, like lava. Blue ice is 200 K, packed ice 240, ice 260 and snow 273.</li>
+        <li>Lava: buckets from lava lakes, or a superheated mixer turns cobblestone into lava later.</li>
+      </ul>
+      <p class="verdict">8 generators give about 500 FE/t, enough for the Metal Press and an early IE setup.</p>
+    </article>
+    <article class="tier">
+      <div class="head"><span>Mid game</span><span class="meter" aria-label="Stage 2 of 3"><i class="on"></i><i class="on"></i><i></i></span></div>
+      <h3>Alternators on the boiler</h3>
+      <div class="big">1,440<small>FE/t from 8</small></div>
+      <ul>
+        <li><b>Alternator (Crafts &amp; Additions):</b> 180 FE/t at 256 RPM, and it takes 8,192 SU to run. That's 32 SU per RPM, with output going up and down with speed.</li>
+        <li><b>On a level 4 coal boiler:</b> 65,536 SU ÷ 8,192 = 8 alternators, or 1,440 FE/t. The boiler gives 64 RPM, so gear up twice to reach 256.</li>
+        <li><b>Compact:</b> alternators only take rotation on one face, so line up gearboxes and put an alternator on both sides of each.</li>
+        <li>In this pack the alternator is a 5×5 mechanical-crafter recipe: 2 andesite alloy, 6 iron plates, 3 copper coils, an iron rod and a capacitor.</li>
+      </ul>
+      <p class="verdict">Or keep it fuel-free: 20 thermoelectrics (62 each) give 1,240 FE/t.</p>
+    </article>
+    <article class="tier">
+      <div class="head"><span>Late game</span><span class="meter" aria-label="Stage 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+      <h3>Big banks and reactors</h3>
+      <div class="big">6,480<small>FE/t from 36 alternators</small></div>
+      <ul>
+        <li><b>Max boiler (294,912 SU)</b> drives 36 alternators: 6,480 FE/t.</li>
+        <li><b>Uranium thermoelectrics:</b> a uranium block counts as 2000 K. Against water that's 41 FE/t per pair, and the blocks are never used up.</li>
+        <li><b>Extreme Reactor:</b> runs on uranium ingots. In this pack its parts need Refined Storage controllers and advanced processors. Its output depends on its design, and the controller screen shows it.</li>
+        <li><b>Skip the IE Diesel Generator</b> for steady power: it gives 8,192 FE/t but burns 80 mB of biodiesel every second.</li>
+      </ul>
+      <p class="verdict">Use alternators if you already run a big boiler, and the reactor once Refined Storage is up.</p>
+    </article>
+  </div>
+</section>
+
+<section id="builds">
+  <h2>The builds</h2>
+  <div class="btabs" role="tablist" aria-label="Electricity builds">
+    <button type="button" role="tab" data-scene="thermo" aria-selected="true">Thermoelectric row<small>early · 496 FE/t</small></button>
+    <button type="button" role="tab" data-scene="altbank" aria-selected="false">Alternator bank<small>mid · 1,440 FE/t</small></button>
+  </div>
+  <div class="stage">
+    <div class="three" id="three">
+      <button type="button" class="reset" id="resetView">Reset view</button>
+      <span class="hint">Drag to rotate · scroll or pinch to zoom · right-drag to pan</span>
+    </div>
+    <div class="stage-body">
+      <div class="panel-body" data-ppanel="thermo">
+        <h3>8 thermoelectric generators, 62 FE/t each</h3>
+        <ol class="tight">
+          <li>Lay a row: water, generator, lava, generator, water, generator, lava… Each generator sits between a hot and a cold block, which gives 31 FE/t.</li>
+          <li>Above and below each generator, put a hot block on one side and a cold one on the other, switching every other generator. That adds a second pair, for 62 FE/t.</li>
+          <li>Put stone between the fluid blocks on the top and bottom layers, and glass on the open sides, so water and lava never touch. With magma blocks and ice you don't need any of that.</li>
+          <li>For 93 FE/t, add a third hot/cold pair on the north and south faces as well.</li>
+          <li>Collect the power with IE wire connectors, or put a capacitor against the row.</li>
+        </ol>
+      </div>
+      <div class="panel-body" data-ppanel="altbank" hidden>
+        <h3>8 alternators on a coal boiler</h3>
+        <ol class="tight">
+          <li>Take the boiler's 64 RPM shaft through two large→small cogwheel steps to reach 256 RPM.</li>
+          <li>Run that shaft into a row of 4 gearboxes, and put an alternator on the north and south face of each one, facing the gearbox.</li>
+          <li>Each alternator makes 180 FE/t at 256 RPM: 1,440 FE/t from 8, using 65,536 SU, the whole level 4 boiler.</li>
+          <li>Put a Crafts &amp; Additions accumulator next to them, or wire them with C&amp;A connectors. Each alternator pushes out up to 256 FE/t.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Every source side by side</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Source</th><th>FE/t</th><th>Runs on</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>IE windmill + kinetic dynamo</td><td class="num">≈47</td><td>wind</td><td>8 sails, 7 clear blocks in front, clear weather. More in rain and thunder.</td></tr>
+      <tr class="best"><td>Thermoelectric, 1 pair (lava / water)</td><td class="num">31</td><td>nothing</td><td>3 steel, 5 constantan plates, 1 LV coil</td></tr>
+      <tr class="best"><td>Thermoelectric, 2 pairs (row with top/bottom)</td><td class="num">62</td><td>nothing</td><td>the row build above</td></tr>
+      <tr><td>Thermoelectric, 3 pairs</td><td class="num">93</td><td>nothing</td><td>hot/cold on all three axes</td></tr>
+      <tr><td>Thermoelectric, uranium block / water, 3 pairs</td><td class="num">123</td><td>nothing</td><td>uranium blocks are never used up</td></tr>
+      <tr><td>Alternator on a 64-sail windmill</td><td class="num">90</td><td>wind</td><td>4,096 SU runs it at 128 RPM</td></tr>
+      <tr class="best"><td>8 alternators on a level 4 boiler</td><td class="num">1,440</td><td>180 coal/h</td><td>uses the whole 65,536 SU</td></tr>
+      <tr><td>36 alternators on the max boiler</td><td class="num">6,480</td><td>≈200 blaze cakes/h</td><td>uses 294,912 SU</td></tr>
+      <tr><td>IE Diesel Generator</td><td class="num">8,192</td><td>80 mB/s biodiesel</td><td>pack config doubles the output, fuel use is huge</td></tr>
+      <tr><td>Extreme Reactor</td><td class="num">varies</td><td>uranium ingots</td><td>needs Refined Storage parts in this pack</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>Storing it</h2>
+  <div class="two">
+    <div class="note">
+      <h3>Crafts &amp; Additions accumulator</h3>
+      <p>2,048,000 FE per block, and blocks join into tanks up to 3 wide and 5 tall (45 blocks, about 92 million FE). It moves 512 FE/t in and out.</p>
+    </div>
+    <div class="note">
+      <h3>IE capacitors</h3>
+      <p>LV holds 1,000,000 FE, MV 4,000,000 and HV 8,000,000 with the pack's settings. They're good next to the Metal Press so it keeps running at night when the windmill slows down.</p>
+    </div>
+  </div>
+</section>

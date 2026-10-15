@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Rotational Power · DeceasedCraft Create Machines</title>
+<meta name="description" content="Early, mid and late game Create SU generation for DeceasedCraft.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Saira+Stencil+One&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<header class="binder">
+  <div class="wrap">
+    <a class="brand" href="index.html">DeceasedCraft <span>Create Machines</span></a>
+    <nav class="tabs-site" aria-label="Pages"><a href="index.html">Overview</a><a href="ammo.html">Ammo & gun parts</a><a href="kinetic.html" aria-current="page">Rotational power</a><a href="electricity.html">Electricity</a></nav>
+    <button type="button" class="theme-toggle" id="themeToggle">Dark mode</button>
+  </div>
+</header>
+<main class="wrap">
+<section class="hero">
+  <div style="display:flex;flex-direction:column;gap:16px">
+    <span class="kicker">Stress units (SU) for Create machines</span>
+    <h1>Rotational power</h1>
+    <p class="lede">From a free windmill to a 327,680 SU diesel plant. The SU a source gives doesn't change when you gear it up or down, only its speed does. So pick by total SU, then gear to the RPM your machines want.</p>
+  </div>
+  <div class="hero-side">
+    <h3>What the builds need</h3>
+    <p class="small">The ammo line, parts ring, Metalworks and rolling mill together use 68 SU per RPM, or about 2,200 SU at 32 RPM. One 64-sail windmill covers all of it.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Three stages</h2>
+  <div class="tiers">
+    <article class="tier">
+      <div class="head"><span>Early game</span><span class="meter" aria-label="Stage 1 of 3"><i class="on"></i><i></i><i></i></span></div>
+      <h3>Wind and water</h3>
+      <div class="big">4,096<small>SU, free</small></div>
+      <ul>
+        <li><b>Windmill:</b> 512 SU per RPM. It turns 1 RPM for every 8 sails, up to 16 RPM, so 64 sails give 4,096 SU and 128 sails give 8,192 (the most one bearing can do).</li>
+        <li><b>Sails:</b> 1 wool, 2 sticks and 1 andesite alloy make 2 white sails. Plain wool blocks also count as 1 sail each. Super glue them to the bearing.</li>
+        <li><b>Large water wheel:</b> 512 SU for 16 planks and a shaft.</li>
+        <li><b>Skip the small wheel:</b> the pack cuts it to 128 SU.</li>
+      </ul>
+      <p class="verdict">One 64-sail windmill runs every build on the ammo page.</p>
+    </article>
+    <article class="tier">
+      <div class="head"><span>Mid game · needs a blaze</span><span class="meter" aria-label="Stage 2 of 3"><i class="on"></i><i class="on"></i><i></i></span></div>
+      <h3>Coal boiler</h3>
+      <div class="big">65,536<small>SU, level 4</small></div>
+      <ul>
+        <li><b>16,384 SU per boiler level.</b> The level is the lowest of three things: heat (1 per burner on coal), tank blocks ÷ 4, and water in mB per tick ÷ 10. Each level also needs one steam engine.</li>
+        <li><b>One level costs about 17 copper and 1 gold:</b> a steam engine, 4 fluid tanks and a blaze burner.</li>
+        <li><b>Fuel:</b> one coal or charcoal lasts 80 s in a burner, so level 4 burns 180 an hour.</li>
+        <li><b>No blaze yet?</b> A campfire, magma block or lava under 4 or more tank blocks makes a passive boiler: 2,048 SU with no fuel.</li>
+      </ul>
+      <p class="verdict">The most SU for your resources anywhere in the pack.</p>
+    </article>
+    <article class="tier">
+      <div class="head"><span>Late game</span><span class="meter" aria-label="Stage 3 of 3"><i class="on"></i><i class="on"></i><i class="on"></i></span></div>
+      <h3>Max boiler or diesel plant</h3>
+      <div class="big">≈300,000<small>SU</small></div>
+      <ul>
+        <li><b>Level 18 boiler:</b> a 3×3×8 tank, 9 burners on blaze cakes (2 heat each), 18 engines and two water pumps. On coal the same build reaches level 9 (147,456 SU).</li>
+        <li><b>20 huge diesel engines</b> on one shaft line: 16,384 SU each, 327,680 SU in total. This is the "330k" setup from videos.</li>
+        <li>The boiler is cheaper to build. The diesel plant is smaller, needs no water and no burner feeding, but needs crude oil.</li>
+      </ul>
+      <p class="verdict">Pick the boiler if you have blaze cakes automated, and diesel if you have an oil chunk.</p>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="note">
+    <h3>No lake needed: use a 2×2 pool</h3>
+    <p>Dig a 2×2 hole and fill it with two water buckets in opposite corners. Put an open pipe end into one of the water blocks and pump from it. When the pipe drains a source block that vanilla would refill straight away, Create checks that and leaves the block in place, so the pool never empties. This works in the middle of a city.</p>
+    <p class="small muted">A pump moves half its RPM in mB per tick (128 mB/t at 256 RPM). Each boiler level needs 10 mB/t, so one pool and one pump at full speed run a boiler up to level 12. The max boiler uses two. A hose pulley also gives endless water, but only in a body of 10,000+ blocks.</p>
+  </div>
+</section>
+
+<section id="builds">
+  <h2>The builds</h2>
+  <div class="btabs" role="tablist" aria-label="Power builds">
+    <button type="button" role="tab" data-scene="wheels" aria-selected="true">Water wheels<small>early · 1,536 SU</small></button>
+    <button type="button" role="tab" data-scene="windmill" aria-selected="false">Windmill<small>early · 4,096 SU</small></button>
+    <button type="button" role="tab" data-scene="boiler4" aria-selected="false">Coal boiler<small>mid · 65,536 SU</small></button>
+    <button type="button" role="tab" data-scene="boiler18" aria-selected="false">Max boiler<small>late · 294,912 SU</small></button>
+    <button type="button" role="tab" data-scene="diesel20" aria-selected="false">Diesel plant<small>late · 327,680 SU</small></button>
+  </div>
+  <div class="stage">
+    <div class="three" id="three">
+      <button type="button" class="reset" id="resetView">Reset view</button>
+      <span class="hint">Drag to rotate · scroll or pinch to zoom · right-drag to pan</span>
+    </div>
+    <div class="stage-body">
+      <div class="panel-body" data-ppanel="wheels">
+        <h3>Large water wheels on one shaft</h3>
+        <ol class="tight">
+          <li>Line up large water wheels on one shaft line. Each wheel adds 512 SU. A shaft between wheels leaves room to route the water.</li>
+          <li>Water has to run along every wheel's rim the same way: over the top, then down one side. Check with goggles after each wheel.</li>
+          <li>Large wheels turn at 4 RPM. Each large→small cogwheel step doubles the speed and keeps the SU the same.</li>
+        </ol>
+      </div>
+      <div class="panel-body" data-ppanel="windmill" hidden>
+        <h3>64-sail windmill</h3>
+        <ol class="tight">
+          <li>Put a windmill bearing (wooden slab, stone, shaft) on a tower, facing out. Add a hub block on its face and four arms of sails around it, each 2 wide and 8 long (64 sails).</li>
+          <li>Super glue (2 slimeballs, iron plate, iron nugget) holds the sails and hub together. Right-click the bearing to start it: 8 RPM and 4,096 SU.</li>
+          <li>The bearing outputs from its back. Run that shaft down the tower and gear up with two large→small cogwheel steps to reach 32 RPM.</li>
+          <li>You need about 17 × 17 blocks of open space in front of the tower.</li>
+        </ol>
+      </div>
+      <div class="panel-body" data-ppanel="boiler4" hidden>
+        <h3>Level 4 coal boiler</h3>
+        <ol class="tight">
+          <li>Build a 2×2 fluid tank, 4 blocks tall (16 tanks), with a blaze burner under each of the 4 bottom tanks.</li>
+          <li>Put 4 steam engines on one face and right-click each one with a shaft. That puts the shaft in the right spot, with a gap for the crank. Join the shafts with gearboxes.</li>
+          <li>Water: a 2×2 pool and a pump at 80 RPM or faster (40 mB/t). Start the pump with a hand crank; once the boiler runs, it can drive its own pump.</li>
+          <li>A Mechanical Arm next to the burners takes coal from a chest and feeds all four. Filled by hand, each burner holds about 8 minutes of coal.</li>
+          <li>Output: 65,536 SU at 64 RPM. Look at the tank with goggles to see the level and what is holding it back.</li>
+        </ol>
+      </div>
+      <div class="panel-body" data-ppanel="boiler18" hidden>
+        <h3>Level 18 boiler</h3>
+        <ol class="tight">
+          <li>Build a 3×3 tank, 8 tall (72 tanks), on 9 blaze burners fed with blaze cakes, for 18 heat.</li>
+          <li>Put 9 engines on each of two opposite faces (3 × 3), right-click each with a shaft, and tie the six shaft rows together with gearboxes at one end.</li>
+          <li>Water: 180 mB/t is more than one pump moves, so use two pools and two pumps.</li>
+          <li>Blaze cakes: compact an egg, sugar and cinder flour, then spout 250 mB of lava on it. One cake lasts 160 s, so 9 burners use about 200 an hour. Cinder flour comes from crushing netherrack, and the pack makes netherrack by spouting lava onto gravel.</li>
+          <li>One Mechanical Arm at a corner reaches all 9 burners (5-block range). Output: 294,912 SU at 64 RPM.</li>
+        </ol>
+      </div>
+      <div class="panel-body" data-ppanel="diesel20" hidden>
+        <h3>20 huge diesel engines</h3>
+        <ol class="tight">
+          <li>Find an oil chunk with the Oil Scanner and put a pumpjack on it for crude oil.</li>
+          <li>Distill the crude over a lit blaze burner: 100 mB gives 50 mB diesel and 50 mB gasoline (75 + 75 over a superheated burner).</li>
+          <li>Place huge diesel engines along one shaft line, each 2 blocks from the shaft so the crank has room. Alternate sides to keep it narrow.</li>
+          <li>Pipe diesel to every engine. Each one burns 1 mB per second, so 20 engines use 20 mB/s, or 72 buckets an hour.</li>
+          <li>Output: 20 × 16,384 = 327,680 SU at 224 RPM. Gasoline also works, at 12,288 SU per engine. A turbocharger only doubles the RPM, not the SU.</li>
+        </ol>
+        <p class="small muted">In this pack each huge engine is three sequenced-assembly crafts (normal → modular → huge). Together those take 9 precision mechanisms, 9 engine pistons, 9 steel plates, an aluminum block and 150 mB of redstone acid, so 20 engines need 180 precision mechanisms. Modular engines stack up to 21 blocks at 8,192 SU each on diesel (172,032 SU per stack) and cost one craft less each, but give half the SU per mB of fuel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Every source side by side</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Source</th><th>SU</th><th>Running cost</th><th>Main build cost</th></tr></thead>
+    <tbody>
+      <tr><td>Small water wheel</td><td class="num">128</td><td>free</td><td>8 planks, shaft (cut by the pack)</td></tr>
+      <tr><td>Large water wheel</td><td class="num">512</td><td>free</td><td>16 planks, shaft</td></tr>
+      <tr><td>Passive boiler</td><td class="num">2,048</td><td>free</td><td>1 engine, 4 tanks, campfire, pump</td></tr>
+      <tr class="best"><td>Windmill, 64 sails</td><td class="num">4,096</td><td>free</td><td>32 wool, 64 sticks, 32 andesite alloy, bearing, glue</td></tr>
+      <tr><td>Windmill, 128 sails (cap)</td><td class="num">8,192</td><td>free</td><td>64 wool, 128 sticks, 64 andesite alloy</td></tr>
+      <tr><td>Coal boiler, level 1</td><td class="num">16,384</td><td>45 coal/h</td><td>1 engine, 4 tanks, 1 burner</td></tr>
+      <tr class="best"><td>Coal boiler, level 4</td><td class="num">65,536</td><td>180 coal/h</td><td>4 engines, 16 tanks, 4 burners</td></tr>
+      <tr><td>Coal boiler, level 9</td><td class="num">147,456</td><td>405 coal/h</td><td>9 engines, 36 tanks, 9 burners</td></tr>
+      <tr><td>Modular diesel stack, 21 blocks</td><td class="num">172,032</td><td>75.6 buckets/h</td><td>21 modular engines</td></tr>
+      <tr><td>Cake boiler, level 18</td><td class="num">294,912</td><td>≈200 blaze cakes/h</td><td>18 engines, 72 tanks, 9 burners</td></tr>
+      <tr><td>Diesel plant, 20 huge engines</td><td class="num">327,680</td><td>72 buckets/h</td><td>20 huge engines (180 precision mechanisms)</td></tr>
+      <tr><td>Electric motor (Crafts &amp; Additions)</td><td class="num">8,192</td><td>240 FE/t</td><td>mechanical-crafter recipe, plus a power source</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small muted">Highlighted rows are the best value for their stage. Engines burn 1 mB per second per engine block. Gasoline gives about ¾ of diesel's SU in modular and huge engines. Seed oil gives only 2,048 SU in a normal engine.</p>
+</section>
+
+</main>
+<footer class="site">
+  <div class="wrap">
+    <p>Built for DeceasedCraft Beta DH 5.10.17 (Forge 1.20.1, Create 6.0.6). Recipes come from the pack's KubeJS scripts. Machine numbers come from the pack's configs and the source code of Create, Immersive Engineering, Create Crafts &amp; Additions, Create Diesel Generators and Create Big Cannons. If JEI shows something different, trust JEI.</p>
+    <p>The 3D views use hand-drawn stand-in textures, not the mods' own.</p>
+  </div>
+</footer>
+<script src="assets/vendor/three.min.js"></script>
+<script src="assets/vendor/OrbitControls.js"></script>
+<script src="assets/viewer.js"></script>
+<script>DC.mountSceneStage({host:document.getElementById('three'), reset:document.getElementById('resetView'), tabAttr:'data-scene', panelAttr:'data-ppanel', storeKey:'dc-kinetic'});</script>
+</body>
+</html>

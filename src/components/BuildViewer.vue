@@ -4,7 +4,7 @@ import type { Build } from '../data/builds'
 import LayerGrid from './LayerGrid.vue'
 import { createViewer } from '../three/viewer.js'
 
-const props = defineProps<{ build: Build }>()
+const props = defineProps<{ build: Build; load?: { input: string; held: Record<string, string>; swaps: [string, string][] } | null }>()
 const host = ref<HTMLElement | null>(null)
 const viewer = shallowRef<any>(null)
 const failed = ref(false)
@@ -15,7 +15,7 @@ const shownLayer = computed(() => (grid.value ? grid.value.layers[layer.value < 
 async function show() {
   const v = viewer.value
   if (!v || v.dead) return
-  await v.show(props.build.scene, grid.value)
+  await v.show(props.build.scene, grid.value, props.load || undefined)
   v.setLayer(layer.value < 0 || !grid.value ? null : grid.value.layers[layer.value].y)
 }
 function setLayer(i: number) { layer.value = i; show() }
@@ -29,6 +29,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => { viewer.value?.dispose?.() })
 watch(() => props.build.id, () => { layer.value = -1; show() })
+watch(() => [props.load, props.build.grid], () => { if (grid.value && layer.value >= grid.value.layers.length) layer.value = -1; show() })
 </script>
 
 <template>

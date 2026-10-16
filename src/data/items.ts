@@ -1,4 +1,5 @@
 import type { IconSpec, Shape } from '../lib/icons'
+import { CALIBERS, KITS } from './ammo'
 
 export interface Item {
   id: string
@@ -21,7 +22,7 @@ const MODS: Record<string, string> = {
   minecraft: 'Minecraft', create: 'Create', immersiveengineering: 'Immersive Engineering',
   createaddition: 'Crafts & Additions', createdieselgenerators: 'Create Diesel Generators',
   createbigcannons: 'Create Big Cannons', bigreactors: 'Extreme Reactors', refinedstorage: 'Refined Storage',
-  deceasedcraft: 'DeceasedCraft', apocalypsenow: 'Apocalypse Now', tacz: 'Timeless & Classics Zero', quark: 'Quark',
+  deceasedcraft: 'DeceasedCraft', apocalypsenow: 'Apocalypse Now', tacz: 'Timeless & Classics Zero', rebel: 'TaCZ (Rebel gun pack)', quark: 'Quark',
 }
 
 // colour palette
@@ -233,15 +234,18 @@ add('createbigcannons:spring_wire', 'Spring Wire', 'wire', C.steel)
 add('createbigcannons:recoil_spring', 'Recoil Spring', 'spring', C.steel)
 add('apocalypsenow:cardboard_box', 'Cardboard Box', 'box', '#b08a58')
 add('deceasedcraft:rubber', 'Rubber', 'ingot', '#2f2f33', undefined, raw('Heated mixer: phenolic resin + seed oil → rubber base, then + 500 mB redstone acid'))
-add('deceasedcraft:bullet_casing_9mm_round', 'Bullet Casing (any standard caliber)', 'nugget', C.brass, undefined, { tex: 'deceasedcraft/bullet_casing_9mm_round' })
-add('deceasedcraft:bullet_casing_50bmg', '.50 BMG Casing', 'nugget', C.brass)
-add('deceasedcraft:mold_bullet_casing_9mm', 'Casing Mold (per caliber)', 'plate', C.steel, C.brass, raw('Pack item: one per caliber, never used up'))
-add('deceasedcraft:blueprint', 'Assembly Blueprint (per kit)', 'plate', C.blue, C.white, raw('Pack item: one per kit type, never used up', { tex: 'deceasedcraft/pistol_assembly_parts_blueprint' }))
-add('tacz:ammo', 'Round (standard caliber)', 'nugget', C.brass, C.lead)
-add('deceasedcraft:pistol_assembly_parts', 'Gun Part Kit (pistol, SMG…)', 'box', '#b08a58', C.steel)
-add('deceasedcraft:rifle_assembly_parts', 'Gun Part Kit (shotgun, rifle)', 'box', '#b08a58', C.steel)
-add('deceasedcraft:sniper_assembly_parts', 'Gun Part Kit (sniper, HMG, special)', 'box', '#b08a58', '#5a4440')
-add('deceasedcraft:attachment_assembly_parts', 'Attachment Parts', 'box', '#b08a58', '#2f2f33')
+add('quark:gunpowder_sack', 'Gunpowder Sack', 'box', '#6b6b6b', '#3a3a3a')
+add('create:brass_block', 'Block of Brass', 'block', C.brass)
+// calibers: casings (stand-in icons, the pack's own textures aren't public), molds and finished rounds (real TaCZ icons)
+for (const c of CALIBERS) {
+  add(c.casing, c.label + ' Casing', 'shell', C.brass)
+  add(c.mold, c.label + ' Casing Mold', 'plate', C.steel, C.brass, raw('Pack item: loot or traders. Goes in the IE Metal Press, never used up'))
+  add(c.round, c.label + ' Round', 'nugget', C.brass, C.lead)
+}
+for (const k of KITS) {
+  add(k.item, k.label + (k.attachment ? ' Parts' : ' Assembly Parts'), 'box', '#b08a58', k.special === 'deceasedcraft:rubber' ? '#2f2f33' : C.steel)
+  add(k.blueprint, k.label + ' Blueprint', 'paper', '#3f6fb8', '#cfe0f5', raw('Pack item: loot or traders. Sits in the first deployer, never used up'))
+}
 
 export function item(id: string): Item {
   const it = ITEMS[id]

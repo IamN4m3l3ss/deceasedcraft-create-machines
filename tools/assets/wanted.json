@@ -1007,56 +1007,62 @@
    "deceasedcraft:block/rubber"
   ]
  },
- "deceasedcraft:bullet_casing_9mm_round": {
-  "model": "deceasedcraft:item/bullet_casing_9mm_round",
+ "quark:gunpowder_sack": {
+  "model": "quark:item/gunpowder_sack",
   "alt": [
-   "deceasedcraft:block/bullet_casing_9mm_round"
+   "quark:block/gunpowder_sack"
   ]
  },
- "deceasedcraft:bullet_casing_50bmg": {
-  "model": "deceasedcraft:item/bullet_casing_50bmg",
+ "create:brass_block": {
+  "model": "create:item/brass_block",
   "alt": [
-   "deceasedcraft:block/bullet_casing_50bmg"
+   "create:block/brass_block"
   ]
  },
- "deceasedcraft:mold_bullet_casing_9mm": {
-  "model": "deceasedcraft:item/mold_bullet_casing_9mm",
-  "alt": [
-   "deceasedcraft:block/mold_bullet_casing_9mm"
-  ]
- },
- "deceasedcraft:blueprint": {
-  "model": "deceasedcraft:item/pistol_assembly_parts_blueprint",
-  "alt": [
-   "deceasedcraft:block/pistol_assembly_parts_blueprint"
-  ]
- },
- "tacz:ammo": {
+ "tacz:ammo_9mm": {
   "tex": "tacz:ammo/slot/9mm"
  },
- "deceasedcraft:pistol_assembly_parts": {
-  "model": "deceasedcraft:item/pistol_assembly_parts",
-  "alt": [
-   "deceasedcraft:block/pistol_assembly_parts"
-  ]
+ "tacz:ammo_45acp": {
+  "tex": "tacz:ammo/slot/45acp"
  },
- "deceasedcraft:rifle_assembly_parts": {
-  "model": "deceasedcraft:item/rifle_assembly_parts",
-  "alt": [
-   "deceasedcraft:block/rifle_assembly_parts"
-  ]
+ "tacz:ammo_357mag": {
+  "tex": "tacz:ammo/slot/357mag"
  },
- "deceasedcraft:sniper_assembly_parts": {
-  "model": "deceasedcraft:item/sniper_assembly_parts",
-  "alt": [
-   "deceasedcraft:block/sniper_assembly_parts"
-  ]
+ "tacz:ammo_50ae": {
+  "tex": "tacz:ammo/slot/50ae"
  },
- "deceasedcraft:attachment_assembly_parts": {
-  "model": "deceasedcraft:item/attachment_assembly_parts",
-  "alt": [
-   "deceasedcraft:block/attachment_assembly_parts"
-  ]
+ "tacz:ammo_12g": {
+  "tex": "tacz:ammo/slot/12g"
+ },
+ "tacz:ammo_556x45": {
+  "tex": "tacz:ammo/slot/556x45"
+ },
+ "tacz:ammo_57x28": {
+  "tex": "tacz:ammo/slot/57x28"
+ },
+ "tacz:ammo_762x39": {
+  "tex": "tacz:ammo/slot/762x39"
+ },
+ "tacz:ammo_30_06": {
+  "tex": "tacz:ammo/slot/30_06"
+ },
+ "tacz:ammo_308": {
+  "tex": "tacz:ammo/slot/308"
+ },
+ "tacz:ammo_762x54": {
+  "tex": "tacz:ammo/slot/762x54"
+ },
+ "tacz:ammo_338": {
+  "tex": "tacz:ammo/slot/338"
+ },
+ "tacz:ammo_50bmg": {
+  "tex": "tacz:ammo/slot/50bmg"
+ },
+ "tacz:ammo_40mm": {
+  "tex": "tacz:ammo/slot/40mm"
+ },
+ "rebel:ammo_37aphe": {
+  "tex": "rebel:ammo/slot/37aphe"
  },
  "b:shaft": {
   "model": "create:block/shaft"
@@ -1295,18 +1301,6 @@
    "flipped": "false"
   }
  },
- "s:create:mechanical_pump[facing=east]": {
-  "state": "create:mechanical_pump",
-  "props": {
-   "facing": "east"
-  }
- },
- "s:create:mechanical_pump[facing=west]": {
-  "state": "create:mechanical_pump",
-  "props": {
-   "facing": "west"
-  }
- },
  "s:create:steam_engine[face=wall,facing=south,waterlogged=false]": {
   "state": "create:steam_engine",
   "props": {
@@ -1347,42 +1341,6 @@
   "props": {
    "facing": "down",
    "enabled": "true"
-  }
- },
- "s:create:andesite_belt_funnel[facing=east,powered=false,shape=retracted,waterlogged=false]": {
-  "state": "create:andesite_belt_funnel",
-  "props": {
-   "facing": "east",
-   "powered": "false",
-   "shape": "retracted",
-   "waterlogged": "false"
-  }
- },
- "s:create:andesite_belt_funnel[facing=west,powered=false,shape=retracted,waterlogged=false]": {
-  "state": "create:andesite_belt_funnel",
-  "props": {
-   "facing": "west",
-   "powered": "false",
-   "shape": "retracted",
-   "waterlogged": "false"
-  }
- },
- "s:create:andesite_belt_funnel[facing=south,powered=false,shape=retracted,waterlogged=false]": {
-  "state": "create:andesite_belt_funnel",
-  "props": {
-   "facing": "south",
-   "powered": "false",
-   "shape": "retracted",
-   "waterlogged": "false"
-  }
- },
- "s:create:brass_belt_funnel[facing=north,powered=false,shape=retracted,waterlogged=false]": {
-  "state": "create:brass_belt_funnel",
-  "props": {
-   "facing": "north",
-   "powered": "false",
-   "shape": "retracted",
-   "waterlogged": "false"
   }
  },
  "s:create:glass_fluid_pipe[alt=false,axis=x]": {
@@ -1501,6 +1459,42 @@
    "facing": "south"
   }
  },
+ "s:create:mechanical_pump[facing=north]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "north"
+  }
+ },
+ "s:create:mechanical_pump[facing=south]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "south"
+  }
+ },
+ "s:create:mechanical_pump[facing=east]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "east"
+  }
+ },
+ "s:create:mechanical_pump[facing=west]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "west"
+  }
+ },
+ "s:create:mechanical_pump[facing=up]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "up"
+  }
+ },
+ "s:create:mechanical_pump[facing=down]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "down"
+  }
+ },
  "s:create:andesite_belt_funnel[facing=north,powered=false,shape=retracted,waterlogged=false]": {
   "state": "create:andesite_belt_funnel",
   "props": {
@@ -1508,6 +1502,773 @@
    "powered": "false",
    "shape": "retracted",
    "waterlogged": "false"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=south,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "south",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=east,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "east",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=west,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "west",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:brass_belt_funnel[facing=north,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:brass_belt_funnel",
+  "props": {
+   "facing": "north",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:brass_belt_funnel[facing=south,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:brass_belt_funnel",
+  "props": {
+   "facing": "south",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:brass_belt_funnel[facing=east,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:brass_belt_funnel",
+  "props": {
+   "facing": "east",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:brass_belt_funnel[facing=west,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:brass_belt_funnel",
+  "props": {
+   "facing": "west",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=false,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=false,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=false,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=false,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "false",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=false,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=false,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=false,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=false,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "false",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=false,north=true,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=false,north=true,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "false",
+   "west": "true",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=true,up=false,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=true,up=true,west=false]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "false",
+   "up": "true",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=true,up=false,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "false",
+   "down": "true"
+  }
+ },
+ "s:create:fluid_pipe[down=false,east=true,north=true,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "false"
+  }
+ },
+ "s:create:fluid_pipe[down=true,east=true,north=true,south=true,up=true,west=true]": {
+  "state": "create:fluid_pipe",
+  "props": {
+   "north": "true",
+   "south": "true",
+   "east": "true",
+   "west": "true",
+   "up": "true",
+   "down": "true"
   }
  },
  "m:create:block/shaft_half": {
@@ -1564,6 +2325,24 @@
  "m:create:block/belt_pulley": {
   "model": "create:block/belt_pulley"
  },
+ "m:create:block/belt/start": {
+  "model": "create:block/belt/start"
+ },
+ "m:create:block/belt/middle": {
+  "model": "create:block/belt/middle"
+ },
+ "m:create:block/belt/end": {
+  "model": "create:block/belt/end"
+ },
+ "m:create:block/belt/start_bottom": {
+  "model": "create:block/belt/start_bottom"
+ },
+ "m:create:block/belt/middle_bottom": {
+  "model": "create:block/belt/middle_bottom"
+ },
+ "m:create:block/belt/end_bottom": {
+  "model": "create:block/belt/end_bottom"
+ },
  "m:create:block/blaze_burner/blaze/active": {
   "model": "create:block/blaze_burner/blaze/active"
  },
@@ -1584,5 +2363,77 @@
  },
  "m:createdieselgenerators:block/powered_engine_shaft": {
   "model": "createdieselgenerators:block/powered_engine_shaft"
+ },
+ "m:create:block/fluid_pipe/connection/north": {
+  "model": "create:block/fluid_pipe/connection/north"
+ },
+ "m:create:block/fluid_pipe/connection/south": {
+  "model": "create:block/fluid_pipe/connection/south"
+ },
+ "m:create:block/fluid_pipe/connection/east": {
+  "model": "create:block/fluid_pipe/connection/east"
+ },
+ "m:create:block/fluid_pipe/connection/west": {
+  "model": "create:block/fluid_pipe/connection/west"
+ },
+ "m:create:block/fluid_pipe/connection/up": {
+  "model": "create:block/fluid_pipe/connection/up"
+ },
+ "m:create:block/fluid_pipe/connection/down": {
+  "model": "create:block/fluid_pipe/connection/down"
+ },
+ "m:create:block/fluid_pipe/rim_connector/north": {
+  "model": "create:block/fluid_pipe/rim_connector/north"
+ },
+ "m:create:block/fluid_pipe/rim_connector/south": {
+  "model": "create:block/fluid_pipe/rim_connector/south"
+ },
+ "m:create:block/fluid_pipe/rim_connector/east": {
+  "model": "create:block/fluid_pipe/rim_connector/east"
+ },
+ "m:create:block/fluid_pipe/rim_connector/west": {
+  "model": "create:block/fluid_pipe/rim_connector/west"
+ },
+ "m:create:block/fluid_pipe/rim_connector/up": {
+  "model": "create:block/fluid_pipe/rim_connector/up"
+ },
+ "m:create:block/fluid_pipe/rim_connector/down": {
+  "model": "create:block/fluid_pipe/rim_connector/down"
+ },
+ "m:create:block/fluid_pipe/rim/north": {
+  "model": "create:block/fluid_pipe/rim/north"
+ },
+ "m:create:block/fluid_pipe/rim/south": {
+  "model": "create:block/fluid_pipe/rim/south"
+ },
+ "m:create:block/fluid_pipe/rim/east": {
+  "model": "create:block/fluid_pipe/rim/east"
+ },
+ "m:create:block/fluid_pipe/rim/west": {
+  "model": "create:block/fluid_pipe/rim/west"
+ },
+ "m:create:block/fluid_pipe/rim/up": {
+  "model": "create:block/fluid_pipe/rim/up"
+ },
+ "m:create:block/fluid_pipe/rim/down": {
+  "model": "create:block/fluid_pipe/rim/down"
+ },
+ "m:create:block/fluid_pipe/drain/north": {
+  "model": "create:block/fluid_pipe/drain/north"
+ },
+ "m:create:block/fluid_pipe/drain/south": {
+  "model": "create:block/fluid_pipe/drain/south"
+ },
+ "m:create:block/fluid_pipe/drain/east": {
+  "model": "create:block/fluid_pipe/drain/east"
+ },
+ "m:create:block/fluid_pipe/drain/west": {
+  "model": "create:block/fluid_pipe/drain/west"
+ },
+ "m:create:block/fluid_pipe/drain/up": {
+  "model": "create:block/fluid_pipe/drain/up"
+ },
+ "m:create:block/fluid_pipe/drain/down": {
+  "model": "create:block/fluid_pipe/drain/down"
  }
 }

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { BUILD } from '../data/builds'
+import { useRoute, useRouter } from 'vue-router'
+import { BUILD, withVariant } from '../data/builds'
+import { LINES, lineLoad } from '../data/lines'
+import LinePicker from '../components/LinePicker.vue'
 import ItemIcon from '../components/ItemIcon.vue'
 import ItemSlot from '../components/ItemSlot.vue'
 import StatTiles from '../components/StatTiles.vue'
@@ -10,7 +13,23 @@ import DataTable from '../components/DataTable.vue'
 import Callout from '../components/Callout.vue'
 
 const props = defineProps<{ id: string }>()
-const b = computed(() => BUILD[props.id] || BUILD.ammo)
+const route = useRoute(), router = useRouter()
+const base = computed(() => BUILD[props.id] || BUILD.ammo)
+const variant = computed(() => { const v = String(route.query.v || ''); return base.value.variants?.some((x) => x.id === v) ? v : 'main' })
+const b = computed(() => withVariant(base.value, variant.value))
+const versions = computed(() => base.value.variants ? [{ id: 'main', label: base.value.mainLabel || 'Main', blurb: base.value.mainBlurb || '' }, ...base.value.variants.map((v) => ({ id: v.id, label: v.label, blurb: v.blurb }))] : [])
+const line = computed(() => LINES[base.value.id] || null)
+const mode = computed(() => { const m = String(route.query.m || ''); return line.value && line.value.modes.some((x) => x.id === m) ? m : line.value?.defaultMode || '' })
+const load = computed(() => (line.value ? lineLoad(line.value, mode.value) : null))
+const stations = computed(() => {
+  const g = b.value.grid; if (!g) return []
+  const out: string[] = []
+  for (const L of g.layers) for (const r of L.rows) for (const t of r.split(' ')) if (/^([DS]\d|P\d|X)$/.test(t) && !out.includes(t)) out.push(t)
+  return out.sort()
+})
+function setQuery(q: Record<string, string>) { router.replace({ query: { ...route.query, ...q } }) }
+function pickMode(id: string) { setQuery({ m: id }) }
+function pickVariant(id: string) { setQuery({ v: id === 'main' ? '' : id }) }
 const sectionName = computed(() => ({ production: 'Production', kinetic: 'Rotational power', electric: 'Electricity' })[b.value.section])
 const sectionLink = computed(() => ({ production: '/production', kinetic: '/power', electric: '/electricity' })[b.value.section])
 </script>
@@ -49,7 +68,20 @@ const sectionLink = computed(() => ({ production: '/production', kinetic: '/powe
 
     <StatTiles :stats="b.stats" style="margin-top: 12px" />
 
-    <div style="margin-top: 20px"><BuildViewer :build="b" /></div>
+    <div v-if="versions.length" class="versions card">
+      <span class="eyebrow">Version</span>
+      <div class="vlist">
+        <button v-for="v in versions" :key="v.id" type="button" class="ver" :aria-pressed="v.id === variant" @click="pickVariant(v.id)">
+          <b>{{ v.label }}</b><span>{{ v.blurb }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px"><BuildViewer :build="b" :load="load" /></div>
+
+    <div v-if="line" style="margin-top: 20px">
+      <LinePicker :line="line" :mode="mode" :stations="stations" :variant="variant" :variants="versions" @mode="pickMode" @variant="pickVariant" />
+    </div>
 
     <div class="split" style="margin-top: 20px">
       <div class="stack">
@@ -86,4 +118,11 @@ const sectionLink = computed(() => ({ production: '/production', kinetic: '/powe
 .io-arrow { font-size: 26px; color: var(--accent); }
 .io-t { font-size: 13px; color: var(--text-2); }
 .io-t.big { font: 700 20px var(--font); color: var(--green); }
+.versions { margin-top: 12px; padding: 12px 14px; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.vlist { display: flex; gap: 8px; flex-wrap: wrap; }
+.ver { display: flex; flex-direction: column; align-items: flex-start; gap: 1px; padding: 7px 12px; border-radius: 9px; border: 1px solid var(--border-2); background: var(--surface-2); cursor: pointer; text-align: left; }
+.ver span { font-size: 12px; color: var(--muted); }
+.ver:hover { border-color: var(--accent); }
+.ver[aria-pressed='true'] { background: var(--accent-soft); border-color: var(--accent); }
+.ver[aria-pressed='true'] b { color: var(--accent-2); }
 </style>

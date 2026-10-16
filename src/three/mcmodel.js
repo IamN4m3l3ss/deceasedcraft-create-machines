@@ -183,6 +183,51 @@ export function createModelKit(base, opts = {}) {
     return g
   }
 
+  // ---- 3D items: a flat texture pushed out to 1/16 thick, edge by edge, like Minecraft's item/generated ----
+  function extrudeImage(img, tex) {
+    const w = img.width, H = img.height, h = Math.min(H, w) // animated strips: first frame only
+    const cv = document.createElement('canvas'); cv.width = w; cv.height = h
+    const g2 = cv.getContext('2d'); g2.drawImage(img, 0, 0)
+    const px = g2.getImageData(0, 0, w, h).data
+    const solid = (x, y) => x >= 0 && y >= 0 && x < w && y < h && px[(y * w + x) * 4 + 3] > 25
+    const pos = [], uv = [], T = 1 / 32, vTop = 1, vBot = 1 - h / H
+    const quad = (a, b, c, d, ua, ub, uc, ud) => { for (const [p, q] of [[a, ua], [b, ub], [c, uc], [a, ua], [c, uc], [d, ud]]) { pos.push(...p); uv.push(...q) } }
+    quad([-0.5, -0.5, T], [0.5, -0.5, T], [0.5, 0.5, T], [-0.5, 0.5, T], [0, vBot], [1, vBot], [1, vTop], [0, vTop])
+    quad([0.5, -0.5, -T], [-0.5, -0.5, -T], [-0.5, 0.5, -T], [0.5, 0.5, -T], [1, vBot], [0, vBot], [0, vTop], [1, vTop])
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+      if (!solid(x, y)) continue
+      const x0 = -0.5 + x / w, x1 = x0 + 1 / w, y1 = 0.5 - y / h, y0 = y1 - 1 / h
+      const c = [(x + 0.5) / w, 1 - (y + 0.5) / H]
+      if (!solid(x - 1, y)) quad([x0, y0, -T], [x0, y0, T], [x0, y1, T], [x0, y1, -T], c, c, c, c)
+      if (!solid(x + 1, y)) quad([x1, y0, T], [x1, y0, -T], [x1, y1, -T], [x1, y1, T], c, c, c, c)
+      if (!solid(x, y - 1)) quad([x0, y1, T], [x1, y1, T], [x1, y1, -T], [x0, y1, -T], c, c, c, c)
+      if (!solid(x, y + 1)) quad([x0, y0, -T], [x1, y0, -T], [x1, y0, T], [x0, y0, T], c, c, c, c)
+    }
+    const geo = new THREE.BufferGeometry()
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3))
+    geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2))
+    geo.computeVertexNormals()
+    const mat = new THREE.MeshLambertMaterial({ map: tex, alphaTest: 0.1, side: THREE.DoubleSide })
+    return new THREE.Mesh(geo, mat)
+  }
+  const extrudedCache = new Map()
+  /** a 3D item for a flat (item/generated) model key; null if the key isn't a flat model */
+  function extruded(key) {
+    let g = extrudedCache.get(key)
+    if (!g) {
+      const m = models && models[key]
+      if (!m || !m.flat) return null
+      g = new THREE.Group()
+      m.flat.forEach((p, i) => {
+        const t = texture(p)
+        if (!t.image || !t.image.width) return
+        const mesh = extrudeImage(t.image, t); mesh.position.z = i * 0.002; g.add(mesh)
+      })
+      extrudedCache.set(key, g)
+    }
+    return g.clone()
+  }
+
   /** a THREE.Group for the model key, centred on the origin, 1 unit = 1 block */
   async function build(key) {
     const ms = await load()
@@ -227,7 +272,7 @@ export function createModelKit(base, opts = {}) {
   function anims() { return (models && models.__anim) || {} }
   function info(key) { return models && models[key] }
   function allLoaded() { return [...texCache.values()].every((t) => t.image && t.image.complete !== false) }
-  return { load, build, preload, loadAllTextures, get, has, info, texture, material, allLoaded, texCache, states, anims }
+  return { load, build, preload, loadAllTextures, get, has, info, texture, material, allLoaded, texCache, states, anims, extruded, extrudeImage }
 }
 
 /** apply a model's display.gui transform (rotation, translation in 1/16 block, scale) to a group */

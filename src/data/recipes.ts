@@ -3,6 +3,8 @@
 // Crafts & Additions, Create Diesel Generators, Extreme Reactors and Refined Storage for anything the pack
 // leaves alone. "primary" recipes drive the material totals; alternatives are shown on the item card only.
 
+import { CALIBERS, KITS } from './ammo'
+
 export type Stack = [string, number]
 
 export interface Step { kind: 'deploy' | 'press' | 'cut' | 'fill'; item?: string; qty?: number; kept?: boolean }
@@ -197,18 +199,19 @@ shaped('bigreactors:reinforced_reactorpowertapfe_passive', 1, ['CRC', 'RBR', 'CR
 
 // ---------------- ammo & gun parts (pack recipes) ----------------
 shapeless('createbigcannons:gunpowder_pinch', 4, [['minecraft:gunpowder', 1]], { pack: true })
-machine('ie_metal_press', 'deceasedcraft:bullet_casing_9mm_round', 4, [['create:brass_ingot', 1]], { pack: true, note: 'One mold per caliber. 12 standard calibers give 4 casings per ingot.' })
-machine('ie_metal_press', 'deceasedcraft:bullet_casing_50bmg', 2, [['create:brass_ingot', 1]], { pack: true })
-assembly('tacz:ammo', 1, 'deceasedcraft:bullet_casing_9mm_round', [D('createbigcannons:gunpowder_pinch'), D('immersiveengineering:nugget_lead')], 1, { pack: true, note: 'Same two steps for all 12 standard calibers.' })
+shaped('create:brass_block', 1, ['BBB', 'BBB', 'BBB'], { B: 'create:brass_ingot' })
+shaped('quark:gunpowder_sack', 1, ['GGG', 'GGG', 'GGG'], { G: 'minecraft:gunpowder' })
+for (const c of CALIBERS) {
+  machine('ie_metal_press', c.casing, c.perBrass, [[c.brassBlock ? 'create:brass_block' : 'create:brass_ingot', 1]], { pack: true, note: `Needs the ${c.label} Casing Mold in the press.` })
+  assembly(c.round, 1, c.casing, c.steps.map((i) => D(i)), 1, { pack: true })
+}
 machine('cutting', 'createbigcannons:spring_wire', 3, [['immersiveengineering:plate_steel', 1]], { note: 'Put a Spring Wire filter on the saw: steel plate has a second cutting recipe.' })
 assembly('createbigcannons:recoil_spring', 1, 'createbigcannons:spring_wire', [PRESS], 3)
 shaped('apocalypsenow:cardboard_box', 1, ['PPP', 'PSP', 'PPP'], { P: 'minecraft:paper', S: 'minecraft:slime_ball' }, { pack: true })
-const kit = (special: string): Step[] => [D('deceasedcraft:blueprint', true), D('immersiveengineering:stick_steel'), D('immersiveengineering:plate_steel'), D('createbigcannons:recoil_spring'), D('immersiveengineering:component_steel'), D(special)]
-assembly('deceasedcraft:pistol_assembly_parts', 1, 'apocalypsenow:cardboard_box', kit('minecraft:iron_ingot'), 4, { pack: true, note: 'Pistol and SMG kits.' })
-assembly('deceasedcraft:rifle_assembly_parts', 1, 'apocalypsenow:cardboard_box', kit('immersiveengineering:ingot_steel'), 4, { pack: true, note: 'Shotgun and rifle kits.' })
-assembly('deceasedcraft:sniper_assembly_parts', 1, 'apocalypsenow:cardboard_box', kit('minecraft:netherite_scrap'), 4, { pack: true, note: 'Sniper, HMG and special kits.' })
-assembly('deceasedcraft:attachment_assembly_parts', 1, 'apocalypsenow:cardboard_box',
-  [D('deceasedcraft:blueprint', true), D('immersiveengineering:stick_steel'), D('immersiveengineering:plate_steel'), D('immersiveengineering:component_steel'), D('deceasedcraft:rubber')], 1, { pack: true })
+for (const k of KITS) {
+  const steps = [D(k.blueprint, true), D('immersiveengineering:stick_steel'), D('immersiveengineering:plate_steel'), ...(k.attachment ? [] : [D('createbigcannons:recoil_spring')]), D('immersiveengineering:component_steel'), D(k.special)]
+  assembly(k.item, 1, 'apocalypsenow:cardboard_box', steps, k.loops, { pack: true, note: `For ${k.use.toLowerCase()}.` })
+}
 
 // ---------------- lookups ----------------
 export const PRIMARY: Record<string, Recipe> = {}

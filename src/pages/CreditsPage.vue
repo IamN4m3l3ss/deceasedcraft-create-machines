@@ -9,7 +9,7 @@ const rows = [
   { who: 'Create Big Cannons', owner: 'Cannoneers of Create', lic: 'Textures: CC BY-NC-SA 4.0', icon: 'createbigcannons:recoil_spring' },
   { who: 'Refined Storage', owner: 'Refined Mods', lic: 'MIT', icon: 'refinedstorage:controller' },
   { who: 'Extreme Reactors', owner: 'ZeroNoRyouki', lic: 'No licence file published', icon: 'bigreactors:reinforced_reactorcasing' },
-  { who: 'Timeless & Classics Zero (default gun pack)', owner: 'The TaCZ team', lic: 'Ammo icon from the pack’s bundled gun pack', icon: 'tacz:ammo' },
+  { who: 'Timeless & Classics Zero (default gun pack)', owner: 'The TaCZ team', lic: 'Ammo icon from the pack’s bundled gun pack', icon: 'tacz:ammo_9mm' },
 ]
 </script>
 

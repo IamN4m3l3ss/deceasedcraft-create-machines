@@ -5,7 +5,7 @@ export type Shape =
   | 'machine' | 'dust' | 'gem' | 'bucket' | 'slab' | 'planks' | 'log' | 'stick' | 'wool' | 'sail'
   | 'chest' | 'hopper' | 'pipe' | 'tank' | 'engine' | 'glue' | 'chip' | 'tube' | 'spring' | 'box'
   | 'mob' | 'funnel' | 'hand' | 'filter' | 'belt' | 'wheel' | 'bigwheel' | 'arm' | 'burner' | 'saw'
-  | 'press' | 'pump' | 'kelp' | 'glass' | 'clock' | 'chain' | 'torch' | 'rodblock' | 'reactor' | 'piston' | 'scanner' | 'stone'
+  | 'press' | 'pump' | 'kelp' | 'glass' | 'clock' | 'chain' | 'torch' | 'rodblock' | 'reactor' | 'piston' | 'scanner' | 'stone' | 'shell' | 'paper'
 
 export interface IconSpec { shape: Shape; c: string; c2?: string }
 
@@ -18,10 +18,18 @@ function shade([r, g, b]: RGB, f: number): string {
 
 const cache = new Map<string, string>()
 
+/** the 16x16 canvas for an icon (used to extrude stand-in items in the 3D view) */
+export function iconCanvas(spec: IconSpec): HTMLCanvasElement {
+  iconUrl(spec)
+  return canvasCache.get(spec.shape + spec.c + (spec.c2 || ''))!
+}
+const canvasCache = new Map<string, HTMLCanvasElement>()
+
 export function iconUrl(spec: IconSpec): string {
   const key = spec.shape + spec.c + (spec.c2 || '')
   const hit = cache.get(key); if (hit) return hit
   const cv = document.createElement('canvas'); cv.width = 16; cv.height = 16
+  canvasCache.set(key, cv)
   const g = cv.getContext('2d')!
   const base = hex(spec.c), alt = hex(spec.c2 || spec.c)
   const P = {
@@ -105,6 +113,13 @@ export function iconUrl(spec: IconSpec): string {
       rect(5, 3, 6, 10, '#d8e6c2'); rect(6, 1, 4, 2, '#9aa0a3'); rect(5, 7, 6, 3, P.m); outline(5, 3, 6, 10, '#5b6b45'); break
     case 'chip':
       rect(3, 3, 10, 10, P.m); outline(3, 3, 10, 10, P.dd); for (let i = 4; i < 13; i += 2) { px(i, 2, '#c9cdd0'); px(i, 13, '#c9cdd0'); px(2, i, '#c9cdd0'); px(13, i, '#c9cdd0') } rect(6, 6, 4, 4, P.a); break
+    case 'shell': { // empty brass bullet casing, standing at an angle
+      for (let i = 0; i < 9; i++) { const x = 4 + i * 0.6 | 0, y = 12 - i; rect(x, y - 2, 5, 3, i < 2 ? P.d : i > 6 ? P.l : P.m) }
+      rect(4, 12, 6, 2, P.dd); rect(9, 3, 4, 2, P.o); rect(10, 2, 2, 1, P.d); break
+    }
+    case 'paper': { // a sheet with blue print lines
+      rect(2, 2, 12, 12, P.m); outline(2, 2, 12, 12, P.d); for (let y = 4; y < 13; y += 2) rect(4, y, 8, 1, P.a); rect(4, 4, 4, 4, P.al); break
+    }
     case 'tube':
       rect(5, 2, 6, 12, '#cfe4ec'); outline(5, 2, 6, 12, '#6f8a96'); rect(7, 4, 2, 6, P.m); rect(5, 12, 6, 2, '#6f7376'); break
     case 'spring':

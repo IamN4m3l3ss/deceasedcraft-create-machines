@@ -29,6 +29,7 @@ ROOTS = {
     'bigreactors': ['er-src/src/main/resources/assets/bigreactors', 'er-src/src/generated/resources/assets/bigreactors'],
     'refinedstorage': ['rs-src/src/main/resources/assets/refinedstorage', 'rs-src/src/generated/resources/assets/refinedstorage'],
     'tacz': ['pack/x/overrides/tacz/tacz_default_gun/assets/tacz'],
+    'rebel': ['pack/x/overrides/tacz/rebel_default_gun/assets/rebel'],
 }
 
 

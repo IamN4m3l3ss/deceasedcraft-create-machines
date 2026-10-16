@@ -25,47 +25,104 @@ export interface Build {
   steps: string[]
   tables?: Table[]
   callouts?: { title: string; body: string; tone?: 'info' | 'warn' | 'ok' }[]
+  /** other versions of the build (a cheaper starter, a bigger one); each replaces the fields it sets */
+  variants?: Variant[]
+  /** label for the main version in the version picker */
+  mainLabel?: string
+  mainBlurb?: string
+}
+export type Variant = { id: string; label: string; blurb: string } & Partial<Omit<Build, 'id' | 'variants' | 'section' | 'mainLabel' | 'mainBlurb'>>
+/** the build with a variant's fields applied */
+export function withVariant(b: Build, vid?: string): Build {
+  const v = vid && b.variants ? b.variants.find((x) => x.id === vid) : undefined
+  return v ? { ...b, ...v, id: b.id } : b
 }
 
 export const BUILDS: Build[] = [
   // ======================================================= production
   {
-    id: 'ammo', section: 'production', title: 'Ammo line', nav: 'Ammo line', icon: 'tacz:ammo',
-    tagline: '3 deployers · 7 × 2 · 15 round types',
-    intro: 'A 5-block belt with three deployers. Casings go into the input chest and finished rounds land in the output chest. All 12 standard calibers use the same two steps (a gunpowder pinch, then a lead nugget), so you switch caliber just by feeding a different casing. Calibers can be mixed in one chest.',
+    id: 'ammo', section: 'production', title: 'Ammo line', nav: 'Ammo line', icon: 'tacz:ammo_9mm',
+    tagline: '2 deployers · 6 × 2 · 9mm, .45 and every standard round',
+    intro: 'Casings go into the input chest, finished rounds come out of the output chest. Every standard caliber (9mm, .45 ACP and ten more) takes the same two steps: a gunpowder pinch, then a lead nugget. So the line never changes; you only feed it a different casing. Pick a round below to see exactly what goes where.',
+    mainLabel: 'Standard', mainBlurb: '2 deployers. 14 of the 15 rounds.',
     stats: [
-      { label: 'Deployers', value: '3' }, { label: 'Footprint', value: '7 × 2', hint: '4 tall' },
-      { label: 'Stress', value: '12 SU/RPM', hint: '384 SU at 32 RPM' }, { label: 'Speed', value: '≈ 1 round/s', hint: 'at 64 RPM' },
+      { label: 'Deployers', value: '2' }, { label: 'Footprint', value: '6 × 2', hint: '4 tall' },
+      { label: 'Stress', value: '8 SU/RPM', hint: '256 SU at 32 RPM' }, { label: 'Speed', value: '≈ 1 round/s', hint: 'at 64 RPM' },
     ],
     scene: 'ammo',
-    io: { in: ['deceasedcraft:bullet_casing_9mm_round', 'createbigcannons:gunpowder_pinch', 'immersiveengineering:nugget_lead'], out: ['tacz:ammo'], outText: 'any of 15 calibers' },
+    io: { in: ['deceasedcraft:bullet_casing_9mm_round', 'createbigcannons:gunpowder_pinch', 'immersiveengineering:nugget_lead'], out: ['tacz:ammo_9mm', 'tacz:ammo_45acp'], outText: 'or any other standard round' },
     grid: {
-      zs: [0, 1], path: [[1, 0], [5, 0]], loop: false, item: 'casing',
+      zs: [0, 1], path: [[1, 0], [4, 0]], loop: false, item: 'casing',
       layers: [
-        { y: 0, name: 'y0 · belt', cap: 'Belt level. Input chest at x0, output chest at x6. The first gearbox sits right behind the belt’s first pulley.', rows: ['Ci B>*i B> B> B> B>*o Co', '. G . . . . .'] },
-        { y: 1, name: 'y1 · gap', cap: 'Keep the space above x2–x4 clear: the deployer hands reach through it. A vertical shaft rises behind x1.', rows: ['. . ~ ~ ~ . .', '. So . . . . .'] },
-        { y: 2, name: 'y2 · deployers', cap: 'D1–D3 face down. The front gearbox at x1 passes the tower’s rotation along the deployer row.', rows: ['. G D1 D2 D3 . .', '. G . . . . .'] },
-        { y: 3, name: 'y3 · feed + power', cap: 'Hoppers on the deployers (chests can go on y4). Power comes into the tower at x1 from above.', rows: ['. . H H H . .', '. Pw . . . . .'] },
+        { y: 0, name: 'y0 · belt', cap: 'A 4-long belt from x1 to x4 between the input chest (x0) and output chest (x5). The gearbox behind x1 turns the belt’s first pulley.', rows: ['Ci B>*i B> B> B>*o Co', '. G . . . .'] },
+        { y: 1, name: 'y1 · funnels', cap: 'The two funnels sit on top of the belt’s end tiles, against the chests. Keep x2–x3 clear: the deployer hands reach through. The tower shaft rises behind x1.', rows: ['. ~ ~ ~ ~ .', '. So . . . .'] },
+        { y: 2, name: 'y2 · deployers', cap: 'D1 and D2 face down over x2 and x3. The gearbox at x1 passes the tower’s rotation along the deployer row.', rows: ['. G D1 D2 . .', '. G . . . .'] },
+        { y: 3, name: 'y3 · feed + power', cap: 'A hopper on each deployer keeps it stocked (put chests on y4 for long runs). Power comes into the tower at x1 from above.', rows: ['. . H H . .', '. Pw . . . .'] },
       ],
     },
     parts: [
-      { label: 'Line', items: [['create:deployer', 3], ['create:belt_connector', 1], ['create:shaft', 3], ['create:gearbox', 3], ['minecraft:hopper', 3], ['minecraft:chest', 2], ['create:andesite_funnel', 2]] },
-      { label: 'Casings (once)', optional: true, note: 'The IE Metal Press multiblock and a mold for each caliber you want. Build the press from the IE manual.', items: [['deceasedcraft:mold_bullet_casing_9mm', 1]] },
+      { label: 'Line', items: [['create:deployer', 2], ['create:belt_connector', 1], ['create:shaft', 1], ['create:gearbox', 3], ['minecraft:hopper', 2], ['minecraft:chest', 2], ['create:andesite_funnel', 2]] },
+      { label: 'Casings (once)', optional: true, note: 'The IE Metal Press multiblock and the mold for each caliber you make. Molds come from loot and traders and are never used up.', items: [['deceasedcraft:mold_bullet_casing_9mm', 1]] },
     ],
-    stock: { items: [['createbigcannons:gunpowder_pinch', 64], ['immersiveengineering:nugget_lead', 64], ['immersiveengineering:storage_lead', 1]], note: 'Per 64 rounds. D3 keeps one Block of Lead so the line never jams on an empty hand; only 37mm shells use it.' },
+    stock: { items: [['createbigcannons:gunpowder_pinch', 64], ['immersiveengineering:nugget_lead', 64]], note: 'Per 64 standard rounds: 16 gunpowder (as pinches), about 7 lead ingots (as nuggets) and 16 brass ingots for the casings.' },
     steps: [
-      'Lay a 5-long belt from x1 to x5. Put the input chest at x0, then place an andesite funnel on its face so it sits on the belt. Placed normally, a funnel <b>pulls</b> from the chest.',
-      'Put the output chest at x6 and <b>sneak-place</b> its funnel so it inserts. A wrench flips a funnel between pulling and inserting.',
-      'Put deployers D1–D3 on y2 above x2–x4, facing down. Their shaft ends must point east–west so they pass rotation along the row. Wrench them if they don’t.',
+      'Lay a 4-long belt from x1 to x4. Put the input chest at x0 and place an andesite funnel against it, on top of the belt’s first tile. Placed normally, a funnel <b>pulls</b> from the chest onto the belt.',
+      'Put the output chest at x5 and <b>sneak-place</b> its funnel so it puts items into the chest. A wrench flips a funnel between pulling and pushing.',
+      'Put D1 and D2 on y2 above x2 and x3, facing down, with a 1-block gap above the belt. Their shaft ends must point east–west so they pass rotation along the row. Wrench them if they don’t.',
       'Build the power tower behind x1: gearbox (y0), vertical shaft (y1), gearbox (y2), then a gearbox in front of D1. Feed power in from above.',
-      'Check the belt runs from x1 toward x5. If it runs backwards, put one more gearbox in the incoming shaft (straight through a gearbox reverses rotation).',
-      'Add a hopper on each deployer, and a chest on top of each hopper if you want long runs between refills.',
+      'Check the belt runs from x1 toward x4. If it runs backwards, add one gearbox to the incoming shaft (straight through a gearbox reverses rotation).',
+      'Put a hopper on each deployer and fill them as the table below says.',
     ],
-    tables: [
-      { title: 'Stations', head: ['Station', 'Keep in it', 'Used by'], rows: [['D1', 'Gunpowder Pinch', 'all 12 standard calibers'], ['D2', 'Lead Nugget', 'all 12 standard calibers'], ['D3', 'Block of Lead', 'only 37mm, but it stays loaded so the line never stops']] },
-      { title: 'Heavy rounds', head: ['Round', 'D1', 'D2', 'Casings per brass'], rows: [['.50 BMG', 'Gunpowder', 'Lead Ingot', '2 per ingot'], ['40mm', 'Gunpowder', 'TNT', '1 per ingot'], ['37mm APHE', 'Gunpowder Sack', 'TNT', '2 per brass block']], note: 'For heavy rounds, swap D1 and D2 for one batch, then swap back. Standard calibers: 9mm, .45 ACP, .357, .50 AE, 12g, 5.56, 5.7, 7.62×39, .30-06, .308, 7.62×54 and .338, each 4 casings per brass ingot from the IE Metal Press.' },
+    callouts: [{ title: 'Every deployer must hold something', body: 'A casing waits forever under a deployer with an empty hand. Keep both stocked, or put a lever on a deployer to switch it off.', tone: 'warn' }],
+    variants: [
+      {
+        id: 'starter', label: 'Starter', blurb: 'Hand-fed, no chests. Cheapest way to start.',
+        tagline: '2 deployers · hand-fed · water wheel or hand crank',
+        intro: 'The same two deployers and belt, without chests, funnels or hoppers. Drop casings on the start of the belt and pick rounds off the end, where they stop and wait. Right-click each deployer with its item to load it. It turns from a hand crank or a single water wheel, so you can build it the moment you have your first deployers.',
+        stats: [{ label: 'Deployers', value: '2' }, { label: 'Footprint', value: '4 × 2', hint: '4 tall' }, { label: 'Stress', value: '8 SU/RPM', hint: '256 SU at 32 RPM' }, { label: 'Power', value: 'hand crank', hint: 'or a water wheel' }],
+        grid: {
+          zs: [0, 1], path: [[1, 0], [4, 0]], loop: false, item: 'casing',
+          layers: [
+            { y: 0, name: 'y0 · belt', cap: 'A 4-long belt. Drop casings on x1, take rounds off x4: they stop at the end of the belt.', rows: ['. B>* B> B> B>* .', '. G . . . .'] },
+            { y: 1, name: 'y1 · gap', cap: 'Keep x2–x3 clear for the deployer hands.', rows: ['. . ~ ~ . .', '. So . . . .'] },
+            { y: 2, name: 'y2 · deployers', cap: 'D1 and D2 face down over x2 and x3.', rows: ['. G D1 D2 . .', '. G . . . .'] },
+            { y: 3, name: 'y3 · power', cap: 'Put a hand crank on top of the tower’s gearbox, or run a shaft in from a water wheel.', rows: ['. . . . . .', '. Pw . . . .'] },
+          ],
+        },
+        parts: [
+          { label: 'Line', items: [['create:deployer', 2], ['create:belt_connector', 1], ['create:shaft', 1], ['create:gearbox', 3]] },
+          { label: 'Power, pick one', items: [['create:hand_crank', 1], ['create:water_wheel', 1]], note: 'A hand crank gives 256 SU at 32 RPM while you hold it, exactly enough. A water wheel gives 256 SU at 8 RPM, hands-free but slower.' },
+        ],
+        stock: undefined,
+        steps: [
+          'Lay a 4-long belt and put D1 and D2 two blocks above its middle tiles, facing down, shaft ends east–west.',
+          'Build the power tower behind the first tile: gearbox, vertical shaft, gearbox, and a gearbox in front of D1.',
+          'Put a hand crank on the top gearbox (or bring in a shaft from a water wheel).',
+          'Right-click D1 with gunpowder pinches and D2 with lead nuggets. A deployer takes the whole stack.',
+          'Drop casings on the first tile. Rounds pile up at the far end.',
+        ],
+      },
+      {
+        id: 'heavy', label: 'All 15', blurb: '3 deployers. Adds 37mm cannon shells.',
+        tagline: '3 deployers · 7 × 2 · all 15 rounds',
+        intro: 'Only the 37mm APHE shell needs a third step. If you make it, use this longer version: one more belt tile and a third deployer that keeps a Block of Lead. Standard rounds pass under D3 untouched.',
+        stats: [{ label: 'Deployers', value: '3' }, { label: 'Footprint', value: '7 × 2', hint: '4 tall' }, { label: 'Stress', value: '12 SU/RPM', hint: '384 SU at 32 RPM' }, { label: 'Speed', value: '≈ 1 round/s', hint: 'at 64 RPM' }],
+        grid: {
+          zs: [0, 1], path: [[1, 0], [5, 0]], loop: false, item: 'casing',
+          layers: [
+            { y: 0, name: 'y0 · belt', cap: 'Belt from x1 to x5, input chest at x0, output chest at x6.', rows: ['Ci B>*i B> B> B> B>*o Co', '. G . . . . .'] },
+            { y: 1, name: 'y1 · funnels', cap: 'Funnels on the end tiles; x2–x4 stay clear for the hands.', rows: ['. ~ ~ ~ ~ ~ .', '. So . . . . .'] },
+            { y: 2, name: 'y2 · deployers', cap: 'D1–D3 face down over x2–x4.', rows: ['. G D1 D2 D3 . .', '. G . . . . .'] },
+            { y: 3, name: 'y3 · feed + power', cap: 'Hoppers on the deployers, power into the tower from above.', rows: ['. . H H H . .', '. Pw . . . . .'] },
+          ],
+        },
+        parts: [
+          { label: 'Line', items: [['create:deployer', 3], ['create:belt_connector', 1], ['create:shaft', 1], ['create:gearbox', 3], ['minecraft:hopper', 3], ['minecraft:chest', 2], ['create:andesite_funnel', 2]] },
+          { label: 'Casings (once)', optional: true, note: 'The IE Metal Press multiblock and a mold per caliber.', items: [['deceasedcraft:mold_bullet_casing_37mm', 1]] },
+        ],
+        stock: { items: [['quark:gunpowder_sack', 16], ['minecraft:tnt', 16], ['immersiveengineering:storage_lead', 16]], note: 'Per 16 shells. For standard rounds, D3 keeps one Block of Lead so it never stands empty.' },
+      },
     ],
-    callouts: [{ title: 'Every deployer must hold something', body: 'An item waits forever under a deployer with an empty hand. Keep all three stocked, or put a lever on a deployer to switch it off.', tone: 'warn' }],
   },
   {
     id: 'ring', section: 'production', title: 'Parts ring', nav: 'Parts ring', icon: 'deceasedcraft:rifle_assembly_parts',
@@ -90,7 +147,7 @@ export const BUILDS: Build[] = [
       { label: 'Ring', items: [['create:deployer', 6], ['create:belt_connector', 4], ['create:shaft', 16], ['create:gearbox', 3], ['minecraft:hopper', 5], ['minecraft:chest', 2], ['create:andesite_funnel', 1], ['create:brass_funnel', 1], ['create:filter', 1]] },
       { label: 'Spring press add-on', optional: true, note: 'Lets the ring press spring wire into recoil springs between kits (see step 8).', items: [['create:mechanical_press', 1]] },
     ],
-    stock: { items: [['deceasedcraft:blueprint', 1], ['immersiveengineering:stick_steel', 16], ['immersiveengineering:plate_steel', 16], ['createbigcannons:recoil_spring', 16], ['immersiveengineering:component_steel', 16], ['minecraft:iron_ingot', 16]], note: 'For 4 pistol kits: S1 holds the blueprint (kept), S2–S6 get 4 of their item per kit.' },
+    stock: { items: [['deceasedcraft:pistol_assembly_parts_blueprint', 1], ['immersiveengineering:stick_steel', 16], ['immersiveengineering:plate_steel', 16], ['createbigcannons:recoil_spring', 16], ['immersiveengineering:component_steel', 16], ['minecraft:iron_ingot', 16]], note: 'For 4 pistol kits: S1 holds the blueprint (kept), S2–S6 get 4 of their item per kit.' },
     steps: [
       'Lay four belts as on layer y0. A runs x1–x8 on the north row, D is x0 (2 long), C runs x0–x7 on the south row, and B is x8 (2 long). Each belt’s last tile sits beside the first tile of the next belt.',
       'Right-click belt C at x1 with a shaft to add a pulley there. Fill the middle row: gearbox at x1, then shafts from x2 to x7 into B’s pulley.',
@@ -125,7 +182,7 @@ export const BUILDS: Build[] = [
       layers: [
         { y: 0, name: 'y0 · belt', cap: 'Chest → short belt (x1–x2) → saw facing up (x3) → main belt (x4–x8) → output chest. The three cogwheels mesh in a row, so the saw spins opposite to both belts.', rows: ['Ci B>*i B>* X B>* B> B> B> B>*o Co', '. . c c c . . . G .'] },
         { y: 1, name: 'y1 · gap', cap: 'Keep x5–x7 clear for the press heads. The tower shaft rises at x8.', rows: ['. . . . . ~ ~ ~ . .', '. . . . . . . . So .'] },
-        { y: 2, name: 'y2 · presses', cap: 'Three presses with their shafts along the row, powered from the gearbox at x8.', rows: ['. . . . . P P P G .', '. . . . . . . . G .'] },
+        { y: 2, name: 'y2 · presses', cap: 'Three presses with their shafts along the row, powered from the gearbox at x8.', rows: ['. . . . . P1 P2 P3 G .', '. . . . . . . . G .'] },
         { y: 3, name: 'y3 · power', cap: 'Power comes in from above at x8.', rows: ['. . . . . . . . . .', '. . . . . . . . Pw .'] },
       ],
     },

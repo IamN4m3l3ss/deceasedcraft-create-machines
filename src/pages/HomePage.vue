@@ -29,7 +29,7 @@ const road = [
       </div>
       <div class="hero-art" aria-hidden="true">
         <div class="slots">
-          <span v-for="id in ['create:precision_mechanism','create:deployer','createdieselgenerators:huge_diesel_engine','createaddition:alternator','immersiveengineering:thermoelectric_generator','create:steam_engine','tacz:ammo','createbigcannons:recoil_spring','bigreactors:reinforced_reactorcasing']" :key="id" class="hs"><ItemIcon :id="id" :size="36" /></span>
+          <span v-for="id in ['create:precision_mechanism','create:deployer','createdieselgenerators:huge_diesel_engine','createaddition:alternator','immersiveengineering:thermoelectric_generator','create:steam_engine','tacz:ammo_9mm','createbigcannons:recoil_spring','bigreactors:reinforced_reactorcasing']" :key="id" class="hs"><ItemIcon :id="id" :size="36" /></span>
         </div>
       </div>
     </section>

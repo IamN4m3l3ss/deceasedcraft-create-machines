@@ -6,7 +6,6 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 src = open(os.path.join(ROOT, 'src', 'data', 'items.ts'), encoding='utf-8').read()
 want = {}
 SPECIAL = {
-    'tacz:ammo': {'tex': 'tacz:ammo/slot/9mm'},
     'minecraft:chest': {'chest': True},
     'create:blaze_burner': {'model': 'create:item/blaze_burner'},
     'refinedstorage:controller': {'model': 'refinedstorage:block/controller/light_blue'},
@@ -27,6 +26,12 @@ for m in re.finditer(r"^add\('([^']+)'(.*)$", src, re.M):
     else:
         ns, path = iid.split(':', 1)
     want[key] = {'model': f'{ns}:item/{path}', 'alt': [f'{ns}:block/{path}']}
+# finished rounds: flat icons from the TaCZ gun packs (src/data/ammo.ts)
+ammo = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), '../../src/data/ammo.ts')).read()
+for m in re.finditer(r"^\s*std\('[^']+', '[^']+', '[^']+', '[^']+', '([^']+)'", ammo, re.M):
+    want['tacz:ammo_' + m.group(1)] = {'tex': 'tacz:ammo/slot/' + m.group(1)}
+for m in re.finditer(r"round: '([^']+)', roundTex: '([^']+)'", ammo):
+    want[m.group(1)] = {'tex': m.group(2)}
 # extra blocks for the 3D views (key "b:<name>")
 EXTRA = {
     'b:shaft': 'create:block/shaft', 'b:cogwheel': 'create:block/cogwheel', 'b:large_cogwheel': 'create:block/large_cogwheel',
@@ -63,16 +68,11 @@ STATES = [
     ('create:deployer', {'facing': 'down', 'axis_along_first': 'true'}),
     ('create:mechanical_press', {'facing': 'east'}),
     ('create:mechanical_saw', {'facing': 'up', 'axis_along_first': 'false', 'flipped': 'false'}),
-    ('create:mechanical_pump', {'facing': 'east'}), ('create:mechanical_pump', {'facing': 'west'}),
     ('create:steam_engine', {'face': 'wall', 'facing': 'south', 'waterlogged': 'false'}), ('create:steam_engine', {'face': 'wall', 'facing': 'north', 'waterlogged': 'false'}),
     ('create:mechanical_arm', {'ceiling': 'false'}),
     ('create:windmill_bearing', {'facing': 'north'}),
     ('create:large_water_wheel', {'axis': 'x', 'extension': 'false'}),
     ('minecraft:hopper', {'facing': 'down', 'enabled': 'true'}),
-    ('create:andesite_belt_funnel', {'facing': 'east', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
-    ('create:andesite_belt_funnel', {'facing': 'west', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
-    ('create:andesite_belt_funnel', {'facing': 'south', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
-    ('create:brass_belt_funnel', {'facing': 'north', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
     ('create:glass_fluid_pipe', {'axis': 'x', 'alt': 'false'}), ('create:glass_fluid_pipe', {'axis': 'y', 'alt': 'false'}), ('create:glass_fluid_pipe', {'axis': 'z', 'alt': 'false'}),
     ('create:fluid_tank', {'bottom': 'true', 'top': 'false', 'shape': 'window'}), ('create:fluid_tank', {'bottom': 'false', 'top': 'false', 'shape': 'window'}),
     ('create:fluid_tank', {'bottom': 'false', 'top': 'true', 'shape': 'window'}), ('create:fluid_tank', {'bottom': 'true', 'top': 'true', 'shape': 'window'}),
@@ -82,8 +82,10 @@ STATES = [
     ('createdieselgenerators:pumpjack_bearing', {'facing': 'north'}), ('createdieselgenerators:pumpjack_bearing', {'facing': 'south'}),
     ('createdieselgenerators:pumpjack_head', {'facing': 'east', 'waterlogged': 'false'}),
     ('immersiveengineering:connector_lv', {'facing': 'north'}), ('immersiveengineering:connector_lv', {'facing': 'south'}),
-    ('create:andesite_belt_funnel', {'facing': 'north', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
-]
+] + [('create:mechanical_pump', {'facing': f}) for f in ('north', 'south', 'east', 'west', 'up', 'down')] + [(f'create:{m}_belt_funnel', {'facing': f, 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}) for m in ('andesite', 'brass') for f in ('north', 'south', 'east', 'west')]
+import itertools
+for bits in itertools.product(['false', 'true'], repeat=6):
+    STATES.append(('create:fluid_pipe', dict(zip(['north', 'south', 'east', 'west', 'up', 'down'], bits))))
 def skey(b, p): return 's:' + b + '[' + ','.join(f'{k}={v}' for k, v in sorted(p.items())) + ']'
 for b, p in STATES:
     want[skey(b, p)] = {'state': b, 'props': p}
@@ -93,10 +95,16 @@ for ref in ['create:block/shaft_half', 'create:block/deployer/pole', 'create:blo
             'create:block/steam_engine/linkage', 'create:block/steam_engine/shaft_connector', 'create:block/mechanical_arm/base',
             'create:block/mechanical_arm/lower_body', 'create:block/mechanical_arm/upper_body', 'create:block/mechanical_arm/claw_base',
             'create:block/mechanical_arm/upper_claw_grip', 'create:block/mechanical_arm/lower_claw_grip', 'create:block/mechanical_arm/cog',
-            'create:block/bearing/top_wooden', 'create:block/belt_pulley', 'create:block/blaze_burner/blaze/active',
+            'create:block/bearing/top_wooden', 'create:block/belt_pulley',
+            'create:block/belt/start', 'create:block/belt/middle', 'create:block/belt/end', 'create:block/belt/start_bottom',
+            'create:block/belt/middle_bottom', 'create:block/belt/end_bottom', 'create:block/blaze_burner/blaze/active',
             'createdieselgenerators:block/huge_diesel_engine/piston', 'createdieselgenerators:block/huge_diesel_engine/linkage',
             'createdieselgenerators:block/huge_diesel_engine/shaft_connector', 'createdieselgenerators:block/pumpjack_crank/small_counterweight',
             'createdieselgenerators:block/pumpjack_crank/small_rod', 'createdieselgenerators:block/powered_engine_shaft']:
     want['m:' + ref] = {'model': ref}
+# fluid pipe end pieces (Create adds these in code: PipeAttachmentModel)
+for kind in ('connection', 'rim_connector', 'rim', 'drain'):
+    for d in ('north', 'south', 'east', 'west', 'up', 'down'):
+        want[f'm:create:block/fluid_pipe/{kind}/{d}'] = {'model': f'create:block/fluid_pipe/{kind}/{d}'}
 json.dump(want, open(os.path.join(HERE, 'wanted.json'), 'w'), indent=1)
 print(len(want), 'entries')

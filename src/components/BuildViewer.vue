@@ -12,10 +12,10 @@ const layer = ref(-1)
 const grid = computed(() => props.build.grid)
 const shownLayer = computed(() => (grid.value ? grid.value.layers[layer.value < 0 ? 0 : layer.value] : null))
 
-function show() {
+async function show() {
   const v = viewer.value
   if (!v || v.dead) return
-  v.show(props.build.scene, grid.value)
+  await v.show(props.build.scene, grid.value)
   v.setLayer(layer.value < 0 || !grid.value ? null : grid.value.layers[layer.value].y)
 }
 function setLayer(i: number) { layer.value = i; show() }

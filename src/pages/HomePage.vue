@@ -43,6 +43,20 @@ const road = [
       </RouterLink>
     </div>
 
+    <section class="card gloss">
+      <div class="card-b">
+        <h2 style="margin-bottom: 10px">New to Create? Five words you’ll see a lot</h2>
+        <dl>
+          <div><dt>SU</dt><dd>Stress units: how much rotational power a source gives and a machine uses. A network stops if machines need more SU than the sources make.</dd></div>
+          <div><dt>RPM</dt><dd>How fast shafts turn. Faster machines work quicker but use more SU. Cogwheels change the speed.</dd></div>
+          <div><dt>Deployer</dt><dd>A robot hand that uses its held item on whatever passes under it. Most recipes here are a row of deployers over a belt.</dd></div>
+          <div><dt>Sequenced assembly</dt><dd>A recipe done in steps on a belt (add this, then press, then add that), sometimes several rounds.</dd></div>
+          <div><dt>FE</dt><dd>Forge Energy, i.e. electricity. IE and Refined Storage machines run on it; FE/t is per tick (20 ticks a second).</dd></div>
+        </dl>
+        <p class="small" style="margin: 10px 0 0">Click any item on this site to see how it’s made and what it’s for.</p>
+      </div>
+    </section>
+
     <h2 style="margin: 32px 0 6px">How it fits together</h2>
     <p>New world? Put up a 64-sail windmill for power, then the Metalworks line for plates and springs, and the ammo line. A row of thermoelectric generators between lava and water gives you electricity for the IE Metal Press without any fuel.</p>
     <div class="road">
@@ -68,9 +82,17 @@ const road = [
 .sec p { font-size: 14px; flex: 1; }
 .si { width: 48px; height: 48px; border-radius: 10px; background: var(--slot); display: grid; place-items: center; box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.45); }
 .go { color: var(--accent-2); font-weight: 600; font-size: 14px; }
+.gloss { margin-top: 20px; }
+.gloss dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.gloss dt { font-weight: 700; color: var(--accent-2); }
+.gloss dd { margin: 2px 0 0; color: var(--text-2); font-size: 14px; }
 .road { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 14px; }
 .lane-h { margin-bottom: 10px; }
 .stack-s { display: flex; flex-direction: column; gap: 10px; }
-@media (max-width: 1100px) { .road { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1100px) { .gloss { margin-top: 20px; }
+.gloss dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
+.gloss dt { font-weight: 700; color: var(--accent-2); }
+.gloss dd { margin: 2px 0 0; color: var(--text-2); font-size: 14px; }
+.road { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 800px) { .hero { grid-template-columns: minmax(0, 1fr); } .hero-art { display: none; } .hero-b { padding: 22px; } .hero h1 { font-size: 30px; } }
 </style>

@@ -1,6 +1,28 @@
 // 3D build viewer. Blocks are drawn with small procedural stand-in textures, not the mods' textures.
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { createModelKit } from './mcmodel.js'
+
+// Real block models (from public/mc). Set while a scene is being built; null means "use the stand-ins".
+let KIT = null
+const MODEL_KEYS = ['b:gearbox', 'b:deployer', 'b:press', 'b:saw', 'b:hopper', 'b:shaft', 'b:cogwheel', 'b:large_cogwheel', 'b:fluid_tank', 'b:steam_engine', 'b:burner_lit', 'b:pump', 'b:pipe', 'b:arm', 'b:large_water_wheel', 'b:windmill_bearing', 'b:alternator', 'b:thermo', 'b:huge_engine', 'b:girder', 'b:scaffold', 'b:pumpjack_bearing', 'b:pumpjack_head', 'b:pumpjack_hole', 'b:pumpjack_crank', 'b:distill', 'b:reactor_casing', 'b:reactor_controller', 'b:reactor_port', 'b:reactor_access', 'b:reactor_fuelrod', 'b:reactor_controlrod', 'b:lv_connector', 'b:chest', 'b:stone', 'b:glass', 'b:oak_log', 'b:industrial_iron', 'b:zinc_block', 'create:white_sail', 'create:andesite_funnel', 'create:brass_funnel', 'b:copper_casing']
+/** clone of a real model, optionally rotated (radians), or null */
+function M(key, rx, ry, rz) {
+  const g = KIT && KIT.get(key)
+  if (!g) return null
+  if (!rx && !ry && !rz) return g
+  const o = new THREE.Group(); g.rotation.set(rx || 0, ry || 0, rz || 0); o.add(g); return o
+}
+function realTex(p, frames) {
+  if (!KIT) return null
+  const key = 'rt:' + p
+  if (TEX[key]) return TEX[key]
+  const t = KIT.texture('tex/' + p + '.png').clone()
+  t.wrapS = t.wrapT = THREE.RepeatWrapping
+  if (frames) { t.repeat.set(1, 1 / frames); t.offset.set(0, 1 - 1 / frames) }
+  t.needsUpdate = true
+  return (TEX[key] = t)
+}
 
 const reduceMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const PI = Math.PI
@@ -59,8 +81,8 @@ function mat(key, opts) {
   return (MAT[key] = new THREE.MeshLambertMaterial(o))
 }
 function colorMat(key, color, extra) { return MAT[key] || (MAT[key] = new THREE.MeshLambertMaterial(Object.assign({ color }, extra || {}))) }
-const waterMat = () => colorMat('water', 0x3f86d8, { transparent: true, opacity: 0.45, depthWrite: false })
-const lavaMat = () => colorMat('lava', 0xff7a1a, { emissive: 0x7a2a00 })
+const waterMat = () => MAT.water || (MAT.water = new THREE.MeshLambertMaterial(realTex('minecraft/block/water_still', 32) ? { map: realTex('minecraft/block/water_still', 32), color: 0x3f76e4, transparent: true, opacity: 0.75, depthWrite: false } : { color: 0x3f86d8, transparent: true, opacity: 0.45, depthWrite: false }))
+const lavaMat = () => MAT.lava || (MAT.lava = new THREE.MeshLambertMaterial(realTex('minecraft/block/lava_still', 20) ? { map: realTex('minecraft/block/lava_still', 20), emissive: 0x3a1400 } : { color: 0xff7a1a, emissive: 0x7a2a00 }))
 const glassMat = () => colorMat('glass', 0xcfe6ee, { transparent: true, opacity: 0.2, depthWrite: false })
 const oilMat = () => colorMat('oil', 0x2a2622)
 function box(w, h, d) { const k = 'b' + w + '_' + h + '_' + d; return GEO[k] || (GEO[k] = new THREE.BoxGeometry(w, h, d)) }
@@ -77,7 +99,7 @@ function label(text, bg, fg) {
   s.scale.set(0.064 * w / 128, 0.032, 1); s.renderOrder = 10; return s
 }
 const LBL = { amber: ['#E3A93B', '#1B1406'], green: ['#3E9A5A', '#F2FBF3'], blue: ['#3B78C4', '#EEF4FB'], slate: ['#5B6774', '#F3F6F8'], oil: ['#3B362C', '#F2EED8'], red: ['#B9473C', '#FFF1EE'] }
-function shaftMesh(axis, len) { const m = mesh(cyl(0.14, len || 1), mat('shaft')); if (axis === 'x') m.rotation.z = PI / 2; if (axis === 'z') m.rotation.x = PI / 2; return m }
+function shaftMesh(axis, len) { if (!len || len === 1) { const r = M('b:shaft', axis === 'z' ? PI / 2 : 0, 0, axis === 'x' ? PI / 2 : 0); if (r) return r } const m = mesh(cyl(0.14, len || 1), mat('shaft')); if (axis === 'x') m.rotation.z = PI / 2; if (axis === 'z') m.rotation.x = PI / 2; return m }
 
 function baseScene() {
   const scene = new THREE.Scene()
@@ -94,7 +116,11 @@ function addGround(scene, minX, maxX, minZ, maxZ) {
   scene.add(grid)
 }
 function put(scene, obj, x, y, z) { obj.position.set(x, y, z); scene.add(obj); return obj }
-function block(m) { return new THREE.Mesh(box(1, 1, 1), m) }
+const REAL_FOR_MAT = { copper: 'b:fluid_tank', gear: 'b:gearbox', stone: 'b:stone', distill: 'b:distill', scaff: 'b:scaffold', log: 'b:oak_log', reactor: 'b:reactor_casing', zinc: 'b:zinc_block' }
+function block(m) {
+  for (const k in REAL_FOR_MAT) if (MAT[k] === m) { const r = M(REAL_FOR_MAT[k]); if (r) return r }
+  return new THREE.Mesh(box(1, 1, 1), m)
+}
 function tag(scene, text, x, y, z, tone) { const [bg, fg] = LBL[tone || 'amber']; return put(scene, label(text, bg, fg), x, y, z) }
 
 /* ---------------- token-grid builds ---------------- */
@@ -104,7 +130,7 @@ function neighborChest(L, zi, xi) {
   for (const d of dirs) { const nz = zi + d[1], nx = xi + d[0]; if (rows[nz] && rows[nz][nx] && rows[nz][nx][0] === 'C' && rows[nz][nx].length === 2 && 'io'.includes(rows[nz][nx][1])) return d }
   return null
 }
-function chestMesh() { const w = mat('wood'), fr = mat('chestf'); const c = new THREE.Mesh(box(0.875, 0.875, 0.875), [w, w, w, w, fr, fr]); c.position.y = -0.0625; return c }
+function chestMesh() { const r = M('b:chest'); if (r) return r; const w = mat('wood'), fr = mat('chestf'); const c = new THREE.Mesh(box(0.875, 0.875, 0.875), [w, w, w, w, fr, fr]); c.position.y = -0.0625; return c }
 function powerIn() {
   const g = new THREE.Group()
   g.add(mesh(cyl(0.14, 1), mat('green')))
@@ -113,6 +139,13 @@ function powerIn() {
   return g
 }
 function cogMesh(sign, anim, axis) {
+  const real = M('b:cogwheel', PI / 2, 0, 0)
+  if (real) {
+    const cog = new THREE.Group(); cog.add(real)
+    anim.push((t, dt) => { cog.rotation.z += dt * 2.2 * sign })
+    if (axis === 'x') { const g = new THREE.Group(); g.rotation.y = PI / 2; g.add(cog); return g }
+    return cog
+  }
   const cog = new THREE.Group(), wm = mat('wood')
   const disc = mesh(cyl(0.36, 0.22, 16), wm); disc.rotation.x = PI / 2; cog.add(disc)
   for (let i = 0; i < 8; i++) { const a = i / 8 * PI * 2; const tth = mesh(box(0.16, 0.16, 0.2), wm, Math.cos(a) * 0.43, Math.sin(a) * 0.43, 0); tth.rotation.z = a; cog.add(tth) }
@@ -122,6 +155,13 @@ function cogMesh(sign, anim, axis) {
   return cog
 }
 function largeCog(anim, sign, axis) {
+  const real = M('b:large_cogwheel', PI / 2, 0, 0)
+  if (real) {
+    const cog = new THREE.Group(); cog.add(real)
+    anim.push((t, dt) => { cog.rotation.z += dt * 1.1 * (sign || 1) })
+    if (axis === 'x') { const g = new THREE.Group(); g.rotation.y = PI / 2; g.add(cog); return g }
+    return cog
+  }
   const cog = new THREE.Group(), wm = mat('wood')
   const disc = mesh(cyl(0.95, 0.22, 24), wm); disc.rotation.x = PI / 2; cog.add(disc)
   for (let i = 0; i < 16; i++) { const a = i / 16 * PI * 2; const tth = mesh(box(0.18, 0.18, 0.2), wm, Math.cos(a) * 1.02, Math.sin(a) * 1.02, 0); tth.rotation.z = a; cog.add(tth) }
@@ -140,7 +180,8 @@ function tokenBlock(tok, L, zi, xi, anim) {
   if (tok[0] === 'B' && tok.length >= 2 && '<>^v'.includes(tok[1])) {
     const d = tok[1], f = tok.slice(2)
     grp.add(mesh(box(1, 0.36, 1), mat('beltside'), 0, -0.32, 0))
-    const top = new THREE.Mesh(new THREE.PlaneGeometry(0.98, 0.98), mat('belttop'))
+    const bt = realTex('create/block/belt')
+    const top = new THREE.Mesh(new THREE.PlaneGeometry(0.98, 0.98), bt ? (MAT.beltReal || (MAT.beltReal = new THREE.MeshLambertMaterial({ map: bt }))) : mat('belttop'))
     top.rotation.x = -PI / 2; top.position.y = -0.135
     const holder = new THREE.Group(); holder.add(top)
     holder.rotation.y = ({ '^': 0, '<': PI / 2, '>': -PI / 2, 'v': PI })[d]
@@ -149,25 +190,32 @@ function tokenBlock(tok, L, zi, xi, anim) {
     if (f.includes('*')) { const p = mesh(cyl(0.18, 1.08), mat('shaft'), 0, -0.32, 0); if (alongX) p.rotation.x = PI / 2; else p.rotation.z = PI / 2; grp.add(p) }
     if (/[iob]/.test(f)) {
       const nb = neighborChest(L, zi, xi)
-      if (nb) grp.add(mesh(nb[0] ? box(0.22, 0.5, 0.86) : box(0.86, 0.5, 0.22), f.includes('b') ? mat('brass') : mat('iron'), nb[0] * 0.4, 0.02, nb[1] * 0.4))
+      if (nb) {
+        const fun = M(f.includes('b') ? 'create:brass_funnel' : 'create:andesite_funnel')
+        if (fun) { fun.scale.set(0.7, 0.7, 0.7); fun.position.set(nb[0] * 0.45, 0, nb[1] * 0.45); grp.add(fun) }
+        else grp.add(mesh(nb[0] ? box(0.22, 0.5, 0.86) : box(0.86, 0.5, 0.22), f.includes('b') ? mat('brass') : mat('iron'), nb[0] * 0.4, 0.02, nb[1] * 0.4))
+      }
     }
     return grp
   }
   switch (tok) {
     case 'Ci': case 'Co': { grp.add(chestMesh()); const lb = label(tok === 'Ci' ? 'IN' : 'OUT', '#8C6640', '#FFF4E6'); lb.position.set(0, 0.75, 0); grp.add(lb); return grp }
-    case 'G': grp.add(mesh(box(1, 1, 1), mat('gear'))); return grp
+    case 'G': grp.add(M('b:gearbox') || mesh(box(1, 1, 1), mat('gear'))); return grp
     case 'S-': grp.add(shaftMesh('x')); return grp
     case 'S|': grp.add(shaftMesh('z')); return grp
     case 'So': grp.add(shaftMesh('y')); return grp
     case 'Pw': grp.add(powerIn()); return grp
     case 'H':
+      { const r = M('b:hopper'); if (r) { grp.add(r); return grp } }
       grp.add(mesh(box(1, 0.42, 1), mat('dark'), 0, 0.29, 0)); grp.add(mesh(box(0.5, 0.4, 0.5), mat('dark'), 0, -0.12, 0)); grp.add(mesh(box(0.26, 0.3, 0.26), mat('dark'), 0, -0.45, 0)); return grp
     case 'P': {
+      { const r = M('b:press'); if (r) { r.position.y = -0.3; grp.add(r); return grp } }
       grp.add(mesh(box(1, 0.72, 1), mat('casing'), 0, 0.14, 0)); grp.add(mesh(box(0.82, 0.3, 0.82), mat('iron'), 0, -0.4, 0))
       const head = mesh(box(0.82, 0.18, 0.82), mat('iron'), 0, -0.68, 0); grp.add(head)
       anim.push((t) => { head.position.y = -0.68 - Math.max(0, Math.sin(t * 3 + xi)) * 0.25 }); return grp
     }
     case 'X': {
+      { const r = M('b:saw'); if (r) { grp.add(r); const sl = label('SAW', ...LBL.slate); sl.position.set(0, 0.9, -0.2); grp.add(sl); return grp } }
       grp.add(mesh(box(1, 0.62, 1), mat('casing'), 0, -0.19, 0))
       const blade = mesh(cyl(0.44, 0.07, 16), mat('blade'), 0, 0.2, 0); blade.rotation.x = PI / 2; grp.add(blade)
       anim.push((t, dt) => { blade.rotation.y -= dt * 6 })
@@ -175,21 +223,23 @@ function tokenBlock(tok, L, zi, xi, anim) {
     }
     case 'c': grp.add(cogMesh(xi % 2 ? 1 : -1, anim)); return grp
     // thermoelectric row
-    case 'Tg': grp.add(mesh(box(1, 1, 1), mat('thermo'))); return grp
+    case 'Tg': grp.add(M('b:thermo') || mesh(box(1, 1, 1), mat('thermo'))); return grp
     case 'Lv': grp.add(block(lavaMat())); return grp
     case 'Wa': grp.add(block(waterMat())); return grp
-    case 'St': grp.add(block(mat('stone'))); return grp
-    case 'Gl': grp.add(block(glassMat())); return grp
-    case 'Cn': grp.add(mesh(box(0.34, 0.34, 0.5), colorMat('terra', 0xa5624a), 0, 0, 0.25)); grp.add(mesh(cyl(0.08, 0.3), mat('copper'), 0, 0.3, 0.25)); return grp
+    case 'St': grp.add(M('b:stone') || block(mat('stone'))); return grp
+    case 'Gl': grp.add(M('b:glass') || block(glassMat())); return grp
+    case 'Cn': { const r = M('b:lv_connector', -PI / 2, 0, 0); if (r) { r.position.z = 0; grp.add(r); return grp } } grp.add(mesh(box(0.34, 0.34, 0.5), colorMat('terra', 0xa5624a), 0, 0, 0.25)); grp.add(mesh(cyl(0.08, 0.3), mat('copper'), 0, 0.3, 0.25)); return grp
     // reactor
-    case 'Rc': grp.add(block(mat('reactor'))); return grp
-    case 'Rk': { grp.add(block(mat('reactorFace'))); const l = label('CONTROLLER', ...LBL.slate); l.position.set(0, 0.9, 0.9); grp.add(l); return grp }
-    case 'Rt': { grp.add(block(mat('reactor'))); grp.add(mesh(box(0.5, 0.5, 0.1), colorMat('tap', 0xc0392b), 0.51, 0, 0)); const l = label('POWER', ...LBL.red); l.position.set(1.2, 0.8, 0); grp.add(l); return grp }
-    case 'Ra': { grp.add(block(mat('reactor'))); grp.add(mesh(box(0.1, 0.5, 0.5), mat('brass'), -0.51, 0, 0)); return grp }
-    case 'Rf': { const m = mesh(cyl(0.38, 1, 12), mat('fuel', { emissive: 0x1d4a14 })); grp.add(m); grp.add(mesh(box(0.9, 1, 0.9), glassMat())); return grp }
-    case 'Rr': { grp.add(block(mat('ctrl'))); return grp }
+    case 'Rc': grp.add(M('b:reactor_casing') || block(mat('reactor'))); return grp
+    case 'Rk': { grp.add(M('b:reactor_controller') || block(mat('reactorFace'))); const l = label('CONTROLLER', ...LBL.slate); l.position.set(0, 0.9, 0.9); grp.add(l); return grp }
+    case 'Rt': { const r = M('b:reactor_port'); if (r) grp.add(r); else { grp.add(block(mat('reactor'))); grp.add(mesh(box(0.5, 0.5, 0.1), colorMat('tap', 0xc0392b), 0.51, 0, 0)) } const l = label('POWER', ...LBL.red); l.position.set(1.2, 0.8, 0); grp.add(l); return grp }
+    case 'Ra': { const r = M('b:reactor_access'); if (r) { grp.add(r); return grp } grp.add(block(mat('reactor'))); grp.add(mesh(box(0.1, 0.5, 0.5), mat('brass'), -0.51, 0, 0)); return grp }
+    case 'Rf': { const r = M('b:reactor_fuelrod'); if (r) { grp.add(r); return grp } const m = mesh(cyl(0.38, 1, 12), mat('fuel', { emissive: 0x1d4a14 })); grp.add(m); grp.add(mesh(box(0.9, 1, 0.9), glassMat())); return grp }
+    case 'Rr': { grp.add(M('b:reactor_controlrod') || block(mat('ctrl'))); return grp }
   }
   if (/^[DS]\d$/.test(tok)) {
+    const real = M('b:deployer', PI / 2, 0, 0)
+    if (real) { grp.add(real); const dl = label(tok, ...LBL.amber); dl.position.set(0, 0.1, -0.85); grp.add(dl); return grp }
     grp.add(mesh(box(1, 1, 1), mat('casing')))
     grp.add(mesh(box(1.02, 0.22, 1.02), mat('brass'), 0, -0.3, 0))
     grp.add(mesh(cyl(0.11, 0.55), mat('shaft'), 0, -0.72, 0))
@@ -240,6 +290,8 @@ function buildTokenScene(G) {
 /* ---------------- power builds ---------------- */
 function water(scene, x, y, z) { put(scene, new THREE.Mesh(box(1, 1, 1), waterMat()), x, y, z) }
 function largeWheel(anim) {
+  const real = M('b:large_water_wheel', 0, 0, PI / 2)
+  if (real) { const spin = new THREE.Group(); spin.add(real); anim.push((t, dt) => { spin.rotation.x -= dt * 0.6 }); return spin }
   const g = new THREE.Group(), spin = new THREE.Group(), wm = mat('wood')
   const hub = mesh(cyl(1.0, 0.7, 20), wm); hub.rotation.z = PI / 2; spin.add(hub)
   for (let i = 0; i < 12; i++) { const a = i / 12 * PI * 2; const pd = mesh(box(0.85, 0.12, 0.62), wm, 0, Math.cos(a) * 1.18, Math.sin(a) * 1.18); pd.rotation.x = a - PI / 2; spin.add(pd) }
@@ -249,12 +301,14 @@ function largeWheel(anim) {
   return g
 }
 function burner(cake) {
+  const real = M('b:burner_lit'); if (real) return real
   const g = new THREE.Group()
   const m = cake ? mat('burnCake', { map: T.burnCake(), emissive: 0x0d3a4a }) : mat('burnLit', { map: T.burnLit(), emissive: 0x4a2205 })
   g.add(mesh(box(0.92, 0.92, 0.92), m, 0, -0.04, 0))
   return g
 }
 function engine(dirZ, anim, phase) {
+  const real = M('b:steam_engine', dirZ > 0 ? PI / 2 : -PI / 2, 0, 0); if (real) return real
   const g = new THREE.Group()
   g.add(mesh(box(0.8, 0.8, 0.55), mat('copper'), 0, 0, -dirZ * 0.2))
   g.add(mesh(box(0.86, 0.2, 0.6), mat('brass'), 0, 0.32, -dirZ * 0.2))
@@ -262,10 +316,11 @@ function engine(dirZ, anim, phase) {
   anim.push((t) => { rod.position.y = Math.sin(t * 6 + phase) * 0.15 })
   return g
 }
-function pump() { const g = new THREE.Group(); g.add(mesh(box(0.7, 0.7, 0.7), mat('copper'))); const c = mesh(cyl(0.42, 0.16, 12), mat('wood')); c.rotation.z = PI / 2; g.add(c); return g }
-function pipe(axis, len) { const m = mesh(cyl(0.2, len || 1), mat('copper')); if (axis === 'x') m.rotation.z = PI / 2; if (axis === 'z') m.rotation.x = PI / 2; return m }
-function arm() { const g = new THREE.Group(); g.add(mesh(box(0.9, 0.5, 0.9), mat('brass'), 0, -0.25, 0)); const a1 = mesh(box(0.18, 1.1, 0.18), mat('brass'), 0, 0.4, 0); a1.rotation.z = 0.5; g.add(a1); const a2 = mesh(box(0.18, 0.9, 0.18), mat('brass'), -0.55, 0.85, 0); a2.rotation.z = -1.1; g.add(a2); return g }
-function alternator() {
+function pump() { const r = M('b:pump', 0, 0, PI / 2); if (r) return r; const g = new THREE.Group(); g.add(mesh(box(0.7, 0.7, 0.7), mat('copper'))); const c = mesh(cyl(0.42, 0.16, 12), mat('wood')); c.rotation.z = PI / 2; g.add(c); return g }
+function pipe(axis, len) { if (!len || len === 1) { const r = M('b:pipe', axis === 'z' ? PI / 2 : 0, 0, axis === 'x' ? PI / 2 : 0); if (r) return r } const m = mesh(cyl(0.2, len || 1), mat('copper')); if (axis === 'x') m.rotation.z = PI / 2; if (axis === 'z') m.rotation.x = PI / 2; return m }
+function arm() { const r = M('b:arm'); if (r) return r; const g = new THREE.Group(); g.add(mesh(box(0.9, 0.5, 0.9), mat('brass'), 0, -0.25, 0)); const a1 = mesh(box(0.18, 1.1, 0.18), mat('brass'), 0, 0.4, 0); a1.rotation.z = 0.5; g.add(a1); const a2 = mesh(box(0.18, 0.9, 0.18), mat('brass'), -0.55, 0.85, 0); a2.rotation.z = -1.1; g.add(a2); return g }
+function alternator(face) {
+  const r = M('b:alternator', 0, face || 0, 0); if (r) return r
   const g = new THREE.Group()
   const body = mesh(cyl(0.42, 0.9, 16), mat('alt')); body.rotation.x = PI / 2; g.add(body)
   g.add(mesh(box(0.9, 0.18, 0.9), mat('iron'), 0, -0.4, 0))
@@ -274,6 +329,7 @@ function alternator() {
 }
 function hugeEngine(dirZ, anim, phase) {
   // engine 2 blocks from its shaft; dirZ points from the engine toward the shaft
+  const real = M('b:huge_engine', 0, dirZ > 0 ? 0 : PI, 0); if (real) return real
   const g = new THREE.Group()
   g.add(mesh(box(0.98, 0.98, 0.98), mat('dieselEng')))
   g.add(mesh(box(1.0, 0.18, 1.0), mat('brass'), 0, 0.42, 0))
@@ -332,8 +388,8 @@ function bankScene(n, out) {
   tag(scene, 'FROM BOILER', -5.5, 1.9, -0.6, 'slate')
   for (let x = 0; x < n; x++) {
     put(scene, block(mat('gear')), x, 1, 2.7)
-    put(scene, alternator(), x, 1, 1.7)
-    put(scene, alternator(), x, 1, 3.7)
+    put(scene, alternator(0), x, 1, 1.7)
+    put(scene, alternator(PI), x, 1, 3.7)
   }
   tag(scene, (2 * n) + ' × 180 = ' + (2 * n * 180).toLocaleString('en-US') + ' FE/t', (n - 1) / 2, 2.8, 2.7)
   tag(scene, out, (n - 1) / 2, 2.2, 4.6, 'green')
@@ -375,12 +431,11 @@ function dieselScene() {
   tag(scene, 'GASOLINE', TX, 3.6, 3.4, 'oil')
   // crude buffer
   for (let y = 0; y < 2; y++) put(scene, block(mat('copper')), TX - 2, y, -3)
-  tag(scene, 'CRUDE OIL', TX - 2, 2.6, -3.4, 'oil')
   for (let x = TX - 1; x <= TX - 1; x++) put(scene, pipe('x'), x, 1, -3)
   put(scene, pipe('z'), TX, 1, -2)
   // ---- pumpjack (layout from the CDG ponder scene), arm along x
   const HX = -20 // hole x
-  put(scene, block(mat('copper')), HX, 0, 0) // pumpjack hole (copper casing)
+  put(scene, M('b:pumpjack_hole') || block(mat('copper')), HX, 0, 0) // pumpjack hole
   for (let d = 1; d <= 9; d++) { const p = put(scene, pipe('y'), HX, -d, 0); p.material = mat('copper') }
   put(scene, block(oilMat()), HX, -10, 0)
   tag(scene, 'PIPES TO BEDROCK', HX - 1.5, -5, 0, 'oil')
@@ -392,21 +447,22 @@ function dieselScene() {
   // scaffold tower at the pivot (x = HX+4), 3 tall, on both sides of the arm
   const PX = HX + 4
   for (let y = 0; y < 3; y++) { put(scene, block(mat('scaff')), PX, y, -1); put(scene, block(mat('scaff')), PX, y, 1) }
-  put(scene, block(mat('casing')), PX, 3, -1) // pumpjack bearing
+  put(scene, M('b:pumpjack_bearing', PI / 2, 0, 0) || block(mat('casing')), PX, 3, -1) // pumpjack bearing, facing the arm
   tag(scene, 'PUMPJACK', PX, 6.4, 0, 'slate')
   // the rocking arm: head over the hole, iron block, girders, iron block (pivot), zinc block, girders, bearing B over the crank
   const armG = new THREE.Group(); armG.position.set(PX, 3, 0); scene.add(armG)
-  const seg = (dx, m, w, h) => { armG.add(mesh(box(1, h || 1, w || 1), m, dx, 0, 0)) }
-  seg(-4, mat('zinc')) // head
+  const seg = (dx, m, w, h, real) => { const r = real && M(...real); if (r) { r.position.x = dx; armG.add(r) } else armG.add(mesh(box(1, h || 1, w || 1), m, dx, 0, 0)) }
+  const GIR = ['b:girder', 0, 0, PI / 2]
+  seg(-4, mat('zinc'), 1, 1, ['b:pumpjack_head', 0, -PI / 2, 0]) // head
   armG.add(mesh(box(0.35, 1.6, 0.35), mat('dark'), -4, -1.2, 0)) // rod down to the hole
-  seg(-3, mat('iron')); seg(-2, mat('girder'), 0.6, 0.6); seg(-1, mat('girder'), 0.6, 0.6); seg(0, mat('iron'))
-  armG.add(mesh(box(1, 1, 1), mat('zinc'), 0, 0, 1))
-  for (let dx = 1; dx <= 3; dx++) seg(dx, mat('girder'), 0.6, 0.6)
-  seg(4, mat('casing'))
+  seg(-3, mat('iron'), 1, 1, ['b:industrial_iron']); seg(-2, mat('girder'), 0.6, 0.6, GIR); seg(-1, mat('girder'), 0.6, 0.6, GIR); seg(0, mat('iron'), 1, 1, ['b:industrial_iron'])
+  { const z = M('b:zinc_block'); if (z) { z.position.z = 1; armG.add(z) } else armG.add(mesh(box(1, 1, 1), mat('zinc'), 0, 0, 1)) }
+  for (let dx = 1; dx <= 3; dx++) seg(dx, mat('girder'), 0.6, 0.6, GIR)
+  seg(4, mat('casing'), 1, 1, ['b:pumpjack_bearing', PI / 2, 0, 0])
   anim.push((t) => { armG.rotation.z = Math.sin(t * 1.6) * 0.18 })
   // crank under the far end
   const CX = PX + 4
-  put(scene, block(mat('casing')), CX, 0, 0)
+  put(scene, M('b:pumpjack_crank') || block(mat('casing')), CX, 0, 0)
   const crankArm = new THREE.Group(); crankArm.position.set(CX, 0.6, 0); scene.add(crankArm)
   crankArm.add(mesh(box(0.2, 0.9, 0.2), mat('iron'), 0, 0.35, 0.55))
   anim.push((t) => { crankArm.rotation.z = t * 1.6 })
@@ -422,24 +478,25 @@ function dieselScene() {
 const SCENES = {
   wheels() {
     const scene = baseScene(), anim = []
+    // wheel centres at y2: the 3x3 wheel sits on the ground, its paddles reach 2 blocks out into the water
     ;[0, 2, 4].forEach((x) => {
-      put(scene, largeWheel(anim), x, 1, 0)
-      for (let z = -1; z <= 1; z++) water(scene, x, 3, z)
-      for (let y = 2; y >= 0; y--) water(scene, x, y, 2)
-      tag(scene, '512 SU', x, 4.3, 0)
+      put(scene, largeWheel(anim), x, 2, 0)
+      for (let z = -1; z <= 1; z++) water(scene, x, 4, z)
+      for (let y = 3; y >= 1; y--) water(scene, x, y, 2)
+      tag(scene, '512 SU', x, 5.3, 0)
     })
-    ;[1, 3, 5].forEach((x) => put(scene, shaftMesh('x'), x, 1, 0))
-    put(scene, block(mat('gear')), 6, 1, 0)
-    put(scene, block(mat('stone')), 6, 0, 0)
-    tag(scene, '1,536 SU @ 4 RPM', 6.5, 2.4, 0, 'green')
+    ;[1, 3, 5].forEach((x) => put(scene, shaftMesh('x'), x, 2, 0))
+    put(scene, block(mat('gear')), 6, 2, 0)
+    put(scene, block(mat('stone')), 6, 1, 0); put(scene, block(mat('stone')), 6, 0, 0)
+    tag(scene, '1,536 SU @ 4 RPM', 6.5, 3.4, 0, 'green')
     addGround(scene, -1, 7, -2, 3)
-    return { scene, anim, layers: [], center: new THREE.Vector3(3, 1.5, 0.5), span: 9 }
+    return { scene, anim, layers: [], center: new THREE.Vector3(3, 2, 0.5), span: 10 }
   },
   windmill() {
     const scene = baseScene(), anim = []
     const hy = 9
     for (let y = 0; y < hy; y++) put(scene, block(mat('stone')), 0, y, 0)
-    put(scene, block(mat('casing')), 0, hy, 0)
+    put(scene, M('b:windmill_bearing', -PI / 2, 0, 0) || block(mat('casing')), 0, hy, 0)
     const plate = mesh(cyl(0.45, 0.12, 16), mat('wood'), 0, hy, -0.52); plate.rotation.x = PI / 2; scene.add(plate)
     put(scene, shaftMesh('z'), 0, hy, 1)
     put(scene, block(mat('gear')), 0, hy, 2)
@@ -448,10 +505,10 @@ const SCENES = {
     put(scene, shaftMesh('x'), 1, 0, 2); put(scene, shaftMesh('x'), 2, 0, 2)
     tag(scene, '4,096 SU @ 8 RPM', 2.6, 1.3, 2, 'green')
     const rotor = new THREE.Group(); rotor.position.set(0, hy, -1); scene.add(rotor)
-    rotor.add(mesh(box(1, 1, 1), mat('log')))
+    rotor.add(M('b:oak_log') || mesh(box(1, 1, 1), mat('log')))
     const all = []
     for (let dx = 0; dx <= 1; dx++) for (let dy = 1; dy <= 8; dy++) { let p = [dx, dy]; for (let r = 0; r < 4; r++) { all.push(p); p = [p[1], -p[0]] } }
-    all.forEach((c) => rotor.add(mesh(box(0.98, 0.98, 0.14), mat('cloth'), c[0], c[1], 0)))
+    all.forEach((c) => { const sl = M('create:white_sail', PI / 2, 0, 0); if (sl) { sl.position.set(c[0], c[1], 0); rotor.add(sl) } else rotor.add(mesh(box(0.98, 0.98, 0.14), mat('cloth'), c[0], c[1], 0)) })
     anim.push((t, dt) => { rotor.rotation.z -= dt * 0.35 })
     tag(scene, '64 SAILS', 0, hy + 9.6, -1.2)
     addGround(scene, -9, 9, -3, 4)
@@ -465,6 +522,8 @@ const SCENES = {
 }
 
 /* ---------------- viewer ---------------- */
+let KIT_READY = null
+function base() { const u = new URL('.', location.href); return u.pathname.endsWith('/') ? u.pathname : u.pathname + '/' }
 export function createViewer(host) {
   const V = { scenes: {}, current: null, visible: true, last: performance.now(), clock: 0, dead: false }
   let renderer
@@ -486,7 +545,11 @@ export function createViewer(host) {
     controls.target.copy(sc.center); controls.update()
   }
   function renderOnce() { if (V.current) { controls.update(); renderer.render(V.current.scene, camera) } }
-  V.show = (key, grid) => {
+  V.show = async (key, grid) => {
+    if (!KIT_READY) {
+      KIT_READY = (async () => { try { const k = createModelKit(base(), { onTexture: () => renderOnce() }); await k.preload(MODEL_KEYS); KIT = k } catch (e) { KIT = null } })()
+    }
+    await KIT_READY
     if (!V.scenes[key]) V.scenes[key] = grid ? buildTokenScene(grid) : (SCENES[key] ? SCENES[key]() : null)
     const sc = V.scenes[key]; if (!sc) return
     const changed = V.current !== sc; V.current = sc

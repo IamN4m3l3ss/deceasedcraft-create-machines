@@ -1,5 +1,1 @@
 node_modules/
-# Real item textures extracted from your own mod jars stay on your PC
-public/icons/*
-!public/icons/README.md
-docs/icons/

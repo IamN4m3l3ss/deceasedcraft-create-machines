@@ -15,6 +15,8 @@ export interface Build {
   intro: string
   stats: Stat[]
   scene: string
+  /** what goes in and what comes out, for the summary strip at the top */
+  io: { in: string[]; inText?: string; out: string[]; outText?: string }
   /** token grid for the layer view (production lines and the reactor) */
   grid?: { zs: number[]; layers: Layer[]; path?: number[][]; loop?: boolean; item?: string }
   parts: PartGroup[]
@@ -36,6 +38,7 @@ export const BUILDS: Build[] = [
       { label: 'Stress', value: '12 SU/RPM', hint: '384 SU at 32 RPM' }, { label: 'Speed', value: '≈ 1 round/s', hint: 'at 64 RPM' },
     ],
     scene: 'ammo',
+    io: { in: ['deceasedcraft:bullet_casing_9mm_round', 'createbigcannons:gunpowder_pinch', 'immersiveengineering:nugget_lead'], out: ['tacz:ammo'], outText: 'any of 15 calibers' },
     grid: {
       zs: [0, 1], path: [[1, 0], [5, 0]], loop: false, item: 'casing',
       layers: [
@@ -73,6 +76,7 @@ export const BUILDS: Build[] = [
       { label: 'Stress', value: '24 SU/RPM', hint: '768 SU at 32 RPM' }, { label: 'Kits', value: '8 types' },
     ],
     scene: 'ring',
+    io: { in: ['apocalypsenow:cardboard_box', 'immersiveengineering:stick_steel', 'immersiveengineering:plate_steel', 'createbigcannons:recoil_spring', 'immersiveengineering:component_steel'], inText: '+ iron, steel or netherite scrap', out: ['deceasedcraft:pistol_assembly_parts', 'deceasedcraft:rifle_assembly_parts', 'deceasedcraft:sniper_assembly_parts', 'deceasedcraft:attachment_assembly_parts'] },
     grid: {
       zs: [-1, 0, 1, 2, 3], path: [[8, 0], [0, 0], [0, 2], [8, 2], [8, 0]], loop: true, item: 'box',
       layers: [
@@ -108,13 +112,14 @@ export const BUILDS: Build[] = [
   },
   {
     id: 'metal', section: 'production', title: 'Metalworks', nav: 'Metalworks', icon: 'createbigcannons:recoil_spring',
-    tagline: 'saw + 3 presses · plates and recoil springs',
-    intro: 'This feeds the ring. Steel ingots go in and come out as Steel Plates, because only the first press has a recipe for them. Steel plates go in and the saw cuts each into 3 Spring Wire, then the three presses turn every wire into a Recoil Spring. A rolling mill next to it makes the steel rods.',
+    tagline: 'makes the steel parts for the gun-part ring',
+    intro: 'Every gun-part kit needs steel plates, recoil springs and steel rods. This small line makes all three, so build it before the parts ring. Drop steel ingots in and you get steel plates. Drop steel plates in and you get recoil springs (the saw cuts each plate into 3 spring wires, the presses squeeze each wire 3 times). The rolling mill beside it turns steel ingots into rods.',
     stats: [
       { label: 'Footprint', value: '10 × 2', hint: '4 tall' }, { label: 'Stress', value: '28 SU/RPM', hint: '+4 for the rolling mill' },
       { label: 'Per steel plate', value: '3 springs' }, { label: 'Per steel ingot', value: '2 rods', hint: 'rolling mill' },
     ],
     scene: 'metal',
+    io: { in: ['immersiveengineering:ingot_steel', 'immersiveengineering:plate_steel'], inText: 'ingots for plates and rods, plates for springs', out: ['immersiveengineering:plate_steel', 'createbigcannons:recoil_spring', 'immersiveengineering:stick_steel'], outText: 'all the steel parts the ring needs' },
     grid: {
       zs: [0, 1], path: [[1, 0], [8, 0]], loop: false, item: 'plate',
       layers: [
@@ -160,6 +165,7 @@ export const BUILDS: Build[] = [
     intro: 'Line up large water wheels on one shaft line. Each wheel adds 512 SU. Skip the small wheel: the pack cuts it to 128 SU.',
     stats: [{ label: 'Output', value: '1,536 SU', hint: '3 wheels' }, { label: 'Speed', value: '4 RPM' }, { label: 'Fuel', value: 'none' }, { label: 'Per wheel', value: '16 planks' }],
     scene: 'wheels',
+    io: { in: ['fluid:water'], inText: 'flowing water', out: [], outText: '1,536 SU' },
     parts: [{ label: 'Three wheels', items: [['create:large_water_wheel', 3], ['create:shaft', 3], ['create:gearbox', 1]] }],
     steps: [
       'Put the wheels on one shaft line with a shaft between each pair. That leaves room to route the water.',
@@ -173,6 +179,7 @@ export const BUILDS: Build[] = [
     intro: 'A windmill gives 512 SU per RPM and turns 1 RPM for every 8 sails, up to 16 RPM. 64 sails give 4,096 SU, which covers the ammo line, parts ring, Metalworks and rolling mill together (≈ 2,200 SU at 32 RPM).',
     stats: [{ label: 'Output', value: '4,096 SU', hint: '8 RPM' }, { label: 'Fuel', value: 'none' }, { label: 'Space', value: '17 × 17', hint: 'in front of the tower' }, { label: 'Max', value: '8,192 SU', hint: '128 sails' }],
     scene: 'windmill',
+    io: { in: [], inText: 'wind, nothing else', out: [], outText: '4,096 SU' },
     parts: [
       { label: 'Windmill', items: [['create:white_sail', 64], ['create:windmill_bearing', 1], ['create:super_glue', 1], ['minecraft:oak_log', 1]] },
       { label: 'Tower and gearing', note: 'Any solid blocks for the tower. The two cogwheel steps take it from 8 to 32 RPM.', items: [['create:shaft', 11], ['create:gearbox', 2], ['create:large_cogwheel', 2], ['create:cogwheel', 2], ['minecraft:stone', 9]] },
@@ -190,6 +197,7 @@ export const BUILDS: Build[] = [
     intro: 'Create’s steam boiler gives 16,384 SU per level. The level is the lowest of three things: heat (1 per burner on coal), tank blocks ÷ 4, and water in mB per tick ÷ 10. Each level also needs one steam engine. This is the most SU for your resources anywhere in the pack.',
     stats: [{ label: 'Output', value: '65,536 SU', hint: 'at 64 RPM' }, { label: 'Fuel', value: '180 coal/h', hint: '1 coal lasts 80 s' }, { label: 'Water', value: '40 mB/t', hint: 'one 2×2 pool' }, { label: 'Footprint', value: '≈ 9 × 5' }],
     scene: 'boiler4',
+    io: { in: ['minecraft:coal', 'fluid:water'], inText: '180 coal an hour', out: [], outText: '65,536 SU' },
     parts: [
       { label: 'Boiler', items: [['create:fluid_tank', 16], ['create:blaze_burner', 4], ['create:steam_engine', 4], ['create:shaft', 6], ['create:gearbox', 2]] },
       { label: 'Water', note: 'A 2×2 pool never runs dry. The cog pair speeds the pump up to 128 RPM.', items: [['create:mechanical_pump', 1], ['create:fluid_pipe', 6], ['create:large_cogwheel', 1], ['create:cogwheel', 1], ['create:hand_crank', 1]] },
@@ -211,6 +219,7 @@ export const BUILDS: Build[] = [
     intro: 'A 3×3 tank, 8 tall, on 9 blaze burners fed with blaze cakes (2 heat each) reaches level 18. On coal the same build reaches level 9 (147,456 SU). It’s cheaper to build than the diesel plant, but it needs water and burner feeding.',
     stats: [{ label: 'Output', value: '294,912 SU', hint: 'at 64 RPM' }, { label: 'Fuel', value: '≈ 200 cakes/h', hint: 'one cake lasts 160 s' }, { label: 'Water', value: '180 mB/t', hint: 'two pools, two pumps' }, { label: 'Engines', value: '18' }],
     scene: 'boiler18',
+    io: { in: ['create:blaze_cake', 'fluid:water'], inText: '≈ 200 cakes an hour', out: [], outText: '294,912 SU' },
     parts: [
       { label: 'Boiler', items: [['create:fluid_tank', 72], ['create:blaze_burner', 9], ['create:steam_engine', 18], ['create:shaft', 27], ['create:gearbox', 6]] },
       { label: 'Water', items: [['create:mechanical_pump', 2], ['create:fluid_pipe', 12], ['create:large_cogwheel', 2], ['create:cogwheel', 2], ['create:hand_crank', 1]] },
@@ -234,6 +243,7 @@ export const BUILDS: Build[] = [
       { label: 'Crude oil', value: '≈ 67 mB/s', hint: '240 buckets/h' }, { label: 'Pumpjacks', value: '1', hint: '≈ 1,280 B/h at ratio 1' },
     ],
     scene: 'diesel',
+    io: { in: ['fluid:crude_oil'], inText: 'pumped from an oil chunk, turned into diesel on site', out: [], outText: '327,680 SU' },
     parts: [
       { label: 'Engine row', note: 'Engines on both sides of a 10-long shaft, 2 blocks out, fed from pipes on top.', items: [['createdieselgenerators:huge_diesel_engine', 20], ['create:shaft', 11], ['create:large_cogwheel', 1], ['create:fluid_pipe', 26], ['create:mechanical_pump', 1], ['create:fluid_tank', 4]] },
       { label: 'Distillation', note: 'Two 1×1×3 towers on heated burners (6 tanks; each tank block uses up one controller), plus 4 tanks for crude and gasoline.', items: [['create:fluid_tank', 10], ['createdieselgenerators:distillation_controller', 6], ['create:blaze_burner', 2], ['create:mechanical_pump', 1], ['create:fluid_pipe', 10]] },
@@ -273,6 +283,7 @@ export const BUILDS: Build[] = [
     intro: 'A thermoelectric generator gives √(temperature difference) FE/t for every pair of opposite faces where one side is hot and the other cold (with the pack’s ×2 setting). Lava is 1300 K and water 300 K, so one pair gives 31 FE/t. Neither fluid is ever used up.',
     stats: [{ label: 'Output', value: '496 FE/t', hint: '8 generators' }, { label: 'Per generator', value: '62 FE/t', hint: '2 pairs' }, { label: 'Fuel', value: 'none' }, { label: 'Footprint', value: '17 × 3', hint: '3 tall' }],
     scene: 'thermo',
+    io: { in: ['fluid:lava', 'fluid:water'], inText: 'never used up', out: [], outText: '496 FE/t' },
     grid: {
       zs: [-1, 0, 1],
       layers: [
@@ -300,6 +311,7 @@ export const BUILDS: Build[] = [
     intro: 'A Crafts & Additions alternator makes 180 FE/t at 256 RPM and takes 8,192 SU to run (32 SU per RPM). A level 4 boiler’s 65,536 SU runs exactly 8 of them.',
     stats: [{ label: 'Output', value: '1,440 FE/t', hint: '8 × 180' }, { label: 'Uses', value: '65,536 SU', hint: 'whole L4 boiler' }, { label: 'Speed', value: '256 RPM' }, { label: 'Footprint', value: '9 × 3' }],
     scene: 'altbank',
+    io: { in: [], inText: '65,536 SU from the coal boiler', out: [], outText: '1,440 FE/t' },
     parts: [
       { label: 'Bank', items: [['createaddition:alternator', 8], ['create:gearbox', 4], ['create:large_cogwheel', 2], ['create:cogwheel', 2], ['create:shaft', 3]] },
       { label: 'Wiring', note: 'A connector on each alternator, wired with copper spools.', items: [['createaddition:connector', 8], ['createaddition:copper_spool', 2]] },
@@ -317,6 +329,7 @@ export const BUILDS: Build[] = [
     intro: 'The same idea at full scale: the level 18 boiler’s 294,912 SU runs 36 alternators. They sit on both sides of an 18-long gearbox row, 3 blocks wide.',
     stats: [{ label: 'Output', value: '6,480 FE/t', hint: '36 × 180' }, { label: 'Uses', value: '294,912 SU', hint: 'whole L18 boiler' }, { label: 'Speed', value: '256 RPM' }, { label: 'Footprint', value: '23 × 3' }],
     scene: 'bigbank',
+    io: { in: [], inText: '294,912 SU from the max boiler', out: [], outText: '6,480 FE/t' },
     parts: [
       { label: 'Bank', items: [['createaddition:alternator', 36], ['create:gearbox', 18], ['create:large_cogwheel', 2], ['create:cogwheel', 2], ['create:shaft', 3]] },
       { label: 'Wiring', items: [['createaddition:connector', 36], ['createaddition:copper_spool', 8]] },
@@ -336,6 +349,7 @@ export const BUILDS: Build[] = [
     intro: 'In this pack only the reinforced reactor parts can be crafted, and their casing needs a Refined Storage machine casing, so the reactor is a late Refined Storage project. This 5×5×5 passive design is the smallest sensible one: 15 fuel rods in 5 columns with water as moderator. Its output depends on fuel and control-rod settings, and the controller screen shows it.',
     stats: [{ label: 'Size', value: '5 × 5 × 5' }, { label: 'Fuel rods', value: '15', hint: '5 columns' }, { label: 'Casings', value: '89' }, { label: 'Output', value: 'see controller', hint: 'depends on settings' }],
     scene: 'reactor',
+    io: { in: ['immersiveengineering:ingot_uranium'], out: [], outText: 'electricity (FE)' },
     grid: {
       zs: [0, 1, 2, 3, 4],
       layers: [

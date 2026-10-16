@@ -15,6 +15,7 @@ const groups = computed(() => [
     { to: '/shopping', label: 'Shopping list', icon: 'minecraft:chest' },
     { to: '/items', label: 'Items & recipes', icon: 'minecraft:crafting_table' },
     { to: '/rules', label: 'Pack rules', icon: 'immersiveengineering:component_electronic' },
+    { to: '/credits', label: 'Credits', icon: 'minecraft:paper' },
   ] },
 ])
 watch(() => route.fullPath, () => { store.navOpen = false; closeItem(); window.scrollTo({ top: 0 }) })
@@ -51,7 +52,7 @@ watch(() => route.fullPath, () => { store.navOpen = false; closeItem(); window.s
       <RouterView />
       <footer class="foot">
         <p>Recipes come from the pack’s KubeJS scripts. Machine numbers come from the pack’s configs and the source code of Create, Immersive Engineering, Crafts &amp; Additions, Create Diesel Generators, Create Big Cannons, Extreme Reactors and Refined Storage. If JEI shows something different, trust JEI.</p>
-        <p>Icons and 3D blocks are hand-drawn stand-ins unless you add the real textures yourself (see <code>public/icons/README.md</code>). Not affiliated with Mojang or the mod authors.</p>
+        <p>Icons and 3D blocks are rendered from the textures and models of Minecraft and the mods; they belong to their authors (see <RouterLink to="/credits">Credits</RouterLink>). A free fan guide, not affiliated with Mojang or the mod authors.</p>
       </footer>
     </main>
     <ItemDrawer />

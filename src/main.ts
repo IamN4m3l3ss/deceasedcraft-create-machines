@@ -15,6 +15,7 @@ const router = createRouter({
     { path: '/shopping', component: () => import('./pages/ShoppingPage.vue') },
     { path: '/items', component: () => import('./pages/ItemsPage.vue') },
     { path: '/rules', component: () => import('./pages/RulesPage.vue') },
+    { path: '/credits', component: () => import('./pages/CreditsPage.vue') },
     { path: '/:pathMatch(.*)*', redirect: '/' },
   ],
   scrollBehavior: () => ({ top: 0 }),

@@ -254,9 +254,7 @@ export function item(id: string): Item {
   return it
 }
 
-/** path of the optional real texture, relative to the site root */
-export function texPath(it: Item): string | null {
-  if (it.id.startsWith('fluid:') && !it.tex) return null
-  const p = it.tex || it.id.replace(':', '/')
-  return `icons/${p}.png`
+/** path of the rendered real icon (public/icons, listed in icons/manifest.json) */
+export function texPath(it: Item): string {
+  return `icons/${it.id.replace(':', '/')}.png`
 }

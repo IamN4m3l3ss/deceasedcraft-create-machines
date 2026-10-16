@@ -21,7 +21,8 @@ const outLabel = computed(() => {
   if (item(props.recipe.out).fluid) return `${num(n)} mB`
   return Number.isInteger(n) ? (n > 1 ? `× ${n}` : '') : `${Math.round(n * 100)}% chance`
 })
-const stepText: Record<string, string> = { deploy: 'Deploy', press: 'Press', cut: 'Saw', fill: 'Spout' }
+const stepText: Record<string, string> = { deploy: 'Add', press: 'Press', cut: 'Cut', fill: 'Pour' }
+const hasKept = computed(() => !!props.recipe.steps?.some((s) => s.kept))
 </script>
 
 <template>
@@ -31,6 +32,7 @@ const stepText: Record<string, string> = { deploy: 'Deploy', press: 'Press', cut
       <span v-if="recipe.pack" class="chip pack" title="Changed or added by the DeceasedCraft scripts">Pack recipe</span>
       <span v-if="recipe.alt" class="chip">Alternative</span>
     </div>
+    <p v-if="st.how && !compact" class="how">{{ st.how }}</p>
     <div class="rc-b">
       <!-- shaped crafting / mechanical crafting -->
       <template v-if="cells">
@@ -55,6 +57,7 @@ const stepText: Record<string, string> = { deploy: 'Deploy', press: 'Press', cut
               </li>
             </ol>
           </div>
+          <p v-if="hasKept" class="kept-n">∞ = stays in its deployer, not used up</p>
           <div class="seq-row">
             <span class="loops" v-if="recipe.loops && recipe.loops > 1">repeat × {{ recipe.loops }}</span>
             <span class="loops" v-else>once</span>
@@ -97,5 +100,7 @@ const stepText: Record<string, string> = { deploy: 'Deploy', press: 'Press', cut
 .seq-steps li::before { content: counter(q); font: 700 11px var(--mono); color: var(--muted); }
 .seq-steps .k { font-size: 12px; font-weight: 600; color: var(--text-2); }
 .loops { font: 600 12px var(--mono); color: var(--accent-2); background: var(--accent-soft); padding: 3px 8px; border-radius: 6px; }
+.how { margin: 0; padding: 8px 12px 0; font-size: 12.5px; color: var(--muted); }
+.kept-n { margin: 0; font-size: 12px; color: var(--accent-2); }
 .note { margin: 0; padding: 0 12px 12px; font-size: 13px; color: var(--muted); }
 </style>

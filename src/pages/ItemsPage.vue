@@ -5,6 +5,7 @@ import { BY_OUT } from '../data/recipes'
 import { station } from '../data/stations'
 import ItemIcon from '../components/ItemIcon.vue'
 import { openItem } from '../lib/store'
+import { DESC } from '../data/descs'
 
 const q = ref('')
 const mod = ref('all')
@@ -16,7 +17,7 @@ const list = computed(() => {
   return all.value.filter((i) =>
     (mod.value === 'all' || i.mod === mod.value) &&
     (kind.value === 'all' || (kind.value === 'raw' ? !!i.raw : !!BY_OUT[i.id])) &&
-    (!s || i.name.toLowerCase().includes(s) || i.id.includes(s)))
+    (!s || i.name.toLowerCase().includes(s) || i.id.includes(s) || (DESC[i.id] || '').toLowerCase().includes(s)))
 })
 function made(id: string) { const r = (BY_OUT[id] || []).find((x) => !x.alt) || (BY_OUT[id] || [])[0]; return r ? station(r.station).name : null }
 </script>
@@ -45,7 +46,7 @@ function made(id: string) { const r = (BY_OUT[id] || []).find((x) => !x.alt) || 
       <span class="muted small">{{ list.length }} items</span>
     </div>
     <div class="igrid">
-      <button v-for="i in list" :key="i.id" type="button" class="ic card" @click="openItem(i.id)">
+      <button v-for="i in list" :key="i.id" type="button" class="ic card" :title="DESC[i.id] || i.name" @click="openItem(i.id)">
         <span class="slotbg"><ItemIcon :id="i.id" :size="32" /></span>
         <span class="tx">
           <b>{{ i.name }}</b>

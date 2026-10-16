@@ -1,0 +1,1223 @@
+{
+ "minecraft:iron_ingot": {
+  "model": "minecraft:item/iron_ingot",
+  "alt": [
+   "minecraft:block/iron_ingot"
+  ]
+ },
+ "minecraft:copper_ingot": {
+  "model": "minecraft:item/copper_ingot",
+  "alt": [
+   "minecraft:block/copper_ingot"
+  ]
+ },
+ "minecraft:gold_ingot": {
+  "model": "minecraft:item/gold_ingot",
+  "alt": [
+   "minecraft:block/gold_ingot"
+  ]
+ },
+ "create:zinc_ingot": {
+  "model": "create:item/zinc_ingot",
+  "alt": [
+   "create:block/zinc_ingot"
+  ]
+ },
+ "immersiveengineering:ingot_lead": {
+  "model": "immersiveengineering:item/ingot_lead",
+  "alt": [
+   "immersiveengineering:block/ingot_lead"
+  ]
+ },
+ "immersiveengineering:ingot_nickel": {
+  "model": "immersiveengineering:item/ingot_nickel",
+  "alt": [
+   "immersiveengineering:block/ingot_nickel"
+  ]
+ },
+ "immersiveengineering:ingot_aluminum": {
+  "model": "immersiveengineering:item/ingot_aluminum",
+  "alt": [
+   "immersiveengineering:block/ingot_aluminum"
+  ]
+ },
+ "immersiveengineering:ingot_silver": {
+  "model": "immersiveengineering:item/ingot_silver",
+  "alt": [
+   "immersiveengineering:block/ingot_silver"
+  ]
+ },
+ "immersiveengineering:ingot_uranium": {
+  "model": "immersiveengineering:item/ingot_uranium",
+  "alt": [
+   "immersiveengineering:block/ingot_uranium"
+  ]
+ },
+ "immersiveengineering:ingot_hop_graphite": {
+  "model": "immersiveengineering:item/ingot_hop_graphite",
+  "alt": [
+   "immersiveengineering:block/ingot_hop_graphite"
+  ]
+ },
+ "minecraft:andesite": {
+  "model": "minecraft:item/andesite",
+  "alt": [
+   "minecraft:block/andesite"
+  ]
+ },
+ "minecraft:cobblestone": {
+  "model": "minecraft:item/cobblestone",
+  "alt": [
+   "minecraft:block/cobblestone"
+  ]
+ },
+ "minecraft:stone": {
+  "model": "minecraft:item/stone",
+  "alt": [
+   "minecraft:block/stone"
+  ]
+ },
+ "minecraft:oak_planks": {
+  "model": "minecraft:item/oak_planks",
+  "alt": [
+   "minecraft:block/oak_planks"
+  ]
+ },
+ "minecraft:stripped_oak_log": {
+  "model": "minecraft:item/stripped_oak_log",
+  "alt": [
+   "minecraft:block/stripped_oak_log"
+  ]
+ },
+ "minecraft:oak_log": {
+  "model": "minecraft:item/oak_log",
+  "alt": [
+   "minecraft:block/oak_log"
+  ]
+ },
+ "minecraft:white_wool": {
+  "model": "minecraft:item/white_wool",
+  "alt": [
+   "minecraft:block/white_wool"
+  ]
+ },
+ "minecraft:slime_ball": {
+  "model": "minecraft:item/slime_ball",
+  "alt": [
+   "minecraft:block/slime_ball"
+  ]
+ },
+ "minecraft:paper": {
+  "model": "minecraft:item/paper",
+  "alt": [
+   "minecraft:block/paper"
+  ]
+ },
+ "minecraft:glass": {
+  "model": "minecraft:item/glass",
+  "alt": [
+   "minecraft:block/glass"
+  ]
+ },
+ "minecraft:redstone": {
+  "model": "minecraft:item/redstone",
+  "alt": [
+   "minecraft:block/redstone"
+  ]
+ },
+ "minecraft:quartz": {
+  "model": "minecraft:item/quartz",
+  "alt": [
+   "minecraft:block/quartz"
+  ]
+ },
+ "minecraft:coal": {
+  "model": "minecraft:item/coal",
+  "alt": [
+   "minecraft:block/coal"
+  ]
+ },
+ "minecraft:dried_kelp": {
+  "model": "minecraft:item/dried_kelp",
+  "alt": [
+   "minecraft:block/dried_kelp"
+  ]
+ },
+ "minecraft:gunpowder": {
+  "model": "minecraft:item/gunpowder",
+  "alt": [
+   "minecraft:block/gunpowder"
+  ]
+ },
+ "minecraft:netherrack": {
+  "model": "minecraft:item/netherrack",
+  "alt": [
+   "minecraft:block/netherrack"
+  ]
+ },
+ "minecraft:terracotta": {
+  "model": "minecraft:item/terracotta",
+  "alt": [
+   "minecraft:block/terracotta"
+  ]
+ },
+ "minecraft:tnt": {
+  "model": "minecraft:item/tnt",
+  "alt": [
+   "minecraft:block/tnt"
+  ]
+ },
+ "minecraft:netherite_scrap": {
+  "model": "minecraft:item/netherite_scrap",
+  "alt": [
+   "minecraft:block/netherite_scrap"
+  ]
+ },
+ "minecraft:blaze": {
+  "model": "minecraft:item/blaze_powder",
+  "alt": [
+   "minecraft:block/blaze_powder"
+  ]
+ },
+ "minecraft:sugar": {
+  "model": "minecraft:item/sugar",
+  "alt": [
+   "minecraft:block/sugar"
+  ]
+ },
+ "minecraft:egg": {
+  "model": "minecraft:item/egg",
+  "alt": [
+   "minecraft:block/egg"
+  ]
+ },
+ "immersiveengineering:coal_coke": {
+  "model": "immersiveengineering:item/coal_coke",
+  "alt": [
+   "immersiveengineering:block/coal_coke"
+  ]
+ },
+ "deceasedcraft:silica_dust": {
+  "model": "deceasedcraft:item/silica_dust",
+  "alt": [
+   "deceasedcraft:block/silica_dust"
+  ]
+ },
+ "refinedstorage:silicon": {
+  "model": "refinedstorage:item/silicon",
+  "alt": [
+   "refinedstorage:block/silicon"
+  ]
+ },
+ "immersiveengineering:plate_duroplast": {
+  "model": "immersiveengineering:item/plate_duroplast",
+  "alt": [
+   "immersiveengineering:block/plate_duroplast"
+  ]
+ },
+ "fluid:water": {
+  "model": "minecraft:item/water_bucket",
+  "alt": [
+   "minecraft:block/water_bucket"
+  ]
+ },
+ "fluid:lava": {
+  "model": "minecraft:item/lava_bucket",
+  "alt": [
+   "minecraft:block/lava_bucket"
+  ]
+ },
+ "fluid:creosote": {
+  "model": "immersiveengineering:item/creosote_bucket",
+  "alt": [
+   "immersiveengineering:block/creosote_bucket"
+  ]
+ },
+ "fluid:redstone_acid": {
+  "model": "immersiveengineering:item/redstone_acid_bucket",
+  "alt": [
+   "immersiveengineering:block/redstone_acid_bucket"
+  ]
+ },
+ "fluid:crude_oil": {
+  "model": "createdieselgenerators:item/crude_oil_bucket",
+  "alt": [
+   "createdieselgenerators:block/crude_oil_bucket"
+  ]
+ },
+ "fluid:diesel": {
+  "model": "createdieselgenerators:item/diesel_bucket",
+  "alt": [
+   "createdieselgenerators:block/diesel_bucket"
+  ]
+ },
+ "fluid:gasoline": {
+  "model": "createdieselgenerators:item/gasoline_bucket",
+  "alt": [
+   "createdieselgenerators:block/gasoline_bucket"
+  ]
+ },
+ "minecraft:iron_nugget": {
+  "model": "minecraft:item/iron_nugget",
+  "alt": [
+   "minecraft:block/iron_nugget"
+  ]
+ },
+ "minecraft:stick": {
+  "model": "minecraft:item/stick",
+  "alt": [
+   "minecraft:block/stick"
+  ]
+ },
+ "minecraft:oak_slab": {
+  "model": "minecraft:item/oak_slab",
+  "alt": [
+   "minecraft:block/oak_slab"
+  ]
+ },
+ "minecraft:chest": {
+  "chest": true
+ },
+ "minecraft:barrel": {
+  "model": "minecraft:item/barrel",
+  "alt": [
+   "minecraft:block/barrel"
+  ]
+ },
+ "minecraft:hopper": {
+  "model": "minecraft:item/hopper",
+  "alt": [
+   "minecraft:block/hopper"
+  ]
+ },
+ "minecraft:crafting_table": {
+  "model": "minecraft:item/crafting_table",
+  "alt": [
+   "minecraft:block/crafting_table"
+  ]
+ },
+ "minecraft:redstone_torch": {
+  "model": "minecraft:item/redstone_torch",
+  "alt": [
+   "minecraft:block/redstone_torch"
+  ]
+ },
+ "minecraft:clock": {
+  "model": "minecraft:item/clock",
+  "alt": [
+   "minecraft:block/clock"
+  ]
+ },
+ "minecraft:chain": {
+  "model": "minecraft:item/chain",
+  "alt": [
+   "minecraft:block/chain"
+  ]
+ },
+ "minecraft:piston": {
+  "model": "minecraft:item/piston",
+  "alt": [
+   "minecraft:block/piston"
+  ]
+ },
+ "minecraft:iron_block": {
+  "model": "minecraft:item/iron_block",
+  "alt": [
+   "minecraft:block/iron_block"
+  ]
+ },
+ "minecraft:copper_block": {
+  "model": "minecraft:item/copper_block",
+  "alt": [
+   "minecraft:block/copper_block"
+  ]
+ },
+ "minecraft:redstone_block": {
+  "model": "minecraft:item/redstone_block",
+  "alt": [
+   "minecraft:block/redstone_block"
+  ]
+ },
+ "create:andesite_alloy": {
+  "model": "create:item/andesite_alloy",
+  "alt": [
+   "create:block/andesite_alloy"
+  ]
+ },
+ "create:zinc_nugget": {
+  "model": "create:item/zinc_nugget",
+  "alt": [
+   "create:block/zinc_nugget"
+  ]
+ },
+ "create:brass_ingot": {
+  "model": "create:item/brass_ingot",
+  "alt": [
+   "create:block/brass_ingot"
+  ]
+ },
+ "create:iron_sheet": {
+  "model": "create:item/iron_sheet",
+  "alt": [
+   "create:block/iron_sheet"
+  ]
+ },
+ "create:copper_sheet": {
+  "model": "create:item/copper_sheet",
+  "alt": [
+   "create:block/copper_sheet"
+  ]
+ },
+ "create:golden_sheet": {
+  "model": "create:item/golden_sheet",
+  "alt": [
+   "create:block/golden_sheet"
+  ]
+ },
+ "create:brass_sheet": {
+  "model": "create:item/brass_sheet",
+  "alt": [
+   "create:block/brass_sheet"
+  ]
+ },
+ "create:shaft": {
+  "model": "create:item/shaft",
+  "alt": [
+   "create:block/shaft"
+  ]
+ },
+ "create:cogwheel": {
+  "model": "create:item/cogwheel",
+  "alt": [
+   "create:block/cogwheel"
+  ]
+ },
+ "create:large_cogwheel": {
+  "model": "create:item/large_cogwheel",
+  "alt": [
+   "create:block/large_cogwheel"
+  ]
+ },
+ "create:gearbox": {
+  "model": "create:item/gearbox",
+  "alt": [
+   "create:block/gearbox"
+  ]
+ },
+ "create:andesite_casing": {
+  "model": "create:item/andesite_casing",
+  "alt": [
+   "create:block/andesite_casing"
+  ]
+ },
+ "create:brass_casing": {
+  "model": "create:item/brass_casing",
+  "alt": [
+   "create:block/brass_casing"
+  ]
+ },
+ "create:copper_casing": {
+  "model": "create:item/copper_casing",
+  "alt": [
+   "create:block/copper_casing"
+  ]
+ },
+ "create:belt_connector": {
+  "model": "create:item/belt_connector"
+ },
+ "create:deployer": {
+  "model": "create:item/deployer",
+  "alt": [
+   "create:block/deployer"
+  ]
+ },
+ "create:brass_hand": {
+  "model": "create:item/brass_hand",
+  "alt": [
+   "create:block/brass_hand"
+  ]
+ },
+ "create:andesite_funnel": {
+  "model": "create:item/andesite_funnel",
+  "alt": [
+   "create:block/andesite_funnel"
+  ]
+ },
+ "create:brass_funnel": {
+  "model": "create:item/brass_funnel",
+  "alt": [
+   "create:block/brass_funnel"
+  ]
+ },
+ "create:filter": {
+  "model": "create:item/filter",
+  "alt": [
+   "create:block/filter"
+  ]
+ },
+ "create:mechanical_saw": {
+  "model": "create:item/mechanical_saw",
+  "alt": [
+   "create:block/mechanical_saw"
+  ]
+ },
+ "create:mechanical_press": {
+  "model": "create:item/mechanical_press",
+  "alt": [
+   "create:block/mechanical_press"
+  ]
+ },
+ "create:water_wheel": {
+  "model": "create:item/water_wheel",
+  "alt": [
+   "create:block/water_wheel"
+  ]
+ },
+ "create:large_water_wheel": {
+  "model": "create:item/large_water_wheel",
+  "alt": [
+   "create:block/large_water_wheel"
+  ]
+ },
+ "create:windmill_bearing": {
+  "model": "create:item/windmill_bearing",
+  "alt": [
+   "create:block/windmill_bearing"
+  ]
+ },
+ "create:mechanical_bearing": {
+  "model": "create:item/mechanical_bearing",
+  "alt": [
+   "create:block/mechanical_bearing"
+  ]
+ },
+ "create:white_sail": {
+  "model": "create:item/white_sail",
+  "alt": [
+   "create:block/white_sail"
+  ]
+ },
+ "create:super_glue": {
+  "model": "create:item/super_glue",
+  "alt": [
+   "create:block/super_glue"
+  ]
+ },
+ "create:fluid_tank": {
+  "model": "create:item/fluid_tank",
+  "alt": [
+   "create:block/fluid_tank"
+  ]
+ },
+ "create:fluid_pipe": {
+  "model": "create:item/fluid_pipe",
+  "alt": [
+   "create:block/fluid_pipe"
+  ]
+ },
+ "create:mechanical_pump": {
+  "model": "create:item/mechanical_pump",
+  "alt": [
+   "create:block/mechanical_pump"
+  ]
+ },
+ "create:steam_engine": {
+  "model": "create:item/steam_engine",
+  "alt": [
+   "create:block/steam_engine"
+  ]
+ },
+ "create:empty_blaze_burner": {
+  "model": "create:item/empty_blaze_burner",
+  "alt": [
+   "create:block/empty_blaze_burner"
+  ]
+ },
+ "create:blaze_burner": {
+  "model": "create:item/blaze_burner"
+ },
+ "create:precision_mechanism": {
+  "model": "create:item/precision_mechanism",
+  "alt": [
+   "create:block/precision_mechanism"
+  ]
+ },
+ "create:mechanical_arm": {
+  "model": "create:item/mechanical_arm",
+  "alt": [
+   "create:block/mechanical_arm"
+  ]
+ },
+ "create:mechanical_crafter": {
+  "model": "create:item/mechanical_crafter",
+  "alt": [
+   "create:block/mechanical_crafter"
+  ]
+ },
+ "create:hand_crank": {
+  "model": "create:item/hand_crank",
+  "alt": [
+   "create:block/hand_crank"
+  ]
+ },
+ "create:metal_girder": {
+  "model": "create:item/metal_girder",
+  "alt": [
+   "create:block/metal_girder"
+  ]
+ },
+ "create:industrial_iron_block": {
+  "model": "create:item/industrial_iron_block",
+  "alt": [
+   "create:block/industrial_iron_block"
+  ]
+ },
+ "create:andesite_scaffolding": {
+  "model": "create:item/andesite_scaffolding",
+  "alt": [
+   "create:block/andesite_scaffolding"
+  ]
+ },
+ "create:zinc_block": {
+  "model": "create:item/zinc_block",
+  "alt": [
+   "create:block/zinc_block"
+  ]
+ },
+ "create:mechanical_piston": {
+  "model": "create:item/mechanical_piston",
+  "alt": [
+   "create:block/mechanical_piston"
+  ]
+ },
+ "create:piston_extension_pole": {
+  "model": "create:item/piston_extension_pole",
+  "alt": [
+   "create:block/piston_extension_pole"
+  ]
+ },
+ "create:blaze_cake": {
+  "model": "create:item/blaze_cake",
+  "alt": [
+   "create:block/blaze_cake"
+  ]
+ },
+ "create:basin": {
+  "model": "create:item/basin",
+  "alt": [
+   "create:block/basin"
+  ]
+ },
+ "create:mechanical_mixer": {
+  "model": "create:item/mechanical_mixer",
+  "alt": [
+   "create:block/mechanical_mixer"
+  ]
+ },
+ "create:spout": {
+  "model": "create:item/spout",
+  "alt": [
+   "create:block/spout"
+  ]
+ },
+ "createaddition:alternator": {
+  "model": "createaddition:item/alternator",
+  "alt": [
+   "createaddition:block/alternator"
+  ]
+ },
+ "createaddition:electric_motor": {
+  "model": "createaddition:item/electric_motor",
+  "alt": [
+   "createaddition:block/electric_motor"
+  ]
+ },
+ "createaddition:capacitor": {
+  "model": "createaddition:item/capacitor",
+  "alt": [
+   "createaddition:block/capacitor"
+  ]
+ },
+ "createaddition:copper_spool": {
+  "model": "createaddition:item/copper_spool",
+  "alt": [
+   "createaddition:block/copper_spool"
+  ]
+ },
+ "createaddition:spool": {
+  "model": "createaddition:item/spool",
+  "alt": [
+   "createaddition:block/spool"
+  ]
+ },
+ "createaddition:iron_rod": {
+  "model": "createaddition:item/iron_rod",
+  "alt": [
+   "createaddition:block/iron_rod"
+  ]
+ },
+ "createaddition:copper_rod": {
+  "model": "createaddition:item/copper_rod",
+  "alt": [
+   "createaddition:block/copper_rod"
+  ]
+ },
+ "createaddition:zinc_sheet": {
+  "model": "createaddition:item/zinc_sheet",
+  "alt": [
+   "createaddition:block/zinc_sheet"
+  ]
+ },
+ "createaddition:gold_wire": {
+  "model": "createaddition:item/gold_wire",
+  "alt": [
+   "createaddition:block/gold_wire"
+  ]
+ },
+ "createaddition:connector": {
+  "model": "createaddition:item/connector",
+  "alt": [
+   "createaddition:block/connector"
+  ]
+ },
+ "createaddition:modular_accumulator": {
+  "model": "createaddition:item/modular_accumulator",
+  "alt": [
+   "createaddition:block/modular_accumulator"
+  ]
+ },
+ "createaddition:rolling_mill": {
+  "model": "createaddition:item/rolling_mill",
+  "alt": [
+   "createaddition:block/rolling_mill"
+  ]
+ },
+ "createdieselgenerators:huge_diesel_engine": {
+  "model": "createdieselgenerators:item/huge_diesel_engine",
+  "alt": [
+   "createdieselgenerators:block/huge_diesel_engine"
+  ]
+ },
+ "createdieselgenerators:large_diesel_engine": {
+  "model": "createdieselgenerators:item/large_diesel_engine",
+  "alt": [
+   "createdieselgenerators:block/large_diesel_engine"
+  ]
+ },
+ "createdieselgenerators:diesel_engine": {
+  "model": "createdieselgenerators:item/diesel_engine",
+  "alt": [
+   "createdieselgenerators:block/diesel_engine"
+  ]
+ },
+ "createdieselgenerators:engine_piston": {
+  "model": "createdieselgenerators:item/engine_piston",
+  "alt": [
+   "createdieselgenerators:block/engine_piston"
+  ]
+ },
+ "createdieselgenerators:pumpjack_bearing": {
+  "model": "createdieselgenerators:item/pumpjack_bearing",
+  "alt": [
+   "createdieselgenerators:block/pumpjack_bearing"
+  ]
+ },
+ "createdieselgenerators:pumpjack_head": {
+  "model": "createdieselgenerators:item/pumpjack_head",
+  "alt": [
+   "createdieselgenerators:block/pumpjack_head"
+  ]
+ },
+ "createdieselgenerators:pumpjack_hole": {
+  "model": "createdieselgenerators:item/pumpjack_hole",
+  "alt": [
+   "createdieselgenerators:block/pumpjack_hole"
+  ]
+ },
+ "createdieselgenerators:pumpjack_crank": {
+  "model": "createdieselgenerators:item/pumpjack_crank",
+  "alt": [
+   "createdieselgenerators:block/pumpjack_crank"
+  ]
+ },
+ "createdieselgenerators:distillation_controller": {
+  "model": "createdieselgenerators:item/distillation_controller",
+  "alt": [
+   "createdieselgenerators:block/distillation_controller"
+  ]
+ },
+ "createdieselgenerators:oil_scanner": {
+  "model": "createdieselgenerators:item/oil_scanner",
+  "alt": [
+   "createdieselgenerators:block/oil_scanner"
+  ]
+ },
+ "immersiveengineering:ingot_steel": {
+  "model": "immersiveengineering:item/ingot_steel",
+  "alt": [
+   "immersiveengineering:block/ingot_steel"
+  ]
+ },
+ "immersiveengineering:ingot_constantan": {
+  "model": "immersiveengineering:item/ingot_constantan",
+  "alt": [
+   "immersiveengineering:block/ingot_constantan"
+  ]
+ },
+ "immersiveengineering:ingot_electrum": {
+  "model": "immersiveengineering:item/ingot_electrum",
+  "alt": [
+   "immersiveengineering:block/ingot_electrum"
+  ]
+ },
+ "immersiveengineering:nugget_lead": {
+  "model": "immersiveengineering:item/nugget_lead",
+  "alt": [
+   "immersiveengineering:block/nugget_lead"
+  ]
+ },
+ "immersiveengineering:plate_steel": {
+  "model": "immersiveengineering:item/plate_steel",
+  "alt": [
+   "immersiveengineering:block/plate_steel"
+  ]
+ },
+ "immersiveengineering:plate_constantan": {
+  "model": "immersiveengineering:item/plate_constantan",
+  "alt": [
+   "immersiveengineering:block/plate_constantan"
+  ]
+ },
+ "immersiveengineering:plate_lead": {
+  "model": "immersiveengineering:item/plate_lead",
+  "alt": [
+   "immersiveengineering:block/plate_lead"
+  ]
+ },
+ "immersiveengineering:plate_aluminum": {
+  "model": "immersiveengineering:item/plate_aluminum",
+  "alt": [
+   "immersiveengineering:block/plate_aluminum"
+  ]
+ },
+ "immersiveengineering:plate_electrum": {
+  "model": "immersiveengineering:item/plate_electrum",
+  "alt": [
+   "immersiveengineering:block/plate_electrum"
+  ]
+ },
+ "immersiveengineering:plate_nickel": {
+  "model": "immersiveengineering:item/plate_nickel",
+  "alt": [
+   "immersiveengineering:block/plate_nickel"
+  ]
+ },
+ "immersiveengineering:stick_steel": {
+  "model": "immersiveengineering:item/stick_steel",
+  "alt": [
+   "immersiveengineering:block/stick_steel"
+  ]
+ },
+ "immersiveengineering:wire_copper": {
+  "model": "immersiveengineering:item/wire_copper",
+  "alt": [
+   "immersiveengineering:block/wire_copper"
+  ]
+ },
+ "immersiveengineering:wire_electrum": {
+  "model": "immersiveengineering:item/wire_electrum",
+  "alt": [
+   "immersiveengineering:block/wire_electrum"
+  ]
+ },
+ "immersiveengineering:wire_aluminum": {
+  "model": "immersiveengineering:item/wire_aluminum",
+  "alt": [
+   "immersiveengineering:block/wire_aluminum"
+  ]
+ },
+ "immersiveengineering:wirecoil_copper": {
+  "model": "immersiveengineering:item/wirecoil_copper",
+  "alt": [
+   "immersiveengineering:block/wirecoil_copper"
+  ]
+ },
+ "immersiveengineering:coil_lv": {
+  "model": "immersiveengineering:item/coil_lv",
+  "alt": [
+   "immersiveengineering:block/coil_lv"
+  ]
+ },
+ "immersiveengineering:thermoelectric_generator": {
+  "model": "immersiveengineering:item/thermoelectric_generator",
+  "alt": [
+   "immersiveengineering:block/thermoelectric_generator"
+  ]
+ },
+ "immersiveengineering:connector_lv": {
+  "model": "immersiveengineering:item/connector_lv",
+  "alt": [
+   "immersiveengineering:block/connector_lv"
+  ]
+ },
+ "immersiveengineering:component_steel": {
+  "model": "immersiveengineering:item/component_steel",
+  "alt": [
+   "immersiveengineering:block/component_steel"
+  ]
+ },
+ "immersiveengineering:component_electronic": {
+  "model": "immersiveengineering:item/component_electronic",
+  "alt": [
+   "immersiveengineering:block/component_electronic"
+  ]
+ },
+ "immersiveengineering:electron_tube": {
+  "model": "immersiveengineering:item/electron_tube",
+  "alt": [
+   "immersiveengineering:block/electron_tube"
+  ]
+ },
+ "immersiveengineering:treated_wood_horizontal": {
+  "model": "immersiveengineering:item/treated_wood_horizontal",
+  "alt": [
+   "immersiveengineering:block/treated_wood_horizontal"
+  ]
+ },
+ "immersiveengineering:slab_treated_wood_horizontal": {
+  "model": "immersiveengineering:item/slab_treated_wood_horizontal",
+  "alt": [
+   "immersiveengineering:block/slab_treated_wood_horizontal"
+  ]
+ },
+ "immersiveengineering:storage_aluminum": {
+  "model": "immersiveengineering:item/storage_aluminum",
+  "alt": [
+   "immersiveengineering:block/storage_aluminum"
+  ]
+ },
+ "immersiveengineering:storage_lead": {
+  "model": "immersiveengineering:item/storage_lead",
+  "alt": [
+   "immersiveengineering:block/storage_lead"
+  ]
+ },
+ "immersiveengineering:graphite_electrode": {
+  "model": "immersiveengineering:item/graphite_electrode",
+  "alt": [
+   "immersiveengineering:block/graphite_electrode"
+  ]
+ },
+ "immersiveengineering:steel_scaffolding_standard": {
+  "model": "immersiveengineering:item/steel_scaffolding_standard",
+  "alt": [
+   "immersiveengineering:block/steel_scaffolding_standard"
+  ]
+ },
+ "immersiveengineering:circuit_board": {
+  "model": "immersiveengineering:item/circuit_board",
+  "alt": [
+   "immersiveengineering:block/circuit_board"
+  ]
+ },
+ "refinedstorage:machine_casing": {
+  "model": "refinedstorage:item/machine_casing",
+  "alt": [
+   "refinedstorage:block/machine_casing"
+  ]
+ },
+ "refinedstorage:controller": {
+  "model": "refinedstorage:block/controller/light_blue"
+ },
+ "refinedstorage:advanced_processor": {
+  "model": "refinedstorage:item/advanced_processor",
+  "alt": [
+   "refinedstorage:block/advanced_processor"
+  ]
+ },
+ "refinedstorage:raw_advanced_processor": {
+  "model": "refinedstorage:item/raw_advanced_processor",
+  "alt": [
+   "refinedstorage:block/raw_advanced_processor"
+  ]
+ },
+ "refinedstorage:cable": {
+  "model": "refinedstorage:item/cable",
+  "alt": [
+   "refinedstorage:block/cable"
+  ]
+ },
+ "bigreactors:reinforced_reactorcasing": {
+  "model": "bigreactors:item/reinforced_reactorcasing",
+  "alt": [
+   "bigreactors:block/reinforced_reactorcasing"
+  ]
+ },
+ "bigreactors:reinforced_reactorcontroller": {
+  "model": "bigreactors:item/reinforced_reactorcontroller",
+  "alt": [
+   "bigreactors:block/reinforced_reactorcontroller"
+  ]
+ },
+ "bigreactors:reinforced_reactorfuelrod": {
+  "model": "bigreactors:item/reinforced_reactorfuelrod",
+  "alt": [
+   "bigreactors:block/reinforced_reactorfuelrod"
+  ]
+ },
+ "bigreactors:reinforced_reactorcontrolrod": {
+  "model": "bigreactors:item/reinforced_reactorcontrolrod",
+  "alt": [
+   "bigreactors:block/reinforced_reactorcontrolrod"
+  ]
+ },
+ "bigreactors:reinforced_reactorpowertapfe_passive": {
+  "model": "bigreactors:item/reinforced_reactorpowertapfe_passive",
+  "alt": [
+   "bigreactors:block/reinforced_reactorpowertapfe_passive"
+  ]
+ },
+ "bigreactors:reinforced_reactorsolidaccessport": {
+  "model": "bigreactors:item/reinforced_reactorsolidaccessport",
+  "alt": [
+   "bigreactors:block/reinforced_reactorsolidaccessport"
+  ]
+ },
+ "createbigcannons:gunpowder_pinch": {
+  "model": "createbigcannons:item/gunpowder_pinch",
+  "alt": [
+   "createbigcannons:block/gunpowder_pinch"
+  ]
+ },
+ "createbigcannons:spring_wire": {
+  "model": "createbigcannons:item/spring_wire",
+  "alt": [
+   "createbigcannons:block/spring_wire"
+  ]
+ },
+ "createbigcannons:recoil_spring": {
+  "model": "createbigcannons:item/recoil_spring",
+  "alt": [
+   "createbigcannons:block/recoil_spring"
+  ]
+ },
+ "apocalypsenow:cardboard_box": {
+  "model": "apocalypsenow:item/cardboard_box",
+  "alt": [
+   "apocalypsenow:block/cardboard_box"
+  ]
+ },
+ "deceasedcraft:rubber": {
+  "model": "deceasedcraft:item/rubber",
+  "alt": [
+   "deceasedcraft:block/rubber"
+  ]
+ },
+ "deceasedcraft:bullet_casing_9mm_round": {
+  "model": "deceasedcraft:item/bullet_casing_9mm_round",
+  "alt": [
+   "deceasedcraft:block/bullet_casing_9mm_round"
+  ]
+ },
+ "deceasedcraft:bullet_casing_50bmg": {
+  "model": "deceasedcraft:item/bullet_casing_50bmg",
+  "alt": [
+   "deceasedcraft:block/bullet_casing_50bmg"
+  ]
+ },
+ "deceasedcraft:mold_bullet_casing_9mm": {
+  "model": "deceasedcraft:item/mold_bullet_casing_9mm",
+  "alt": [
+   "deceasedcraft:block/mold_bullet_casing_9mm"
+  ]
+ },
+ "deceasedcraft:blueprint": {
+  "model": "deceasedcraft:item/pistol_assembly_parts_blueprint",
+  "alt": [
+   "deceasedcraft:block/pistol_assembly_parts_blueprint"
+  ]
+ },
+ "tacz:ammo": {
+  "tex": "tacz:ammo/slot/9mm"
+ },
+ "deceasedcraft:pistol_assembly_parts": {
+  "model": "deceasedcraft:item/pistol_assembly_parts",
+  "alt": [
+   "deceasedcraft:block/pistol_assembly_parts"
+  ]
+ },
+ "deceasedcraft:rifle_assembly_parts": {
+  "model": "deceasedcraft:item/rifle_assembly_parts",
+  "alt": [
+   "deceasedcraft:block/rifle_assembly_parts"
+  ]
+ },
+ "deceasedcraft:sniper_assembly_parts": {
+  "model": "deceasedcraft:item/sniper_assembly_parts",
+  "alt": [
+   "deceasedcraft:block/sniper_assembly_parts"
+  ]
+ },
+ "deceasedcraft:attachment_assembly_parts": {
+  "model": "deceasedcraft:item/attachment_assembly_parts",
+  "alt": [
+   "deceasedcraft:block/attachment_assembly_parts"
+  ]
+ },
+ "b:shaft": {
+  "model": "create:block/shaft"
+ },
+ "b:cogwheel": {
+  "model": "create:block/cogwheel"
+ },
+ "b:large_cogwheel": {
+  "model": "create:block/large_cogwheel"
+ },
+ "b:gearbox": {
+  "model": "create:item/gearbox"
+ },
+ "b:andesite_casing": {
+  "model": "create:block/andesite_casing"
+ },
+ "b:copper_casing": {
+  "model": "create:block/copper_casing"
+ },
+ "b:deployer": {
+  "model": "create:item/deployer"
+ },
+ "b:press": {
+  "model": "create:item/mechanical_press"
+ },
+ "b:saw": {
+  "model": "create:item/mechanical_saw"
+ },
+ "b:hopper": {
+  "model": "minecraft:block/hopper"
+ },
+ "b:stone": {
+  "model": "minecraft:block/stone"
+ },
+ "b:glass": {
+  "model": "minecraft:block/glass"
+ },
+ "b:oak_log": {
+  "model": "minecraft:block/oak_log"
+ },
+ "b:white_wool": {
+  "model": "minecraft:block/white_wool"
+ },
+ "b:copper_block": {
+  "model": "minecraft:block/copper_block"
+ },
+ "b:fluid_tank": {
+  "model": "create:block/fluid_tank/block_single_window"
+ },
+ "b:steam_engine": {
+  "model": "create:item/steam_engine"
+ },
+ "b:burner_lit": {
+  "model": "create:item/blaze_burner"
+ },
+ "b:burner_empty": {
+  "model": "create:item/empty_blaze_burner"
+ },
+ "b:pump": {
+  "model": "create:item/mechanical_pump"
+ },
+ "b:pipe": {
+  "model": "create:item/fluid_pipe"
+ },
+ "b:arm": {
+  "model": "create:item/mechanical_arm"
+ },
+ "b:water_wheel": {
+  "model": "create:item/water_wheel"
+ },
+ "b:large_water_wheel": {
+  "model": "create:item/large_water_wheel"
+ },
+ "b:windmill_bearing": {
+  "model": "create:item/windmill_bearing"
+ },
+ "b:alternator": {
+  "model": "createaddition:item/alternator"
+ },
+ "b:thermo": {
+  "model": "immersiveengineering:item/thermoelectric_generator"
+ },
+ "b:huge_engine": {
+  "model": "createdieselgenerators:item/huge_diesel_engine"
+ },
+ "b:girder": {
+  "model": "create:item/metal_girder"
+ },
+ "b:industrial_iron": {
+  "model": "create:block/industrial_iron_block"
+ },
+ "b:zinc_block": {
+  "model": "create:block/zinc_block"
+ },
+ "b:scaffold": {
+  "model": "create:item/andesite_scaffolding"
+ },
+ "b:pumpjack_bearing": {
+  "model": "createdieselgenerators:item/pumpjack_bearing"
+ },
+ "b:pumpjack_head": {
+  "model": "createdieselgenerators:item/pumpjack_head"
+ },
+ "b:pumpjack_hole": {
+  "model": "createdieselgenerators:item/pumpjack_hole"
+ },
+ "b:pumpjack_crank": {
+  "model": "createdieselgenerators:item/pumpjack_crank"
+ },
+ "b:distill": {
+  "model": "createdieselgenerators:block/distillation_tank/block"
+ },
+ "b:reactor_casing": {
+  "model": "bigreactors:block/reactor/reinforced/casing_01_face"
+ },
+ "b:reactor_controller": {
+  "model": "bigreactors:item/reinforced_reactorcontroller"
+ },
+ "b:reactor_port": {
+  "model": "bigreactors:item/reinforced_reactorpowertapfe_passive"
+ },
+ "b:reactor_access": {
+  "model": "bigreactors:item/reinforced_reactorsolidaccessport"
+ },
+ "b:reactor_fuelrod": {
+  "model": "bigreactors:item/reinforced_reactorfuelrod"
+ },
+ "b:reactor_controlrod": {
+  "model": "bigreactors:item/reinforced_reactorcontrolrod"
+ },
+ "b:lv_connector": {
+  "model": "immersiveengineering:item/connector_lv"
+ },
+ "b:rolling_mill": {
+  "model": "createaddition:item/rolling_mill"
+ },
+ "b:magma": {
+  "model": "minecraft:block/magma_block"
+ },
+ "b:terracotta": {
+  "model": "minecraft:block/terracotta"
+ },
+ "b:belt_tex": {
+  "tex": "create:block/belt"
+ },
+ "b:belt_scroll": {
+  "tex": "create:block/belt_scroll"
+ },
+ "b:water_still": {
+  "tex": "minecraft:block/water_still"
+ },
+ "b:lava_still": {
+  "tex": "minecraft:block/lava_still"
+ },
+ "b:chest": {
+  "chest": true
+ }
+}

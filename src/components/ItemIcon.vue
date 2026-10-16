@@ -8,7 +8,7 @@ const props = withDefaults(defineProps<{ id: string; size?: number }>(), { size:
 const it = computed(() => item(props.id))
 const src = computed(() => {
   const p = texPath(it.value)
-  if (p && store.icons.has(p.slice(6, -4))) return p
+  if (store.icons.has(p.slice(6, -4))) return p
   return iconUrl(it.value.icon)
 })
 </script>

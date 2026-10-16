@@ -29,7 +29,25 @@ const sectionLink = computed(() => ({ production: '/production', kinetic: '/powe
       </div>
     </div>
 
-    <StatTiles :stats="b.stats" />
+    <section class="io card">
+      <div class="io-side">
+        <span class="eyebrow">Put in</span>
+        <div class="row wrap" style="gap: 6px">
+          <ItemSlot v-for="id in b.io.in" :key="id" :id="id" :size="28" />
+          <span v-if="b.io.inText" class="io-t">{{ b.io.inText }}</span>
+        </div>
+      </div>
+      <span class="io-arrow" aria-hidden="true">→</span>
+      <div class="io-side">
+        <span class="eyebrow">Get out</span>
+        <div class="row wrap" style="gap: 6px">
+          <ItemSlot v-for="id in b.io.out" :key="id" :id="id" :size="28" />
+          <span v-if="b.io.outText" class="io-t" :class="{ big: !b.io.out.length }">{{ b.io.outText }}</span>
+        </div>
+      </div>
+    </section>
+
+    <StatTiles :stats="b.stats" style="margin-top: 12px" />
 
     <div style="margin-top: 20px"><BuildViewer :build="b" /></div>
 
@@ -61,3 +79,11 @@ const sectionLink = computed(() => ({ production: '/production', kinetic: '/powe
     </div>
   </div>
 </template>
+
+<style scoped>
+.io { display: flex; align-items: center; gap: 18px; padding: 14px 18px; flex-wrap: wrap; }
+.io-side { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.io-arrow { font-size: 26px; color: var(--accent); }
+.io-t { font-size: 13px; color: var(--text-2); }
+.io-t.big { font: 700 20px var(--font); color: var(--green); }
+</style>

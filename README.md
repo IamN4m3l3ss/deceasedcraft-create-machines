@@ -23,7 +23,8 @@ Vue 3 + Vite + TypeScript, with three.js for the 3D views. The built site is in 
 | `src/data/sections.ts` | The overview pages and comparison tables |
 | `src/lib/bom.ts` | Turns a parts list into raw materials and a crafting plan |
 | `src/three/viewer.js` | The 3D models |
-| `tools/extract_icons.py` | Optional: copies real item textures from your own jars for local use |
+| `tools/assets/` | Scripts that turn the game's models and textures into the icons and 3D blocks |
+| `public/icons`, `public/mc` | The rendered icons and the block models and textures for the 3D views |
 | `docs/` | The built site (don't edit by hand) |
 
 ## Working on it
@@ -44,4 +45,4 @@ Settings → Pages → Build and deployment → Source: **Deploy from a branch**
 
 ## Textures
 
-The icons and 3D blocks are hand-drawn stand-ins. To see the real textures locally, see `public/icons/README.md`. Those files are ignored by git, so no Mojang or mod textures are published from this repo.
+Item icons and 3D blocks are rendered from the real Minecraft and mod textures and models (credits on the site's Credits page). How to rebuild them is in `tools/assets/README.md`.

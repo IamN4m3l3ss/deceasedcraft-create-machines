@@ -4,6 +4,7 @@ import { store, closeItem } from '../lib/store'
 import { item } from '../data/items'
 import { BY_OUT, USED_IN } from '../data/recipes'
 import { BUILDS } from '../data/builds'
+import { DESC } from '../data/descs'
 import ItemIcon from './ItemIcon.vue'
 import ItemSlot from './ItemSlot.vue'
 import RecipeCard from './RecipeCard.vue'
@@ -33,7 +34,8 @@ watch(() => store.drawer, async (v) => { if (v) { await nextTick(); panel.value?
         <div class="grow">
           <div class="eyebrow">{{ it.mod }}</div>
           <h2>{{ it.name }}</h2>
-          <code class="muted small">{{ it.id.startsWith('fluid:') ? 'fluid · counted in mB' : it.id }}</code>
+          <code class="muted small">{{ it.id.startsWith('fluid:') ? 'fluid · counted in mB (1,000 mB = 1 bucket)' : it.id }}</code>
+          <p v-if="DESC[it.id]" class="desc">{{ DESC[it.id] }}</p>
         </div>
         <button class="btn ghost sm" type="button" aria-label="Close" @click="closeItem()">✕</button>
       </header>
@@ -75,6 +77,7 @@ watch(() => store.drawer, async (v) => { if (v) { await nextTick(); panel.value?
 }
 .dh { display: flex; gap: 14px; align-items: flex-start; padding: 20px 20px 16px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--surface); z-index: 1; }
 .dh h2 { margin: 2px 0 2px; font-size: 20px; }
+.desc { margin: 8px 0 0; font-size: 14px; color: var(--text-2); }
 .big { width: 56px; height: 56px; border-radius: 12px; background: var(--slot); display: grid; place-items: center; flex: none; box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.45); }
 .db { padding: 18px 20px 40px; display: flex; flex-direction: column; gap: 22px; }
 .sec { font-size: 13px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 10px; }

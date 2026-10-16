@@ -126,6 +126,14 @@ def copy_texture(ref, used):
     shutil.copyfile(src, dst)
     w, h = png_size(open(src, 'rb').read(32))
     used[ref] = {'p': dst_rel, 'w': w, 'h': h}
+    if h > w and os.path.isfile(src + '.mcmeta'):
+        try:
+            meta = json.load(open(src + '.mcmeta')).get('animation', {})
+            used[ref]['ft'] = meta.get('frametime', 1)
+            if 'frames' in meta:
+                used[ref]['frames'] = [f if isinstance(f, int) else f.get('index', 0) for f in meta['frames']]
+        except Exception:
+            pass
     return used[ref]
 
 
@@ -215,14 +223,56 @@ def chest_model():
     return {'el': [box([1, 0, 1], [15, 10, 15], 0, 19, 14, 10, 14), box([1, 10, 1], [15, 14, 15], 0, 0, 14, 4, 14), box([7, 7, 15], [9, 11, 16], 0, 0, 2, 4, 1)], 'gui': GUI_DEFAULT}
 
 
+def blockstate_parts(block, props):
+    ns, name = split(block)
+    p = find(ns, f'blockstates/{name}.json')
+    if not p:
+        return None
+    d = json.load(open(p, encoding='utf-8'))
+    def ok(cond):
+        for k, v in cond.items():
+            if k in ('OR', 'AND'):
+                continue
+            if str(props.get(k, '')) not in str(v).split('|'):
+                return False
+        return True
+    out = []
+    if 'variants' in d:
+        for key, v in d['variants'].items():
+            cond = dict(kv.split('=') for kv in key.split(',') if '=' in kv)
+            if all(str(props.get(k)) == val for k, val in cond.items() if k in props) and all(k in props for k in cond):
+                v = v[0] if isinstance(v, list) else v
+                out.append(v); break
+        if not out and '' in d['variants']:
+            v = d['variants']['']; out.append(v[0] if isinstance(v, list) else v)
+    else:
+        for part in d['multipart']:
+            w = part.get('when')
+            if w is None or ('OR' in w and any(ok(c) for c in w['OR'])) or ('OR' not in w and ok(w)):
+                a = part['apply']; out.append(a[0] if isinstance(a, list) else a)
+    return [{'m': 'm:' + v['model'], 'x': v.get('x', 0), 'y': v.get('y', 0)} for v in out]
+
+
 def main():
     want = json.load(open(os.path.join(os.path.dirname(__file__), 'wanted.json')))
-    used, models, report = {}, {}, []
+    used, models, report, states = {}, {}, [], {}
     if os.path.isdir(OUT):
         shutil.rmtree(OUT)
     os.makedirs(OUT)
     for key, spec in want.items():
         # spec: {"model": "ns:item/x"} or {"model": ...,"alt": [...]} or {"tex": "ns:path"} (flat texture) or {"chest": true}
+        if 'state' in spec:
+            parts = blockstate_parts(spec['state'], spec.get('props', {}))
+            if not parts:
+                report.append((key, 'MISSING state ' + spec['state'])); continue
+            for prt in parts:
+                mk = prt['m']
+                if mk not in models:
+                    m, chain = resolve(mk[2:])
+                    got = pack(m, used) if m and m['kind'] != 'entity' else None
+                    if got: models[mk] = got
+                    else: report.append((mk, 'MISSING model'))
+            states[key] = parts; report.append((key, f'state {len(parts)}')); continue
         if spec.get('chest'):
             copy_texture('minecraft:entity/chest/normal', used)
             models[key] = chest_model(); report.append((key, 'chest')); continue
@@ -244,6 +294,8 @@ def main():
             models[key] = got; report.append((key, 'flat' if 'flat' in got else ('obj' if 'obj' in got else f"{len(got['el'])} el")))
         else:
             report.append((key, 'MISSING ' + spec['model']))
+    models['__states'] = states
+    models['__anim'] = {v['p']: {'n': v['h'] // v['w'], 'ft': v.get('ft', 1), **({'frames': v['frames']} if 'frames' in v else {})} for v in used.values() if v and v['h'] > v['w']}
     json.dump(models, open(os.path.join(OUT, 'models.json'), 'w'), separators=(',', ':'))
     miss = [r for r in report if r[1].startswith('MISSING')]
     for k, v in report:

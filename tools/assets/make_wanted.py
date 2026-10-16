@@ -56,5 +56,47 @@ want['b:belt_scroll'] = {'tex': 'create:block/belt_scroll'}
 want['b:water_still'] = {'tex': 'minecraft:block/water_still'}
 want['b:lava_still'] = {'tex': 'minecraft:block/lava_still'}
 want['b:chest'] = {'chest': True}
+# blockstates for the 3D views: key "s:<block>[props]"
+STATES = [
+    ('create:shaft', {'axis': a}) for a in 'xyz'] + [('create:cogwheel', {'axis': a}) for a in 'xyz'] + [('create:large_cogwheel', {'axis': a}) for a in 'xyz'] + [
+    ('create:gearbox', {'axis': 'y'}),
+    ('create:deployer', {'facing': 'down', 'axis_along_first': 'true'}),
+    ('create:mechanical_press', {'facing': 'east'}),
+    ('create:mechanical_saw', {'facing': 'up', 'axis_along_first': 'false', 'flipped': 'false'}),
+    ('create:mechanical_pump', {'facing': 'east'}), ('create:mechanical_pump', {'facing': 'west'}),
+    ('create:steam_engine', {'face': 'wall', 'facing': 'south', 'waterlogged': 'false'}), ('create:steam_engine', {'face': 'wall', 'facing': 'north', 'waterlogged': 'false'}),
+    ('create:mechanical_arm', {'ceiling': 'false'}),
+    ('create:windmill_bearing', {'facing': 'north'}),
+    ('create:large_water_wheel', {'axis': 'x', 'extension': 'false'}),
+    ('minecraft:hopper', {'facing': 'down', 'enabled': 'true'}),
+    ('create:andesite_belt_funnel', {'facing': 'east', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
+    ('create:andesite_belt_funnel', {'facing': 'west', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
+    ('create:andesite_belt_funnel', {'facing': 'south', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
+    ('create:brass_belt_funnel', {'facing': 'north', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
+    ('create:glass_fluid_pipe', {'axis': 'x', 'alt': 'false'}), ('create:glass_fluid_pipe', {'axis': 'y', 'alt': 'false'}), ('create:glass_fluid_pipe', {'axis': 'z', 'alt': 'false'}),
+    ('create:fluid_tank', {'bottom': 'true', 'top': 'false', 'shape': 'window'}), ('create:fluid_tank', {'bottom': 'false', 'top': 'false', 'shape': 'window'}),
+    ('create:fluid_tank', {'bottom': 'false', 'top': 'true', 'shape': 'window'}), ('create:fluid_tank', {'bottom': 'true', 'top': 'true', 'shape': 'window'}),
+    ('createaddition:alternator', {'facing': 'south'}), ('createaddition:alternator', {'facing': 'north'}),
+    ('createdieselgenerators:huge_diesel_engine', {'facing': 'south', 'powered': 'true'}), ('createdieselgenerators:huge_diesel_engine', {'facing': 'north', 'powered': 'true'}),
+    ('createdieselgenerators:pumpjack_crank', {'facing': 'east'}),
+    ('createdieselgenerators:pumpjack_bearing', {'facing': 'north'}), ('createdieselgenerators:pumpjack_bearing', {'facing': 'south'}),
+    ('createdieselgenerators:pumpjack_head', {'facing': 'east', 'waterlogged': 'false'}),
+    ('immersiveengineering:connector_lv', {'facing': 'north'}), ('immersiveengineering:connector_lv', {'facing': 'south'}),
+    ('create:andesite_belt_funnel', {'facing': 'north', 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}),
+]
+def skey(b, p): return 's:' + b + '[' + ','.join(f'{k}={v}' for k, v in sorted(p.items())) + ']'
+for b, p in STATES:
+    want[skey(b, p)] = {'state': b, 'props': p}
+# animated parts (block-space partial models)
+for ref in ['create:block/shaft_half', 'create:block/deployer/pole', 'create:block/deployer/hand_holding', 'create:block/mechanical_press/head',
+            'create:block/mechanical_saw/blade_vertical_active', 'create:block/mechanical_pump/cog', 'create:block/steam_engine/piston',
+            'create:block/steam_engine/linkage', 'create:block/steam_engine/shaft_connector', 'create:block/mechanical_arm/base',
+            'create:block/mechanical_arm/lower_body', 'create:block/mechanical_arm/upper_body', 'create:block/mechanical_arm/claw_base',
+            'create:block/mechanical_arm/upper_claw_grip', 'create:block/mechanical_arm/lower_claw_grip', 'create:block/mechanical_arm/cog',
+            'create:block/bearing/top_wooden', 'create:block/belt_pulley', 'create:block/blaze_burner/blaze/active',
+            'createdieselgenerators:block/huge_diesel_engine/piston', 'createdieselgenerators:block/huge_diesel_engine/linkage',
+            'createdieselgenerators:block/huge_diesel_engine/shaft_connector', 'createdieselgenerators:block/pumpjack_crank/small_counterweight',
+            'createdieselgenerators:block/pumpjack_crank/small_rod', 'createdieselgenerators:block/powered_engine_shaft']:
+    want['m:' + ref] = {'model': ref}
 json.dump(want, open(os.path.join(HERE, 'wanted.json'), 'w'), indent=1)
 print(len(want), 'entries')

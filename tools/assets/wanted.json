@@ -228,16 +228,10 @@
   ]
  },
  "fluid:creosote": {
-  "model": "immersiveengineering:item/creosote_bucket",
-  "alt": [
-   "immersiveengineering:block/creosote_bucket"
-  ]
+  "tex": "immersiveengineering:item/fluid_containers_bucket_creosote"
  },
  "fluid:redstone_acid": {
-  "model": "immersiveengineering:item/redstone_acid_bucket",
-  "alt": [
-   "immersiveengineering:block/redstone_acid_bucket"
-  ]
+  "tex": "immersiveengineering:block/fluid/redstone_acid_still"
  },
  "fluid:crude_oil": {
   "model": "createdieselgenerators:item/crude_oil_bucket",
@@ -1219,5 +1213,376 @@
  },
  "b:chest": {
   "chest": true
+ },
+ "s:create:shaft[axis=x]": {
+  "state": "create:shaft",
+  "props": {
+   "axis": "x"
+  }
+ },
+ "s:create:shaft[axis=y]": {
+  "state": "create:shaft",
+  "props": {
+   "axis": "y"
+  }
+ },
+ "s:create:shaft[axis=z]": {
+  "state": "create:shaft",
+  "props": {
+   "axis": "z"
+  }
+ },
+ "s:create:cogwheel[axis=x]": {
+  "state": "create:cogwheel",
+  "props": {
+   "axis": "x"
+  }
+ },
+ "s:create:cogwheel[axis=y]": {
+  "state": "create:cogwheel",
+  "props": {
+   "axis": "y"
+  }
+ },
+ "s:create:cogwheel[axis=z]": {
+  "state": "create:cogwheel",
+  "props": {
+   "axis": "z"
+  }
+ },
+ "s:create:large_cogwheel[axis=x]": {
+  "state": "create:large_cogwheel",
+  "props": {
+   "axis": "x"
+  }
+ },
+ "s:create:large_cogwheel[axis=y]": {
+  "state": "create:large_cogwheel",
+  "props": {
+   "axis": "y"
+  }
+ },
+ "s:create:large_cogwheel[axis=z]": {
+  "state": "create:large_cogwheel",
+  "props": {
+   "axis": "z"
+  }
+ },
+ "s:create:gearbox[axis=y]": {
+  "state": "create:gearbox",
+  "props": {
+   "axis": "y"
+  }
+ },
+ "s:create:deployer[axis_along_first=true,facing=down]": {
+  "state": "create:deployer",
+  "props": {
+   "facing": "down",
+   "axis_along_first": "true"
+  }
+ },
+ "s:create:mechanical_press[facing=east]": {
+  "state": "create:mechanical_press",
+  "props": {
+   "facing": "east"
+  }
+ },
+ "s:create:mechanical_saw[axis_along_first=false,facing=up,flipped=false]": {
+  "state": "create:mechanical_saw",
+  "props": {
+   "facing": "up",
+   "axis_along_first": "false",
+   "flipped": "false"
+  }
+ },
+ "s:create:mechanical_pump[facing=east]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "east"
+  }
+ },
+ "s:create:mechanical_pump[facing=west]": {
+  "state": "create:mechanical_pump",
+  "props": {
+   "facing": "west"
+  }
+ },
+ "s:create:steam_engine[face=wall,facing=south,waterlogged=false]": {
+  "state": "create:steam_engine",
+  "props": {
+   "face": "wall",
+   "facing": "south",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:steam_engine[face=wall,facing=north,waterlogged=false]": {
+  "state": "create:steam_engine",
+  "props": {
+   "face": "wall",
+   "facing": "north",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:mechanical_arm[ceiling=false]": {
+  "state": "create:mechanical_arm",
+  "props": {
+   "ceiling": "false"
+  }
+ },
+ "s:create:windmill_bearing[facing=north]": {
+  "state": "create:windmill_bearing",
+  "props": {
+   "facing": "north"
+  }
+ },
+ "s:create:large_water_wheel[axis=x,extension=false]": {
+  "state": "create:large_water_wheel",
+  "props": {
+   "axis": "x",
+   "extension": "false"
+  }
+ },
+ "s:minecraft:hopper[enabled=true,facing=down]": {
+  "state": "minecraft:hopper",
+  "props": {
+   "facing": "down",
+   "enabled": "true"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=east,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "east",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=west,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "west",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=south,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "south",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:brass_belt_funnel[facing=north,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:brass_belt_funnel",
+  "props": {
+   "facing": "north",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "s:create:glass_fluid_pipe[alt=false,axis=x]": {
+  "state": "create:glass_fluid_pipe",
+  "props": {
+   "axis": "x",
+   "alt": "false"
+  }
+ },
+ "s:create:glass_fluid_pipe[alt=false,axis=y]": {
+  "state": "create:glass_fluid_pipe",
+  "props": {
+   "axis": "y",
+   "alt": "false"
+  }
+ },
+ "s:create:glass_fluid_pipe[alt=false,axis=z]": {
+  "state": "create:glass_fluid_pipe",
+  "props": {
+   "axis": "z",
+   "alt": "false"
+  }
+ },
+ "s:create:fluid_tank[bottom=true,shape=window,top=false]": {
+  "state": "create:fluid_tank",
+  "props": {
+   "bottom": "true",
+   "top": "false",
+   "shape": "window"
+  }
+ },
+ "s:create:fluid_tank[bottom=false,shape=window,top=false]": {
+  "state": "create:fluid_tank",
+  "props": {
+   "bottom": "false",
+   "top": "false",
+   "shape": "window"
+  }
+ },
+ "s:create:fluid_tank[bottom=false,shape=window,top=true]": {
+  "state": "create:fluid_tank",
+  "props": {
+   "bottom": "false",
+   "top": "true",
+   "shape": "window"
+  }
+ },
+ "s:create:fluid_tank[bottom=true,shape=window,top=true]": {
+  "state": "create:fluid_tank",
+  "props": {
+   "bottom": "true",
+   "top": "true",
+   "shape": "window"
+  }
+ },
+ "s:createaddition:alternator[facing=south]": {
+  "state": "createaddition:alternator",
+  "props": {
+   "facing": "south"
+  }
+ },
+ "s:createaddition:alternator[facing=north]": {
+  "state": "createaddition:alternator",
+  "props": {
+   "facing": "north"
+  }
+ },
+ "s:createdieselgenerators:huge_diesel_engine[facing=south,powered=true]": {
+  "state": "createdieselgenerators:huge_diesel_engine",
+  "props": {
+   "facing": "south",
+   "powered": "true"
+  }
+ },
+ "s:createdieselgenerators:huge_diesel_engine[facing=north,powered=true]": {
+  "state": "createdieselgenerators:huge_diesel_engine",
+  "props": {
+   "facing": "north",
+   "powered": "true"
+  }
+ },
+ "s:createdieselgenerators:pumpjack_crank[facing=east]": {
+  "state": "createdieselgenerators:pumpjack_crank",
+  "props": {
+   "facing": "east"
+  }
+ },
+ "s:createdieselgenerators:pumpjack_bearing[facing=north]": {
+  "state": "createdieselgenerators:pumpjack_bearing",
+  "props": {
+   "facing": "north"
+  }
+ },
+ "s:createdieselgenerators:pumpjack_bearing[facing=south]": {
+  "state": "createdieselgenerators:pumpjack_bearing",
+  "props": {
+   "facing": "south"
+  }
+ },
+ "s:createdieselgenerators:pumpjack_head[facing=east,waterlogged=false]": {
+  "state": "createdieselgenerators:pumpjack_head",
+  "props": {
+   "facing": "east",
+   "waterlogged": "false"
+  }
+ },
+ "s:immersiveengineering:connector_lv[facing=north]": {
+  "state": "immersiveengineering:connector_lv",
+  "props": {
+   "facing": "north"
+  }
+ },
+ "s:immersiveengineering:connector_lv[facing=south]": {
+  "state": "immersiveengineering:connector_lv",
+  "props": {
+   "facing": "south"
+  }
+ },
+ "s:create:andesite_belt_funnel[facing=north,powered=false,shape=retracted,waterlogged=false]": {
+  "state": "create:andesite_belt_funnel",
+  "props": {
+   "facing": "north",
+   "powered": "false",
+   "shape": "retracted",
+   "waterlogged": "false"
+  }
+ },
+ "m:create:block/shaft_half": {
+  "model": "create:block/shaft_half"
+ },
+ "m:create:block/deployer/pole": {
+  "model": "create:block/deployer/pole"
+ },
+ "m:create:block/deployer/hand_holding": {
+  "model": "create:block/deployer/hand_holding"
+ },
+ "m:create:block/mechanical_press/head": {
+  "model": "create:block/mechanical_press/head"
+ },
+ "m:create:block/mechanical_saw/blade_vertical_active": {
+  "model": "create:block/mechanical_saw/blade_vertical_active"
+ },
+ "m:create:block/mechanical_pump/cog": {
+  "model": "create:block/mechanical_pump/cog"
+ },
+ "m:create:block/steam_engine/piston": {
+  "model": "create:block/steam_engine/piston"
+ },
+ "m:create:block/steam_engine/linkage": {
+  "model": "create:block/steam_engine/linkage"
+ },
+ "m:create:block/steam_engine/shaft_connector": {
+  "model": "create:block/steam_engine/shaft_connector"
+ },
+ "m:create:block/mechanical_arm/base": {
+  "model": "create:block/mechanical_arm/base"
+ },
+ "m:create:block/mechanical_arm/lower_body": {
+  "model": "create:block/mechanical_arm/lower_body"
+ },
+ "m:create:block/mechanical_arm/upper_body": {
+  "model": "create:block/mechanical_arm/upper_body"
+ },
+ "m:create:block/mechanical_arm/claw_base": {
+  "model": "create:block/mechanical_arm/claw_base"
+ },
+ "m:create:block/mechanical_arm/upper_claw_grip": {
+  "model": "create:block/mechanical_arm/upper_claw_grip"
+ },
+ "m:create:block/mechanical_arm/lower_claw_grip": {
+  "model": "create:block/mechanical_arm/lower_claw_grip"
+ },
+ "m:create:block/mechanical_arm/cog": {
+  "model": "create:block/mechanical_arm/cog"
+ },
+ "m:create:block/bearing/top_wooden": {
+  "model": "create:block/bearing/top_wooden"
+ },
+ "m:create:block/belt_pulley": {
+  "model": "create:block/belt_pulley"
+ },
+ "m:create:block/blaze_burner/blaze/active": {
+  "model": "create:block/blaze_burner/blaze/active"
+ },
+ "m:createdieselgenerators:block/huge_diesel_engine/piston": {
+  "model": "createdieselgenerators:block/huge_diesel_engine/piston"
+ },
+ "m:createdieselgenerators:block/huge_diesel_engine/linkage": {
+  "model": "createdieselgenerators:block/huge_diesel_engine/linkage"
+ },
+ "m:createdieselgenerators:block/huge_diesel_engine/shaft_connector": {
+  "model": "createdieselgenerators:block/huge_diesel_engine/shaft_connector"
+ },
+ "m:createdieselgenerators:block/pumpjack_crank/small_counterweight": {
+  "model": "createdieselgenerators:block/pumpjack_crank/small_counterweight"
+ },
+ "m:createdieselgenerators:block/pumpjack_crank/small_rod": {
+  "model": "createdieselgenerators:block/pumpjack_crank/small_rod"
+ },
+ "m:createdieselgenerators:block/powered_engine_shaft": {
+  "model": "createdieselgenerators:block/powered_engine_shaft"
  }
 }

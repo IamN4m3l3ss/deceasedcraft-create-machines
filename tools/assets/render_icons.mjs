@@ -26,7 +26,7 @@ const p = await b.newPage()
 p.on('pageerror', (e) => console.log('PAGEERROR', e.message))
 await p.goto(`http://localhost:${port}/`)
 await p.waitForFunction(() => !!window.renderIcon)
-const keys = (await p.evaluate(() => window.iconKeys())).filter((k) => !k.startsWith('b:'))
+const keys = (await p.evaluate(() => window.iconKeys())).filter((k) => !/^(b|m|s):|^__/.test(k))
 const only = process.argv[2] ? process.argv[2].split(',') : null
 fs.rmSync(OUT, { recursive: true, force: true })
 const done = []

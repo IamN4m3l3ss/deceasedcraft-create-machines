@@ -22,7 +22,10 @@ export function createModelKit(base, opts = {}) {
   function texture(p) {
     let t = texCache.get(p)
     if (t) return t
-    t = loader.load(base + 'mc/' + p, (tx) => { tx.needsUpdate = true; opts.onTexture && opts.onTexture() })
+    let done
+    const ready = new Promise((r) => { done = r })
+    t = loader.load(base + 'mc/' + p, () => { done(); opts.onTexture && opts.onTexture() }, undefined, () => done())
+    t.userData.ready = ready
     t.magFilter = THREE.NearestFilter; t.minFilter = THREE.NearestFilter; t.generateMipmaps = false
     t.colorSpace = THREE.SRGBColorSpace
     texCache.set(p, t)
@@ -184,7 +187,7 @@ export function createModelKit(base, opts = {}) {
   async function build(key) {
     const ms = await load()
     const m = ms[key]
-    if (!m) return null
+    if (!m || key.startsWith('__')) return null
     if (m.flat) return flatGroup(m)
     if (m.obj) return objGroup(m)
     return elementsGroup(m)
@@ -197,7 +200,7 @@ export function createModelKit(base, opts = {}) {
   }
   /** a clone of a preloaded (or cuboid/flat) model, sharing geometry and materials; null if unknown */
   function get(key) {
-    if (!models || !models[key]) return null
+    if (!models || !models[key] || key.startsWith('__')) return null
     let g = built.get(key)
     if (!g) {
       const m = models[key]
@@ -207,10 +210,24 @@ export function createModelKit(base, opts = {}) {
     }
     return g.clone()
   }
+  /** start loading every texture the models use and wait for all of them */
+  async function loadAllTextures() {
+    await load()
+    const paths = new Set()
+    for (const [k, m] of Object.entries(models)) {
+      if (k.startsWith('__')) continue
+      if (m.flat) m.flat.forEach((p) => paths.add(p))
+      if (m.el) for (const e of m.el) for (const f of Object.values(e.faces)) paths.add(f.t)
+      if (m.mats) Object.values(m.mats).forEach((v) => paths.add(v.split('|')[0]))
+    }
+    await Promise.all([...paths].map((p) => texture(p).userData.ready))
+  }
   function has(key) { return !!(models && models[key]) }
+  function states() { return (models && models.__states) || {} }
+  function anims() { return (models && models.__anim) || {} }
   function info(key) { return models && models[key] }
   function allLoaded() { return [...texCache.values()].every((t) => t.image && t.image.complete !== false) }
-  return { load, build, preload, get, has, info, texture, material, allLoaded, texCache }
+  return { load, build, preload, loadAllTextures, get, has, info, texture, material, allLoaded, texCache, states, anims }
 }
 
 /** apply a model's display.gui transform (rotation, translation in 1/16 block, scale) to a group */

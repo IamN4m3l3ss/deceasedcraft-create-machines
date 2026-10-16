@@ -18,8 +18,18 @@ const MAP: Record<string, Cell> = {
   Wa: { cls: 'k-water', txt: 'W', tip: 'Water source' }, St: { cls: 'k-stone', txt: '', tip: 'Stone (any block)' },
   Gl: { cls: 'k-glass', txt: '', tip: 'Glass, keeps the fluids in' }, Cn: { cls: 'k-press', txt: 'LV', tip: 'LV wire connector on the generator’s north face' },
   Rc: { cls: 'k-rc', txt: '', tip: 'Reinforced reactor casing' }, Rk: { cls: 'k-rk', txt: 'CTL', tip: 'Reactor controller' },
-  Rt: { cls: 'k-rt', txt: 'FE', tip: 'Passive power port' }, Ra: { cls: 'k-ra', txt: 'AP', tip: 'Solid access port (fuel in / waste out)' },
+  Rt: { cls: 'k-rt', txt: 'FE', tip: 'Active power port' }, Ra: { cls: 'k-ra', txt: 'AP', tip: 'Solid access port (fuel in / waste out)' },
   Rf: { cls: 'k-rf', txt: 'F', tip: 'Fuel rod' }, Rr: { cls: 'k-rr', txt: 'CR', tip: 'Control rod' },
+  Rp: { cls: 'k-port', txt: 'FP', tip: 'Active fluid port (water in or steam out)' }, Rw: { cls: 'k-port', txt: 'H₂O', tip: 'Active fluid port, input: make-up water from the pumps' },
+  Wl: { cls: 'k-wheel', txt: '⟲', tip: 'Crushing wheel, axle north–south (left wheel)' }, Wr: { cls: 'k-wheel', txt: '⟳', tip: 'Crushing wheel, axle north–south (right wheel)' },
+  'z+': { cls: 'k-kin', txt: '⚙', tip: 'Cogwheel, axle north–south' }, 'z-': { cls: 'k-kin', txt: '⚙', tip: 'Cogwheel, axle north–south' },
+  Fd: { cls: 'k-feed', txt: '▼', tip: 'Andesite funnel facing down, under the generator' },
+  Gn: { cls: 'k-gen', txt: 'GEN', tip: 'Mechanical Generator (Create Cobblestone), axle north–south' },
+  Hs: { cls: 'k-feed', txt: 'H→', tip: 'Hopper pointing south into the chest' },
+  Tc: { cls: 'k-tc', txt: '', tip: 'Reinforced turbine casing' }, Tk: { cls: 'k-rk', txt: 'CTL', tip: 'Turbine controller' },
+  Tb: { cls: 'k-kin', txt: 'BRG', tip: 'Rotor bearing (the rotor starts here)' }, Ts: { cls: 'k-kin', txt: '◉', tip: 'Rotor shaft' },
+  Tl: { cls: 'k-blade', txt: '✕', tip: 'Rotor blade' }, Te: { cls: 'k-coil', txt: 'E', tip: 'Block of Electrum (coil)' },
+  Tt: { cls: 'k-rt', txt: 'FE', tip: 'Active power port' }, Tp: { cls: 'k-port', txt: 'FP', tip: 'Turbine fluid port (steam in or water out)' },
 }
 function cell(tok: string): Cell {
   if (tok === '.') return { cls: '', txt: '', tip: 'Empty' }
@@ -34,6 +44,7 @@ function cell(tok: string): Cell {
   }
   if (MAP[tok]) return MAP[tok]
   if (/^[DS]\d$/.test(tok)) return { cls: 'k-dep', txt: tok, tip: 'Deployer ' + tok + ', facing down' }
+  if (/^P\d$/.test(tok)) return { cls: 'k-press', txt: tok, tip: 'Mechanical press ' + tok + ', shaft along the row' }
   return { cls: '', txt: tok, tip: tok }
 }
 const rows = computed(() => props.layer.rows.map((r) => r.split(' ').map(cell)))
@@ -76,6 +87,11 @@ const cols = computed(() => rows.value[0]?.length || 0)
 .k-stone { background: #55575a; }
 .k-glass { background: rgba(191, 227, 238, 0.12); border-color: rgba(191, 227, 238, 0.35); }
 .k-rc { background: #4b5058; border-color: #5d636c; }
+.k-port { background: #1f3f66; border-color: var(--blue); color: #d9eaff; font-size: 9px; }
+.k-wheel { background: #6b5a43; border-color: #8f7a5a; color: #f1e3c8; font-size: 14px; }
+.k-tc { background: #59606a; border-color: #6c737d; }
+.k-blade { background: #3a3f46; color: #c9ced3; }
+.k-coil { background: #8a7a2e; border-color: #ecd66e; color: #fff6cc; }
 .k-rk { background: #3c4048; border-color: var(--green); color: var(--green); font-size: 9px; }
 .k-rt { background: #5a2a26; border-color: var(--red); color: #ffd0ca; font-size: 10px; }
 .k-ra { background: #5d4a1f; border-color: var(--accent); color: #ffe7b0; font-size: 10px; }

@@ -4,12 +4,12 @@ import ItemIcon from '../components/ItemIcon.vue'
 import BuildCard from '../components/BuildCard.vue'
 
 const sections = [
-  { to: '/production', icon: 'create:deployer', stat: '9 deployers', title: 'Ammo & gun parts', text: 'One 3-station line for 15 kinds of rounds, one looping ring for all gun-part kits, and a saw-and-press line for plates and recoil springs.' },
+  { to: '/production', icon: 'create:deployer', stat: '8 deployers', title: 'Ammo & gun parts', text: 'A 2-deployer line for 9mm, .45 and every other standard round, a looping ring for all gun-part kits, a saw-and-press line for plates and springs, and a sand tower.' },
   { to: '/power', icon: 'create:steam_engine', stat: 'up to 327,680 SU', title: 'Rotational power', text: 'Windmills and water wheels early, coal boilers mid game, then a level 18 boiler or a 20-engine diesel plant. No lake needed.' },
-  { to: '/electricity', icon: 'createaddition:alternator', stat: 'up to 6,480 FE/t', title: 'Electricity', text: 'Thermoelectric generators between lava and water, alternators on your boiler, then big banks or an Extreme Reactor.' },
+  { to: '/electricity', icon: 'createaddition:alternator', stat: 'up to 14,400 FE/t', title: 'Electricity', text: 'Thermoelectric generators between lava and water, alternators on your boiler, then big banks or an Extreme Reactor with a turbine.' },
 ]
 const road = [
-  { tier: 'Early', items: ['windmill', 'thermo', 'metal', 'ammo'] },
+  { tier: 'Early', items: ['windmill', 'thermo', 'metal', 'sand', 'ammo'] },
   { tier: 'Mid', items: ['boiler4', 'altbank', 'ring'] },
   { tier: 'Late', items: ['boiler18', 'diesel', 'bigbank', 'reactor'] },
 ]
@@ -23,7 +23,8 @@ const road = [
         <h1>Create Machines</h1>
         <p>Small, cheap factory builds for the pack’s own recipes: automated ammo and gun parts, plus the rotational power and electricity to run them. Every build has a 3D model, a parts list with the raw materials behind it, and every recipe with the station that makes it.</p>
         <div class="row wrap" style="gap: 10px; margin-top: 18px">
-          <RouterLink to="/build/windmill" class="btn primary">Start with a windmill</RouterLink>
+          <RouterLink to="/progress" class="btn primary">What to build when</RouterLink>
+          <RouterLink to="/build/windmill" class="btn">Start with a windmill</RouterLink>
           <RouterLink to="/shopping" class="btn">Open the shopping list</RouterLink>
         </div>
       </div>

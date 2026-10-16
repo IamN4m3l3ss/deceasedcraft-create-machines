@@ -12,6 +12,7 @@ const router = createRouter({
     { path: '/power', component: () => import('./pages/SectionPage.vue'), props: { section: 'kinetic' } },
     { path: '/electricity', component: () => import('./pages/SectionPage.vue'), props: { section: 'electric' } },
     { path: '/build/:id', component: () => import('./pages/BuildPage.vue'), props: true },
+    { path: '/progress', component: () => import('./pages/ProgressPage.vue') },
     { path: '/shopping', component: () => import('./pages/ShoppingPage.vue') },
     { path: '/items', component: () => import('./pages/ItemsPage.vue') },
     { path: '/rules', component: () => import('./pages/RulesPage.vue') },

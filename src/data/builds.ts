@@ -3,7 +3,7 @@ import type { Stack } from './recipes'
 export interface PartGroup { label: string; items: Stack[]; note?: string; optional?: boolean }
 export interface Stat { label: string; value: string; hint?: string }
 export interface Table { title?: string; head: string[]; rows: string[][]; note?: string; highlight?: number[] }
-export interface Layer { y: number; name: string; cap: string; rows: string[] }
+export interface Layer { y: number; name: string; cap: string; rows: string[]; /** the same layer repeats up to this y */ to?: number }
 export interface Build {
   id: string
   section: 'production' | 'kinetic' | 'electric'
@@ -18,7 +18,7 @@ export interface Build {
   /** what goes in and what comes out, for the summary strip at the top */
   io: { in: string[]; inText?: string; out: string[]; outText?: string }
   /** token grid for the layer view (production lines and the reactor) */
-  grid?: { zs: number[]; layers: Layer[]; path?: number[][]; loop?: boolean; item?: string }
+  grid?: { zs: number[]; layers: Layer[]; path?: number[][]; loop?: boolean; item?: string; fall?: [number, number, number, number, string][] }
   parts: PartGroup[]
   stock?: { items: Stack[]; note: string }
   running?: string
@@ -215,6 +215,70 @@ export const BUILDS: Build[] = [
     ],
   },
 
+  {
+    id: 'sand', section: 'production', tier: 'Early', title: 'Gravel & sand tower', nav: 'Gravel & sand', icon: 'minecraft:sand',
+    tagline: 'cobble → gravel → sand · no water, no lava',
+    intro: 'Sand turns into glass (fuel rods need it) and sandstone (crush it in the IE Crusher for saltpeter, half of every gunpowder); gravel turns into netherrack for blaze cakes. This tower makes them out of nothing. The Create Cobblestone generator on top makes cobblestone from rotation alone, a funnel drops it into the first pair of crushing wheels (cobblestone → gravel), and the gravel falls straight into the second pair (gravel → sand).',
+    mainLabel: 'Sand', mainBlurb: 'Two crusher pairs. Makes sand.',
+    stats: [{ label: 'Output', value: '≈ 9 sand/s', hint: 'at 128 RPM' }, { label: 'Footprint', value: '5 × 4', hint: '6 tall' }, { label: 'Stress', value: '40 SU/RPM', hint: '2,560 SU at 64 RPM' }, { label: 'Input', value: 'nothing' }],
+    scene: 'sand',
+    io: { in: [], inText: 'only rotation', out: ['minecraft:sand'], outText: '+ a little flint and clay' },
+    grid: {
+      zs: [-2, -1, 0, 1],
+      fall: [[2, 0, 4.1, 3.4, 'minecraft:cobblestone'], [2, 0, 2.6, 1.4, 'minecraft:gravel'], [2, 0, 0.6, 0.1, 'minecraft:sand']],
+      layers: [
+        { y: 0, name: 'y0 · output', cap: 'A hopper right under the lower gap, pointing south into the output chest.', rows: ['. . . . .', '. . . . .', '. . Hs . .', '. . Co . .'] },
+        { y: 1, name: 'y1 · crushers: sand', cap: 'Second pair: two crushing wheels with their axles north–south and a one-block gap at x2. A cogwheel sits on each axle behind.', rows: ['. . . . .', '. z- . z+ .', '. Wl . Wr .', '. . . . .'] },
+        { y: 2, name: 'y2 · gearing', cap: 'Power comes in at x0 and runs through two gearboxes. Each gearbox turns its column of cogwheels the opposite way, so the left and right wheels spin toward each other. Keep x2 clear: gravel falls through here.', rows: ['Pw G S- G .', '. z+ . z- .', '. . . . .', '. . . . .'] },
+        { y: 3, name: 'y3 · crushers: gravel', cap: 'First pair, the same as the second: cobblestone in, gravel out.', rows: ['. . . . .', '. z- . z+ .', '. Wl . Wr .', '. . . . .'] },
+        { y: 4, name: 'y4 · funnel', cap: 'An andesite funnel on the bottom of the generator, facing down. It drops 64 cobblestone at a time into the gap below.', rows: ['. . . . .', '. z+ . . .', '. . Fd . .', '. . . . .'] },
+        { y: 5, name: 'y5 · generator', cap: 'The Mechanical Generator, turned so its axle runs north–south. A cogwheel on its back axle meshes with the left cog column, which powers it.', rows: ['. . . . .', '. z- z+ . .', '. . Gn . .', '. . . . .'] },
+      ],
+    },
+    parts: [
+      { label: 'Tower', items: [['createcobblestone:mechanical_generator', 1], ['create:crushing_wheel', 4], ['create:cogwheel', 9], ['create:gearbox', 2], ['create:shaft', 2], ['create:andesite_funnel', 1], ['minecraft:hopper', 1], ['minecraft:chest', 1]] },
+    ],
+    steps: [
+      'Put the generator up high (y5) and right-click it with cobblestone if it shows another stone type. Turn it so its axle runs north–south.',
+      'Under it, an andesite funnel facing down. Placed against the generator’s bottom it pulls cobblestone out and drops it.',
+      'Two crushing wheels at y3, one block left and right of the drop spot, axles north–south. Two more at y1. Crushing wheels need a one-block gap and must spin toward each other.',
+      'Behind the wheels, a column of cogwheels on each side (x1 and x3), one per layer from y1 up, plus one on the generator’s axle. At y2 the two middle cogs get their power from gearboxes behind them, linked by a shaft. Feed power into the left gearbox.',
+      'Hopper under the lower gap, into a chest. Sand also brings some flint and clay balls.',
+      'If cobblestone bounces off the top instead of going through, the wheels spin outward: reverse the incoming rotation.',
+    ],
+    tables: [
+      { title: 'Speed', head: ['RPM', 'Sand per second', 'Stress'], rows: [['32', '≈ 2.3', '1,280 SU'], ['64', '≈ 4.7', '2,560 SU'], ['128', '≈ 9.5', '5,120 SU'], ['256', '≈ 19', '10,240 SU']],
+        note: 'The crushers are the limit: at any speed the generator makes far more cobblestone than they can take (2.5 per second per RPM). Crushing wheels work a whole stack at once, so feeding 64 at a time is the fastest way.' },
+    ],
+    variants: [
+      {
+        id: 'gravel', label: 'Gravel only', blurb: 'One crusher pair. Gravel for netherrack.',
+        tagline: 'cobble → gravel · one crusher pair',
+        intro: 'Just the top half: generator, funnel and one pair of crushing wheels. Use it when you only need gravel (spouting lava on gravel makes netherrack, for blaze cakes) or as the first half of the full tower.',
+        stats: [{ label: 'Output', value: '≈ 9 gravel/s', hint: 'at 128 RPM' }, { label: 'Footprint', value: '5 × 4', hint: '4 tall' }, { label: 'Stress', value: '24 SU/RPM', hint: '1,536 SU at 64 RPM' }, { label: 'Input', value: 'nothing' }],
+        io: { in: [], inText: 'only rotation', out: ['minecraft:gravel'] },
+        grid: {
+          zs: [-2, -1, 0, 1],
+          fall: [[2, 0, 2.1, 1.4, 'minecraft:cobblestone'], [2, 0, 0.6, 0.1, 'minecraft:gravel']],
+          layers: [
+            { y: 0, name: 'y0 · output', cap: 'Hopper under the gap, into a chest.', rows: ['Pw G S- G .', '. z+ . z- .', '. . Hs . .', '. . Co . .'] },
+            { y: 1, name: 'y1 · crushers', cap: 'Crushing wheels at x1 and x3, gap at x2. The gearboxes at y0 behind turn the cog columns opposite ways.', rows: ['. . . . .', '. z- . z+ .', '. Wl . Wr .', '. . . . .'] },
+            { y: 2, name: 'y2 · funnel', cap: 'Funnel facing down under the generator.', rows: ['. . . . .', '. z+ . . .', '. . Fd . .', '. . . . .'] },
+            { y: 3, name: 'y3 · generator', cap: 'Generator with its back axle cog meshing into the left column.', rows: ['. . . . .', '. z- z+ . .', '. . Gn . .', '. . . . .'] },
+          ],
+        },
+        parts: [{ label: 'Tower', items: [['createcobblestone:mechanical_generator', 1], ['create:crushing_wheel', 2], ['create:cogwheel', 6], ['create:gearbox', 2], ['create:shaft', 2], ['create:andesite_funnel', 1], ['minecraft:hopper', 1], ['minecraft:chest', 1]] }],
+        steps: [
+          'Generator at the top, axle north–south, funnel facing down under it.',
+          'One pair of crushing wheels below, gap under the funnel.',
+          'Cog columns behind the wheels, gearboxes at the bottom linked by a shaft, power into the left gearbox.',
+          'Hopper and chest under the gap.',
+        ],
+        tables: undefined,
+      },
+    ],
+  },
+
   // ======================================================= rotational power
   {
     id: 'wheels', section: 'kinetic', tier: 'Early', title: 'Large water wheels', nav: 'Water wheels', icon: 'create:large_water_wheel',
@@ -233,7 +297,7 @@ export const BUILDS: Build[] = [
   {
     id: 'windmill', section: 'kinetic', tier: 'Early', title: '64-sail windmill', nav: 'Windmill', icon: 'create:white_sail',
     tagline: '4,096 SU · runs every production line',
-    intro: 'A windmill gives 512 SU per RPM and turns 1 RPM for every 8 sails, up to 16 RPM. 64 sails give 4,096 SU, which covers the ammo line, parts ring, Metalworks and rolling mill together (≈ 2,200 SU at 32 RPM).',
+    intro: 'A windmill gives 512 SU per RPM and turns 1 RPM for every 8 sails, up to 16 RPM. 64 sails give 4,096 SU, which covers the ammo line, parts ring, Metalworks and rolling mill together (≈ 2,000 SU at 32 RPM).',
     stats: [{ label: 'Output', value: '4,096 SU', hint: '8 RPM' }, { label: 'Fuel', value: 'none' }, { label: 'Space', value: '17 × 17', hint: 'in front of the tower' }, { label: 'Max', value: '8,192 SU', hint: '128 sails' }],
     scene: 'windmill',
     io: { in: [], inText: 'wind, nothing else', out: [], outText: '4,096 SU' },
@@ -402,35 +466,129 @@ export const BUILDS: Build[] = [
   },
   {
     id: 'reactor', section: 'electric', tier: 'Late', title: 'Extreme Reactor', nav: 'Reactor', icon: 'bigreactors:reinforced_reactorcasing',
-    tagline: '5×5×5 passive · uranium',
-    intro: 'In this pack only the reinforced reactor parts can be crafted, and their casing needs a Refined Storage machine casing, so the reactor is a late Refined Storage project. This 5×5×5 passive design is the smallest sensible one: 15 fuel rods in 5 columns with water as moderator. Its output depends on fuel and control-rod settings, and the controller screen shows it.',
-    stats: [{ label: 'Size', value: '5 × 5 × 5' }, { label: 'Fuel rods', value: '15', hint: '5 columns' }, { label: 'Casings', value: '89' }, { label: 'Output', value: 'see controller', hint: 'depends on settings' }],
+    tagline: '7×7×7 passive · 12,500 FE/t · uranium',
+    intro: 'Extreme Reactors burns uranium ingots in fuel rods. In this pack only the reinforced parts exist, and every casing needs a Refined Storage machine casing, so it is a late Refined Storage project. All numbers here come from the mod’s own reactor code run with the pack’s settings, so they match what the controller screen will show once the reactor has warmed up (a few minutes).',
+    mainLabel: 'Passive 7³', mainBlurb: 'Most power for the blocks. 12,500 FE/t.',
+    stats: [{ label: 'Output', value: '12,500 FE/t' }, { label: 'Uranium', value: '21 ingots/h', hint: '≈ 1 every 3 min' }, { label: 'Size', value: '7 × 7 × 7' }, { label: 'Fuel rods', value: '45', hint: '9 columns of 5' }],
     scene: 'reactor',
-    io: { in: ['immersiveengineering:ingot_uranium'], out: [], outText: 'electricity (FE)' },
+    io: { in: ['immersiveengineering:ingot_uranium'], out: [], outText: '12,500 FE/t' },
     grid: {
-      zs: [0, 1, 2, 3, 4],
+      zs: [0, 1, 2, 3, 4, 5, 6],
       layers: [
-        { y: 0, name: 'y0 · floor', cap: 'Solid floor of reinforced casings.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rc Rc Rc Rc', 'Rc Rc Rc Rc Rc', 'Rc Rc Rc Rc Rc', 'Rc Rc Rc Rc Rc'] },
-        { y: 1, name: 'y1 · core', cap: 'Fuel rods in the centre and the four inner corners, water in between. The controller and the power port sit on the walls.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Ra Wa Rf Wa Rt', 'Rc Rf Wa Rf Rc', 'Rc Rc Rk Rc Rc'] },
-        { y: 2, name: 'y2 · core', cap: 'Same pattern. Access port 2 is for waste out.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Ra Wa Rf Wa Rc', 'Rc Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc'] },
-        { y: 3, name: 'y3 · core', cap: 'Same pattern. Fuel rod columns must run the full height of the inside.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Rc Wa Rf Wa Rc', 'Rc Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc'] },
-        { y: 4, name: 'y4 · roof', cap: 'A control rod on top of every fuel-rod column, casings elsewhere.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc', 'Rc Rc Rr Rc Rc', 'Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc'] },
+        { y: 0, name: 'y0 · floor', cap: 'A solid floor of reinforced casings.', rows: Array(7).fill('Rc Rc Rc Rc Rc Rc Rc') },
+        { y: 1, name: 'y1 · core', cap: 'Fuel rods every other block (a 3×3 grid of columns), water source blocks everywhere else inside.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc Rc Rc'], to: 1 },
+        { y: 2, name: 'y2 · core + fuel in', cap: 'Same core. The access port on the west wall takes uranium in.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Ra Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc Rc Rc'] },
+        { y: 3, name: 'y3 · core + controller', cap: 'Controller in the middle of the south wall, active power port in the middle of the east wall.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rt', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Rc Rc Rk Rc Rc Rc'] },
+        { y: 4, name: 'y4 · core + waste out', cap: 'The second access port, set to output, gives back the waste.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Ra Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc Rc Rc'] },
+        { y: 5, name: 'y5 · core', cap: 'Last core layer. Every fuel-rod column must run from the floor to the roof.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Wa Wa Wa Wa Wa Rc', 'Rc Rf Wa Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc Rc Rc'] },
+        { y: 6, name: 'y6 · roof', cap: 'A control rod on top of every fuel-rod column, casings everywhere else.', rows: ['Rc Rc Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc Rc Rc'] },
       ],
     },
     parts: [
-      { label: 'Shell', items: [['bigreactors:reinforced_reactorcasing', 89], ['bigreactors:reinforced_reactorcontroller', 1], ['bigreactors:reinforced_reactorpowertapfe_passive', 1], ['bigreactors:reinforced_reactorsolidaccessport', 2]] },
-      { label: 'Core', items: [['bigreactors:reinforced_reactorfuelrod', 15], ['bigreactors:reinforced_reactorcontrolrod', 5], ['fluid:water', 12000]] },
+      { label: 'Shell', note: 'The 7×7×7 shell is 218 blocks: 205 casings plus the parts below. Glass walls are allowed but each glass block also costs a casing.', items: [['bigreactors:reinforced_reactorcasing', 205], ['bigreactors:reinforced_reactorcontroller', 1], ['bigreactors:reinforced_reactorpowertapfe_active', 1], ['bigreactors:reinforced_reactorsolidaccessport', 2]] },
+      { label: 'Core', items: [['bigreactors:reinforced_reactorfuelrod', 45], ['bigreactors:reinforced_reactorcontrolrod', 9], ['fluid:water', 80000]] },
     ],
-    stock: { items: [['immersiveengineering:ingot_uranium', 64]], note: 'Fuel goes into the input access port. Waste (cyanite) comes out of the second one, set to output.' },
+    stock: { items: [['immersiveengineering:ingot_uranium', 64]], note: 'The rods hold 180 ingots when full (4 each). After that it burns about 21 ingots an hour. A hopper or chest on the input access port keeps it fed.' },
     steps: [
-      'Build the 5×5 floor from reinforced casings.',
-      'Layers y1–y3: casings around the edge, fuel rods in the centre and the four inner corners, water source blocks in the other 4 spots. Put the controller, the power port and the two access ports into the walls (not on edges or corners).',
-      'Roof: a control rod above each of the 5 fuel-rod columns, casings everywhere else.',
-      'Right-click the controller. It tells you what’s missing until the structure is valid.',
-      'Put uranium ingots into one access port, set the other to output, and wire the power port to your network. Use the control rods to trade output for fuel use.',
+      'Build the 7×7 floor from reinforced casings.',
+      'Layers y1–y5: casings around the edge. Inside, fuel rods on every other block both ways (9 columns: the four corners, the middle of each side and the centre) and water source blocks in the other 16 spots.',
+      'Put the controller, the active power port and the two access ports into the walls as on the layers. None of them may sit on an edge or a corner of the shell.',
+      'Roof: a control rod on top of each of the 9 fuel-rod columns, casings everywhere else.',
+      'Right-click the controller. Until the structure is right it tells you what is wrong and where.',
+      'Put uranium into the west access port (set to input). Set the upper one to output: waste (cyanite) comes out there. Put a chest under it or pipe it away.',
+      'Touch the active power port with a wire connector or cable. It pushes power out by itself; a passive port would need a cable that pulls.',
+      'Turn it on. It takes a few minutes to heat up to its full 12,500 FE/t (fuel at about 1,850 °C).',
+    ],
+    tables: [
+      { title: 'All three versions', head: ['Version', 'Size', 'Fuel rods', 'Output', 'Uranium', 'Casing blocks'], rows: [
+        ['Starter (passive)', '5 × 5 × 5', '12 (4 columns)', '3,600 FE/t', '6.6 ingots/h', '90 + parts'],
+        ['Passive 7³', '7 × 7 × 7', '45 (9 columns)', '12,500 FE/t', '21 ingots/h', '205 + parts'],
+        ['Steam + turbine', '5³ reactor + 5 × 5 × 21 turbine', '12 (4 columns)', '14,400 FE/t', '5.7 ingots/h', '88 reactor + 349 turbine']],
+        note: 'Bigger reactors give more power per casing; the turbine version gets the most out of each uranium ingot (about 4× the passive ones) but costs the most blocks. Simulated with the mod’s code at 0% control-rod insertion and the pack’s settings (all multipliers 1.0).' },
+      { title: 'The rules the controller checks', head: ['Rule', 'What it means'], rows: [
+        ['Frame', 'Edges and corners of the box must be plain casings. Ports, the controller and taps go on the faces.'],
+        ['Fuel rods', 'Vertical columns from floor to roof, with a control rod on top of each column, all on the same side (the roof).'],
+        ['One controller, one power system', 'Exactly one controller. Use power ports or fluid ports, never both.'],
+        ['Inside', 'Fuel rods plus air, water or any moderator block. Water is free and gives a little more than air.'],
+        ['Size', 'Up to 25 × 25 × 25 in this pack.']] },
     ],
     callouts: [
-      { title: 'This is expensive', body: 'Every casing is 4 steel plates, 4 lead plates and an RS machine casing (4 aluminum plates + 4 duroplast plates). The material list below shows the full bill. A 3×3×3 reactor (1 fuel rod) needs only 22 casings if you just want to try it.', tone: 'warn' },
+      { title: 'This is expensive', body: 'Every casing is 4 steel plates, 4 lead plates and an RS machine casing (4 aluminum plates + 4 duroplast plates). The controller, ports and power port also eat 4 casings each. The material list shows the full bill. Start with the 5×5×5 version: it already makes 3,600 FE/t, and its core is the same one the turbine version uses later.', tone: 'warn' },
+    ],
+    variants: [
+      {
+        id: 'starter', label: 'Starter', blurb: '5×5×5 passive. 3,600 FE/t.',
+        tagline: '5×5×5 passive · 3,600 FE/t',
+        intro: 'The cheapest reactor worth building: four fuel-rod columns in the corners of a 3×3 core. It makes 3,600 FE/t on 6.6 uranium ingots an hour. Later you can turn this exact reactor into the steam version by swapping its power port for fluid ports and adding a turbine.',
+        stats: [{ label: 'Output', value: '3,600 FE/t' }, { label: 'Uranium', value: '6.6 ingots/h' }, { label: 'Size', value: '5 × 5 × 5' }, { label: 'Fuel rods', value: '12', hint: '4 columns of 3' }],
+        io: { in: ['immersiveengineering:ingot_uranium'], out: [], outText: '3,600 FE/t' },
+        grid: {
+          zs: [0, 1, 2, 3, 4],
+          layers: [
+            { y: 0, name: 'y0 · floor', cap: 'Solid floor of reinforced casings.', rows: Array(5).fill('Rc Rc Rc Rc Rc') },
+            { y: 1, name: 'y1 · core + fuel in', cap: 'Fuel rods in the four inner corners, water in the other 5 spots. Input access port on the west wall.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Ra Wa Wa Wa Rc', 'Rc Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc'] },
+            { y: 2, name: 'y2 · core + controller', cap: 'Controller on the south wall, active power port on the east wall.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Rc Wa Wa Wa Rt', 'Rc Rf Wa Rf Rc', 'Rc Rc Rk Rc Rc'] },
+            { y: 3, name: 'y3 · core + waste out', cap: 'Output access port for the waste.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rf Wa Rf Rc', 'Ra Wa Wa Wa Rc', 'Rc Rf Wa Rf Rc', 'Rc Rc Rc Rc Rc'] },
+            { y: 4, name: 'y4 · roof', cap: 'A control rod on each of the 4 columns.', rows: ['Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc', 'Rc Rr Rc Rr Rc', 'Rc Rc Rc Rc Rc'] },
+          ],
+        },
+        parts: [
+          { label: 'Shell', note: '98 shell blocks: 90 casings plus the parts below.', items: [['bigreactors:reinforced_reactorcasing', 90], ['bigreactors:reinforced_reactorcontroller', 1], ['bigreactors:reinforced_reactorpowertapfe_active', 1], ['bigreactors:reinforced_reactorsolidaccessport', 2]] },
+          { label: 'Core', items: [['bigreactors:reinforced_reactorfuelrod', 12], ['bigreactors:reinforced_reactorcontrolrod', 4], ['fluid:water', 15000]] },
+        ],
+        stock: { items: [['immersiveengineering:ingot_uranium', 64]], note: '48 ingots fill the rods, then about 6.6 an hour.' },
+        steps: [
+          'Build the 5×5 casing floor.',
+          'Layers y1–y3: casings around the edge, fuel rods in the four inner corners, water source blocks in the other 5 inside spots.',
+          'Controller, active power port and the two access ports go into the wall faces as on the layers, never on edges.',
+          'Roof: control rods on the 4 columns, casings elsewhere.',
+          'Fill the input access port with uranium, set the other one to output, wire up the power port and turn it on.',
+        ],
+        tables: undefined,
+      },
+      {
+        id: 'turbine', label: 'Steam + turbine', blurb: 'Same 5³ core, 14,400 FE/t on a quarter of the fuel.',
+        tagline: 'active 5³ reactor + 5×5×21 turbine · 14,400 FE/t',
+        intro: 'The starter reactor in active mode: instead of a power port it boils water into steam (2,000 mB/t), and a turbine standing right against it turns the steam into power. It makes four times the power of the same reactor on passive and uses less uranium than the passive 7³. The cost is the turbine: a tall 5×5 tower full of casings, plus 48 blocks of electrum for its coil.',
+        stats: [{ label: 'Output', value: '14,400 FE/t', hint: 'at ≈ 1,800 RPM' }, { label: 'Uranium', value: '5.7 ingots/h' }, { label: 'Steam', value: '2,000 mB/t' }, { label: 'Make-up water', value: '≈ 350 mB/t', hint: '3 pumps at 256 RPM' }],
+        io: { in: ['immersiveengineering:ingot_uranium', 'fluid:water'], inText: '5.7 ingots an hour, 350 mB/t water', out: [], outText: '14,400 FE/t' },
+        grid: {
+          zs: [0, 1, 2, 3, 4],
+          layers: [
+            { y: 0, name: 'y0 · floors', cap: 'Reactor floor (x0–x4) and turbine floor (x5–x9). The rotor bearing sits in the middle of the turbine floor.', rows: ['Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rc Rc Rc Rc Tc Tc Tb Tc Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc'] },
+            { y: 1, name: 'y1 · cores', cap: 'Reactor: the same core as the starter, fuel in on the west wall. Turbine: the rotor shaft in the middle with a blade on each side; the turbine controller is on its south wall.', rows: ['Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rf Wa Rf Rc Tc . Tl . Tc', 'Ra Wa Wa Wa Rc Tc Tl Ts Tl Tc', 'Rc Rf Wa Rf Rc Tc . Tl . Tc', 'Rc Rc Rk Rc Rc Tc Tc Tk Tc Tc'] },
+            { y: 2, name: 'y2 · ports', cap: 'The fluid ports meet face to face: reactor steam out (z1) into the turbine’s steam in, turbine water out (z3) into the reactor’s water in. A third reactor port on the north wall takes make-up water. The turbine’s power port is on its east wall.', rows: ['Rc Rc Rw Rc Rc Tc Tc Tc Tc Tc', 'Rc Rf Wa Rf Rp Tp . Tl . Tc', 'Rc Wa Wa Wa Rc Tc Tl Ts Tl Tt', 'Rc Rf Wa Rf Rp Tp . Tl . Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc'] },
+            { y: 3, name: 'y3 · cores', cap: 'Reactor waste out on the west wall. Turbine: blades again.', rows: ['Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rf Wa Rf Rc Tc . Tl . Tc', 'Ra Wa Wa Wa Rc Tc Tl Ts Tl Tc', 'Rc Rf Wa Rf Rc Tc . Tl . Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc'] },
+            { y: 4, name: 'y4 · reactor roof', cap: 'Control rods on the reactor’s 4 columns. The turbine keeps going up.', rows: ['Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc', 'Rc Rr Rc Rr Rc Tc . Tl . Tc', 'Rc Rc Rc Rc Rc Tc Tl Ts Tl Tc', 'Rc Rr Rc Rr Rc Tc . Tl . Tc', 'Rc Rc Rc Rc Rc Tc Tc Tc Tc Tc'] },
+            { y: 5, to: 13, name: 'y5–y13 · blades', cap: 'Nine more blade layers (13 in all, 52 blades): shaft in the middle, one blade on each side, corners empty.', rows: ['. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc . Tl . Tc', '. . . . . Tc Tl Ts Tl Tc', '. . . . . Tc . Tl . Tc', '. . . . . Tc Tc Tc Tc Tc'] },
+            { y: 14, to: 19, name: 'y14–y19 · coil', cap: 'Six layers of electrum blocks around the shaft (48 blocks). Coils must sit above all the blades, only in the ring right around the shaft.', rows: ['. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc Te Te Te Tc', '. . . . . Tc Te Ts Te Tc', '. . . . . Tc Te Te Te Tc', '. . . . . Tc Tc Tc Tc Tc'] },
+            { y: 20, name: 'y20 · turbine roof', cap: 'Casings. The rotor shaft must end right under this roof.', rows: ['. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc Tc Tc Tc Tc', '. . . . . Tc Tc Tc Tc Tc'] },
+          ],
+        },
+        parts: [
+          { label: 'Reactor shell', note: '98 shell blocks: 88 casings plus the parts below. The same as the starter, with three fluid ports instead of the power port.', items: [['bigreactors:reinforced_reactorcasing', 88], ['bigreactors:reinforced_reactorcontroller', 1], ['bigreactors:reinforced_reactorfluidport_forge_active', 3], ['bigreactors:reinforced_reactorsolidaccessport', 2]] },
+          { label: 'Reactor core', items: [['bigreactors:reinforced_reactorfuelrod', 12], ['bigreactors:reinforced_reactorcontrolrod', 4], ['fluid:water', 15000]] },
+          { label: 'Turbine shell', note: '354 shell blocks: 349 casings plus the parts below.', items: [['bigreactors:reinforced_turbinecasing', 349], ['bigreactors:reinforced_turbinecontroller', 1], ['bigreactors:reinforced_turbinerotorbearing', 1], ['bigreactors:reinforced_turbinefluidport_forge_active', 2], ['bigreactors:reinforced_turbinepowertapfe_active', 1]] },
+          { label: 'Rotor and coil', items: [['bigreactors:reinforced_turbinerotorshaft', 19], ['bigreactors:reinforced_turbinerotorblade', 52], ['immersiveengineering:storage_electrum', 48]] },
+          { label: 'Make-up water', note: 'The reactor turns 1 mB of water into 0.85 mB of steam, so the loop loses about 350 mB/t. Three pumps at 256 RPM from a 2×2 pool cover it.', items: [['create:mechanical_pump', 3], ['create:fluid_pipe', 12]] },
+        ],
+        stock: { items: [['immersiveengineering:ingot_uranium', 64]], note: '48 ingots fill the rods, then about 5.7 an hour.' },
+        steps: [
+          'Build the starter reactor, but leave out the power port: put active fluid ports in the east wall at z1 and z3 (y2), and a third one in the north wall.',
+          'Build the turbine right against the reactor’s east wall: a 5×5 tower, 21 tall. Its two fluid ports go in its west wall touching the reactor’s ports, so the fluid moves port to port without pipes.',
+          'Rotor: the bearing in the middle of the turbine floor, then rotor shafts straight up to the roof (19). Blades on the 4 sides of the lowest 13 shafts, 52 in all.',
+          'Coil: on the top 6 shaft layers, fill the 8 blocks around the shaft with electrum blocks. Coils have to be above all the blades.',
+          'Open each port and set its direction: reactor port z1 = output (steam), turbine port z1 = input; turbine port z3 = output (water), reactor port z3 = input. The north reactor port is an input for make-up water.',
+          'Pump water into the north port: three mechanical pumps at 256 RPM from a 2×2 pool. Fill the loop before starting.',
+          'Turn on the reactor, then the turbine. In the turbine screen set the steam intake to 2,000 mB/t and switch the coils (inductor) on once it passes about 1,700 RPM. It settles near 1,800 RPM and makes about 14,400 FE/t through its power port.',
+        ],
+        tables: [
+          { title: 'Turbine coil choices', head: ['Coil (blocks around the shaft)', 'Layers', 'Output', 'Turbine height'], rows: [
+            ['Electrum (best you can make here)', '6 × 8 = 48', '14,400 FE/t at 1,825 RPM', '21'],
+            ['Gold', '7 × 8 = 56', '11,600 FE/t at 1,790 RPM', '22']],
+            note: 'The coil count sets the speed. Too few coils and the rotor runs past 2,000 RPM; too many and it sits around 900 RPM, which is also fine but wastes coil.' },
+        ],
+      },
     ],
   },
 ]

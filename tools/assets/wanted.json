@@ -149,6 +149,54 @@
    "minecraft:block/gunpowder"
   ]
  },
+ "minecraft:gravel": {
+  "model": "minecraft:item/gravel",
+  "alt": [
+   "minecraft:block/gravel"
+  ]
+ },
+ "minecraft:sand": {
+  "model": "minecraft:item/sand",
+  "alt": [
+   "minecraft:block/sand"
+  ]
+ },
+ "minecraft:sandstone": {
+  "model": "minecraft:item/sandstone",
+  "alt": [
+   "minecraft:block/sandstone"
+  ]
+ },
+ "createcobblestone:mechanical_generator": {
+  "model": "createcobblestone:item/mechanical_generator",
+  "alt": [
+   "createcobblestone:block/mechanical_generator"
+  ]
+ },
+ "create:crushing_wheel": {
+  "model": "create:item/crushing_wheel",
+  "alt": [
+   "create:block/crushing_wheel"
+  ]
+ },
+ "create:mechanical_drill": {
+  "model": "create:item/mechanical_drill",
+  "alt": [
+   "create:block/mechanical_drill"
+  ]
+ },
+ "minecraft:lava_bucket": {
+  "model": "minecraft:item/lava_bucket",
+  "alt": [
+   "minecraft:block/lava_bucket"
+  ]
+ },
+ "minecraft:water_bucket": {
+  "model": "minecraft:item/water_bucket",
+  "alt": [
+   "minecraft:block/water_bucket"
+  ]
+ },
  "minecraft:netherrack": {
   "model": "minecraft:item/netherrack",
   "alt": [
@@ -977,6 +1025,120 @@
    "bigreactors:block/reinforced_reactorsolidaccessport"
   ]
  },
+ "bigreactors:reinforced_reactorfluidport_forge_active": {
+  "model": "bigreactors:item/reinforced_reactorfluidport_forge_active",
+  "alt": [
+   "bigreactors:block/reinforced_reactorfluidport_forge_active"
+  ]
+ },
+ "bigreactors:reinforced_turbinecasing": {
+  "model": "bigreactors:item/reinforced_turbinecasing",
+  "alt": [
+   "bigreactors:block/reinforced_turbinecasing"
+  ]
+ },
+ "bigreactors:reinforced_turbinecontroller": {
+  "model": "bigreactors:item/reinforced_turbinecontroller",
+  "alt": [
+   "bigreactors:block/reinforced_turbinecontroller"
+  ]
+ },
+ "bigreactors:reinforced_turbinerotorbearing": {
+  "model": "bigreactors:item/reinforced_turbinerotorbearing",
+  "alt": [
+   "bigreactors:block/reinforced_turbinerotorbearing"
+  ]
+ },
+ "bigreactors:reinforced_turbinerotorshaft": {
+  "model": "bigreactors:item/reinforced_turbinerotorshaft",
+  "alt": [
+   "bigreactors:block/reinforced_turbinerotorshaft"
+  ]
+ },
+ "bigreactors:reinforced_turbinerotorblade": {
+  "model": "bigreactors:item/reinforced_turbinerotorblade",
+  "alt": [
+   "bigreactors:block/reinforced_turbinerotorblade"
+  ]
+ },
+ "bigreactors:reinforced_turbinepowertapfe_active": {
+  "model": "bigreactors:item/reinforced_turbinepowertapfe_active",
+  "alt": [
+   "bigreactors:block/reinforced_turbinepowertapfe_active"
+  ]
+ },
+ "bigreactors:reinforced_reactorpowertapfe_active": {
+  "model": "bigreactors:item/reinforced_reactorpowertapfe_active",
+  "alt": [
+   "bigreactors:block/reinforced_reactorpowertapfe_active"
+  ]
+ },
+ "bigreactors:reinforced_turbinefluidport_forge_active": {
+  "model": "bigreactors:item/reinforced_turbinefluidport_forge_active",
+  "alt": [
+   "bigreactors:block/reinforced_turbinefluidport_forge_active"
+  ]
+ },
+ "immersiveengineering:storage_electrum": {
+  "model": "immersiveengineering:item/storage_electrum",
+  "alt": [
+   "immersiveengineering:block/storage_electrum"
+  ]
+ },
+ "immersiveengineering:wire_steel": {
+  "model": "immersiveengineering:item/wire_steel",
+  "alt": [
+   "immersiveengineering:block/wire_steel"
+  ]
+ },
+ "immersiveengineering:wirecoil_steel": {
+  "model": "immersiveengineering:item/wirecoil_steel",
+  "alt": [
+   "immersiveengineering:block/wirecoil_steel"
+  ]
+ },
+ "immersiveengineering:sheetmetal_steel": {
+  "model": "immersiveengineering:item/sheetmetal_steel",
+  "alt": [
+   "immersiveengineering:block/sheetmetal_steel"
+  ]
+ },
+ "immersiveengineering:sheetmetal_iron": {
+  "model": "immersiveengineering:item/sheetmetal_iron",
+  "alt": [
+   "immersiveengineering:block/sheetmetal_iron"
+  ]
+ },
+ "immersiveengineering:component_iron": {
+  "model": "immersiveengineering:item/component_iron",
+  "alt": [
+   "immersiveengineering:block/component_iron"
+  ]
+ },
+ "immersiveengineering:heavy_engineering": {
+  "model": "immersiveengineering:item/heavy_engineering",
+  "alt": [
+   "immersiveengineering:block/heavy_engineering"
+  ]
+ },
+ "immersiveengineering:light_engineering": {
+  "model": "immersiveengineering:item/light_engineering",
+  "alt": [
+   "immersiveengineering:block/light_engineering"
+  ]
+ },
+ "immersiveengineering:fluid_pipe": {
+  "model": "immersiveengineering:item/fluid_pipe",
+  "alt": [
+   "immersiveengineering:block/fluid_pipe"
+  ]
+ },
+ "immersiveengineering:fluid_sorter": {
+  "model": "immersiveengineering:item/fluid_sorter",
+  "alt": [
+   "immersiveengineering:block/fluid_sorter"
+  ]
+ },
  "createbigcannons:gunpowder_pinch": {
   "model": "createbigcannons:item/gunpowder_pinch",
   "alt": [
@@ -1195,6 +1357,36 @@
  },
  "b:lv_connector": {
   "model": "immersiveengineering:item/connector_lv"
+ },
+ "b:reactor_fluidport": {
+  "model": "bigreactors:item/reinforced_reactorfluidport_forge_active"
+ },
+ "b:reactor_tap_active": {
+  "model": "bigreactors:item/reinforced_reactorpowertapfe_active"
+ },
+ "b:turbine_casing": {
+  "model": "bigreactors:item/reinforced_turbinecasing"
+ },
+ "b:turbine_controller": {
+  "model": "bigreactors:item/reinforced_turbinecontroller"
+ },
+ "b:turbine_bearing": {
+  "model": "bigreactors:item/reinforced_turbinerotorbearing"
+ },
+ "b:turbine_shaft": {
+  "model": "bigreactors:item/reinforced_turbinerotorshaft"
+ },
+ "b:turbine_blade": {
+  "model": "bigreactors:item/reinforced_turbinerotorblade"
+ },
+ "b:turbine_tap": {
+  "model": "bigreactors:item/reinforced_turbinepowertapfe_active"
+ },
+ "b:turbine_fluidport": {
+  "model": "bigreactors:item/reinforced_turbinefluidport_forge_active"
+ },
+ "b:electrum_block": {
+  "model": "immersiveengineering:block/storage_electrum"
  },
  "b:rolling_mill": {
   "model": "createaddition:item/rolling_mill"
@@ -1457,6 +1649,34 @@
   "state": "immersiveengineering:connector_lv",
   "props": {
    "facing": "south"
+  }
+ },
+ "s:create:crushing_wheel[axis=z]": {
+  "state": "create:crushing_wheel",
+  "props": {
+   "axis": "z"
+  }
+ },
+ "s:create:andesite_funnel[extracting=true,facing=down,powered=false,waterlogged=false]": {
+  "state": "create:andesite_funnel",
+  "props": {
+   "extracting": "true",
+   "facing": "down",
+   "powered": "false",
+   "waterlogged": "false"
+  }
+ },
+ "s:minecraft:hopper[enabled=true,facing=south]": {
+  "state": "minecraft:hopper",
+  "props": {
+   "facing": "south",
+   "enabled": "true"
+  }
+ },
+ "s:createcobblestone:mechanical_generator[facing=north]": {
+  "state": "createcobblestone:mechanical_generator",
+  "props": {
+   "facing": "north"
   }
  },
  "s:create:mechanical_pump[facing=north]": {

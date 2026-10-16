@@ -22,7 +22,7 @@ const MODS: Record<string, string> = {
   minecraft: 'Minecraft', create: 'Create', immersiveengineering: 'Immersive Engineering',
   createaddition: 'Crafts & Additions', createdieselgenerators: 'Create Diesel Generators',
   createbigcannons: 'Create Big Cannons', bigreactors: 'Extreme Reactors', refinedstorage: 'Refined Storage',
-  deceasedcraft: 'DeceasedCraft', apocalypsenow: 'Apocalypse Now', tacz: 'Timeless & Classics Zero', rebel: 'TaCZ (Rebel gun pack)', quark: 'Quark',
+  createcobblestone: 'Create Cobblestone', deceasedcraft: 'DeceasedCraft', apocalypsenow: 'Apocalypse Now', tacz: 'Timeless & Classics Zero', rebel: 'TaCZ (Rebel gun pack)', quark: 'Quark',
 }
 
 // colour palette
@@ -70,6 +70,24 @@ add('minecraft:quartz', 'Nether Quartz', 'gem', '#ece6dc', undefined, raw('Nethe
 add('minecraft:coal', 'Coal', 'gem', C.black, undefined, raw('Mine coal ore'))
 add('minecraft:dried_kelp', 'Dried Kelp', 'kelp', C.kelp, undefined, raw('Smelt kelp'))
 add('minecraft:gunpowder', 'Gunpowder', 'dust', '#6b6b6b', undefined, raw('Creepers, or wash crushed zinc'))
+add('immersiveengineering:dust_saltpeter', 'Saltpeter', 'dust', '#e8e4dc')
+add('immersiveengineering:dust_sulfur', 'Sulfur Dust', 'dust', '#e6d74a')
+add('minecraft:blaze_rod', 'Blaze Rod', 'rod', C.blaze, undefined, raw('Blazes (Nether fortresses or spawners)'))
+add('minecraft:charcoal', 'Charcoal', 'gem', '#3b342c', undefined, raw('Smelt logs'))
+add('immersiveengineering:blastbrick', 'Blast Brick', 'block', '#7a3b2c', undefined, raw('IE: nether bricks + bricks + magma cream'))
+add('immersiveengineering:cokebrick', 'Coke Brick', 'block', '#8a6a4a', undefined, raw('IE: clay + bricks + sandstone'))
+add('immersiveengineering:alloybrick', 'Kiln Brick', 'block', '#a5624a', undefined, raw('IE: clay + bricks + sandstone'))
+add('tacz:gun_smith_table', 'Gun Smith Table', 'machine', '#5a5f66', C.wood, raw('Pack recipe, see the guns quest chapter'))
+add('immersiveengineering:survey_tools', 'Survey Tools', 'box', '#7a5434', C.iron, raw('IE: crafting, see the manual'))
+add('create:goggles', 'Engineer’s Goggles', 'gem', C.brass, C.glass, raw('Create: gold sheet + glass + leather'))
+add('minecraft:gravel', 'Gravel', 'stone', '#8a8580', undefined, raw('Crush cobblestone, or dig it'))
+add('minecraft:sand', 'Sand', 'dust', '#dccf9e', undefined, raw('Crush gravel, or dig it'))
+add('minecraft:sandstone', 'Sandstone', 'stone', '#d8c98f')
+add('createcobblestone:mechanical_generator', 'Mechanical Generator', 'machine', C.brass, '#7d7d7a')
+add('create:crushing_wheel', 'Crushing Wheel', 'biggear', '#8f8f8c', C.wood)
+add('create:mechanical_drill', 'Mechanical Drill', 'machine', C.andesite, C.iron)
+add('minecraft:lava_bucket', 'Lava Bucket', 'bucket', C.lava, undefined, raw('Any lava source'))
+add('minecraft:water_bucket', 'Water Bucket', 'bucket', C.water, undefined, raw('Any water source'))
 add('minecraft:netherrack', 'Netherrack', 'stone', '#8a3b36', undefined, raw('Nether, or spout lava onto gravel (pack recipe)'))
 add('minecraft:terracotta', 'Terracotta', 'block', '#a5624a', undefined, raw('Smelt clay blocks'))
 add('minecraft:tnt', 'TNT', 'block', C.red, C.white, raw('5 gunpowder + 4 sand'))
@@ -227,6 +245,26 @@ add('bigreactors:reinforced_reactorfuelrod', 'Reinforced Reactor Fuel Rod', 'tub
 add('bigreactors:reinforced_reactorcontrolrod', 'Reinforced Reactor Control Rod', 'reactor', C.steel, C.black)
 add('bigreactors:reinforced_reactorpowertapfe_passive', 'Reinforced Power Port (Passive)', 'reactor', C.steel, C.red)
 add('bigreactors:reinforced_reactorsolidaccessport', 'Reinforced Solid Access Port', 'reactor', C.steel, C.brass)
+add('bigreactors:reinforced_reactorfluidport_forge_active', 'Reinforced Fluid Port (Active)', 'reactor', C.steel, C.blue)
+add('bigreactors:reinforced_turbinecasing', 'Reinforced Turbine Casing', 'reactor', C.steel, C.alu)
+add('bigreactors:reinforced_turbinecontroller', 'Reinforced Turbine Controller', 'reactor', C.alu, C.purple)
+add('bigreactors:reinforced_turbinerotorbearing', 'Reinforced Rotor Bearing', 'reactor', C.alu, C.copper)
+add('bigreactors:reinforced_turbinerotorshaft', 'Reinforced Rotor Shaft', 'rod', C.steel)
+add('bigreactors:reinforced_turbinerotorblade', 'Reinforced Rotor Blade', 'plate', C.steel, C.alu)
+add('bigreactors:reinforced_turbinepowertapfe_active', 'Reinforced Turbine Power Port (Active)', 'reactor', C.alu, C.red)
+add('bigreactors:reinforced_reactorpowertapfe_active', 'Reinforced Power Port (Active)', 'reactor', C.steel, C.red)
+add('bigreactors:reinforced_turbinefluidport_forge_active', 'Reinforced Turbine Fluid Port (Active)', 'reactor', C.alu, C.blue)
+add('immersiveengineering:storage_electrum', 'Block of Electrum', 'block', C.electrum)
+add('immersiveengineering:wire_steel', 'Steel Wire', 'wire', C.steel)
+add('immersiveengineering:wire_aluminum', 'Aluminum Wire', 'wire', C.alu)
+add('immersiveengineering:wirecoil_steel', 'HV Wire Coil', 'coil', C.steel, C.alu)
+add('immersiveengineering:sheetmetal_steel', 'Steel Sheet Metal', 'block', C.steel)
+add('immersiveengineering:sheetmetal_iron', 'Iron Sheet Metal', 'block', C.iron)
+add('immersiveengineering:component_iron', 'Iron Mechanical Component', 'gear', C.iron, C.copper)
+add('immersiveengineering:heavy_engineering', 'Heavy Engineering Block', 'machine', C.steel, C.electrum)
+add('immersiveengineering:light_engineering', 'Light Engineering Block', 'machine', C.iron, C.copper)
+add('immersiveengineering:fluid_pipe', 'Fluid Pipe (IE)', 'pipe', C.iron)
+add('immersiveengineering:fluid_sorter', 'Fluid Sorter', 'machine', C.treated, C.blue)
 
 // ---------- pack items: ammo & gun parts ----------
 add('createbigcannons:gunpowder_pinch', 'Gunpowder Pinch', 'dust', '#6b6b6b')

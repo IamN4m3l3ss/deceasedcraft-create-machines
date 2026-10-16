@@ -52,6 +52,11 @@ EXTRA = {
     'b:reactor_controller': 'bigreactors:item/reinforced_reactorcontroller', 'b:reactor_port': 'bigreactors:item/reinforced_reactorpowertapfe_passive',
     'b:reactor_access': 'bigreactors:item/reinforced_reactorsolidaccessport', 'b:reactor_fuelrod': 'bigreactors:item/reinforced_reactorfuelrod',
     'b:reactor_controlrod': 'bigreactors:item/reinforced_reactorcontrolrod', 'b:lv_connector': 'immersiveengineering:item/connector_lv',
+    'b:reactor_fluidport': 'bigreactors:item/reinforced_reactorfluidport_forge_active', 'b:reactor_tap_active': 'bigreactors:item/reinforced_reactorpowertapfe_active',
+    'b:turbine_casing': 'bigreactors:item/reinforced_turbinecasing', 'b:turbine_controller': 'bigreactors:item/reinforced_turbinecontroller',
+    'b:turbine_bearing': 'bigreactors:item/reinforced_turbinerotorbearing', 'b:turbine_shaft': 'bigreactors:item/reinforced_turbinerotorshaft',
+    'b:turbine_blade': 'bigreactors:item/reinforced_turbinerotorblade', 'b:turbine_tap': 'bigreactors:item/reinforced_turbinepowertapfe_active',
+    'b:turbine_fluidport': 'bigreactors:item/reinforced_turbinefluidport_forge_active', 'b:electrum_block': 'immersiveengineering:block/storage_electrum',
     'b:rolling_mill': 'createaddition:item/rolling_mill', 'b:magma': 'minecraft:block/magma_block', 'b:terracotta': 'minecraft:block/terracotta',
 }
 for k, v in EXTRA.items():
@@ -82,6 +87,10 @@ STATES = [
     ('createdieselgenerators:pumpjack_bearing', {'facing': 'north'}), ('createdieselgenerators:pumpjack_bearing', {'facing': 'south'}),
     ('createdieselgenerators:pumpjack_head', {'facing': 'east', 'waterlogged': 'false'}),
     ('immersiveengineering:connector_lv', {'facing': 'north'}), ('immersiveengineering:connector_lv', {'facing': 'south'}),
+    ('create:crushing_wheel', {'axis': 'z'}),
+    ('create:andesite_funnel', {'extracting': 'true', 'facing': 'down', 'powered': 'false', 'waterlogged': 'false'}),
+    ('minecraft:hopper', {'facing': 'south', 'enabled': 'true'}),
+    ('createcobblestone:mechanical_generator', {'facing': 'north'}),
 ] + [('create:mechanical_pump', {'facing': f}) for f in ('north', 'south', 'east', 'west', 'up', 'down')] + [(f'create:{m}_belt_funnel', {'facing': f, 'powered': 'false', 'shape': 'retracted', 'waterlogged': 'false'}) for m in ('andesite', 'brass') for f in ('north', 'south', 'east', 'west')]
 import itertools
 for bits in itertools.product(['false', 'true'], repeat=6):

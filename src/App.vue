@@ -34,6 +34,7 @@ watch(() => route.fullPath, () => { store.navOpen = false; closeItem(); window.s
       </RouterLink>
       <nav>
         <RouterLink to="/" class="nl" exact-active-class="on"><ItemIcon id="minecraft:oak_planks" :size="18" /><span>Home</span></RouterLink>
+        <RouterLink to="/progress" class="nl" active-class="on"><ItemIcon id="minecraft:paper" :size="18" /><span>What to build when</span></RouterLink>
         <div v-for="g in groups" :key="g.label" class="ng">
           <div class="ngl">{{ g.label }}</div>
           <RouterLink v-for="l in g.items" :key="l.to" :to="l.to" class="nl" active-class="on">

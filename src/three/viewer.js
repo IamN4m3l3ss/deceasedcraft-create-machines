@@ -8,6 +8,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { createModelKit } from './mcmodel.js'
 import { ITEMS } from '../data/items'
 import { iconCanvas } from '../lib/icons'
+import { store } from '../lib/store'
 
 const reduceMotion = typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 const PI = Math.PI, DEG = PI / 180
@@ -36,7 +37,9 @@ function label(text, bg, fg, iconId) {
     const it = ITEMS[iconId], im = new Image()
     im.onload = () => draw(im)
     im.onerror = () => draw(iconCanvas(it ? it.icon : { shape: 'box', c: '#8a8f96' }))
-    im.src = base() + 'icons/' + iconId.replace(':', '/') + '.png'
+    const rel = iconId.replace(':', '/')
+    if (store.icons.has(rel)) im.src = base() + 'icons/' + rel + '.png'
+    else draw(iconCanvas(it ? it.icon : { shape: 'box', c: '#8a8f96' }))
   }
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, transparent: true, sizeAttenuation: false }))
   s.scale.set(0.064 * w / 128, 0.032, 1); s.renderOrder = 10; return s
@@ -450,6 +453,29 @@ function tokenBlock(S, tok, L, zi, xi, x, y, z, anim, ctx) {
     case 'St': plain(S, 'b:stone', x, y, z); return
     case 'Gl': plain(S, 'b:glass', x, y, z); return
     case 'Cn': state(S, 'immersiveengineering:connector_lv', { facing: 'north' }, x, y, z); return
+    case 'Wl': state(S, 'create:crushing_wheel', { axis: 'z' }, x, y, z, anim, { axis: 'z', w: -W }); return
+    case 'Wr': state(S, 'create:crushing_wheel', { axis: 'z' }, x, y, z, anim, { axis: 'z', w: W }); return
+    case 'z+': cog(S, 'z', x, y, z, anim, 1); return
+    case 'z-': cog(S, 'z', x, y, z, anim, -1); return
+    case 'Fd': state(S, 'create:andesite_funnel', { extracting: 'true', facing: 'down', powered: 'false', waterlogged: 'false' }, x, y, z); return
+    case 'Gn': state(S, 'createcobblestone:mechanical_generator', { facing: 'north' }, x, y, z); tag(S, 'COBBLESTONE GENERATOR', x, y + 0.9, z + 0.6, 'slate'); return
+    case 'Hs': state(S, 'minecraft:hopper', { facing: 'south', enabled: 'true' }, x, y, z); return
+    case 'Rc': plain(S, 'b:reactor_casing', x, y, z); return
+    case 'Rk': plain(S, 'b:reactor_controller', x, y, z); if (!ctx.once('Rk')) tag(S, 'CONTROLLER', x, y + 0.9, z + 0.9, 'slate'); return
+    case 'Rt': plain(S, 'b:reactor_tap_active', x, y, z); tag(S, 'POWER', x + 1.2, y + 0.8, z, 'red'); return
+    case 'Ra': plain(S, 'b:reactor_access', x, y, z); if (!ctx.once('Ra')) tag(S, 'URANIUM IN', x - 1.4, y + 0.6, z, 'oil'); return
+    case 'Rf': plain(S, 'b:reactor_fuelrod', x, y, z); return
+    case 'Rr': plain(S, 'b:reactor_controlrod', x, y, z); return
+    case 'Rp': plain(S, 'b:reactor_fluidport', x, y, z); return
+    case 'Rw': plain(S, 'b:reactor_fluidport', x, y, z); tag(S, 'MAKE-UP WATER', x, y + 0.6, z - 1.3, 'blue'); return
+    case 'Tc': plain(S, 'b:turbine_casing', x, y, z); return
+    case 'Tk': plain(S, 'b:turbine_controller', x, y, z); tag(S, 'TURBINE', x, y + 0.9, z + 0.9, 'slate'); return
+    case 'Tb': plain(S, 'b:turbine_bearing', x, y, z); return
+    case 'Ts': plain(S, 'b:turbine_shaft', x, y, z); return
+    case 'Tl': plain(S, 'b:turbine_blade', x, y, z); return
+    case 'Te': plain(S, 'b:electrum_block', x, y, z); return
+    case 'Tt': plain(S, 'b:turbine_tap', x, y, z); tag(S, 'POWER', x + 1.2, y + 0.8, z, 'red'); return
+    case 'Tp': plain(S, 'b:turbine_fluidport', x, y, z); return
   }
   if (/^P\d?$/.test(tok)) { press(S, x, y, z, anim, (t) => (st.busy(t) ? extOf(cyc(t).wait, true) : 0)); return }
   if (/^[DS]\d$/.test(tok)) {
@@ -487,7 +513,9 @@ function buildTokenScene(G, load) {
     return out
   }
   const stations = {}
+  const seen = new Set()
   const ctx = {
+    once: (k) => { const had = seen.has(k); seen.add(k); return had },
     travel: (t) => t / CYCLE, // belt surface: one block per cycle, never stopping
     held: (name) => (load.held && name in load.held ? load.held[name] : null),
     station(name, x, z) {
@@ -500,16 +528,26 @@ function buildTokenScene(G, load) {
   let minX = 99, maxX = -99, minZ = 99, maxZ = -99, maxY = 0
   G.layers.forEach((L) => {
     const lg = new THREE.Group(); lg.userData.y = L.y
-    L.rows.forEach((row, zi) => row.split(' ').forEach((tok, xi) => {
+    for (let y = L.y; y <= (L.to ?? L.y); y++) L.rows.forEach((row, zi) => row.split(' ').forEach((tok, xi) => {
       if (tok === '.' || tok === '~') return
       const z = G.zs[zi]
-      tokenBlock(lg, tok, L, zi, xi, xi, L.y, z, anim, ctx)
-      minX = Math.min(minX, xi); maxX = Math.max(maxX, xi); minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z); maxY = Math.max(maxY, L.y)
+      tokenBlock(lg, tok, L, zi, xi, xi, y, z, anim, ctx)
+      minX = Math.min(minX, xi); maxX = Math.max(maxX, xi); minZ = Math.min(minZ, z); maxZ = Math.max(maxZ, z); maxY = Math.max(maxY, y)
     }))
     scene.add(lg); layerGroups.push(lg)
   })
   addGround(scene, minX, maxX, minZ, maxZ)
   anim.push((t) => scrollBelts(ctx.travel(t)))
+  // items dropping through a tower (crushers): each falls from yTop to yBottom, a few at a time
+  for (const [fx, fz, top, bot, id] of G.fall || []) {
+    const n = 3
+    for (let k = 0; k < n; k++) {
+      const o = itemModel(id); if (!o) continue
+      const g = new THREE.Group(); g.add(o); o.scale.setScalar(o.userData.block ? 0.25 : 0.5); scene.add(g)
+      const set = (t) => { const f = ((t * 0.8 + k / n) % 1 + 1) % 1; g.position.set(fx + (k - 1) * 0.12, top - (top - bot) * f * f, fz + ((k * 7) % 3 - 1) * 0.1); g.rotation.y = k * 2.1 + t }
+      set(0.6); anim.push(set)
+    }
+  }
   if (segs.length) {
     // what the item looks like at each point of the route: the input, then each station's product
     const base = load.input || BELT_ITEM[G.item] || G.item

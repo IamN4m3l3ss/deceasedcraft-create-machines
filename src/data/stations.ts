@@ -16,6 +16,8 @@ const S: Station[] = [
   { id: 'item_application', name: 'Item Application', icon: 'create:andesite_casing', how: 'Place the first item as a block, then right-click it holding the second (a Deployer can do it too).', group: 'Create' },
   { id: 'pressing', name: 'Mechanical Press', icon: 'create:mechanical_press', how: 'A Mechanical Press over a Depot or a belt.', group: 'Create' },
   { id: 'cutting', name: 'Mechanical Saw', icon: 'create:mechanical_saw', how: 'Saw facing up, items on a belt or thrown on top. Use a filter when there are two recipes.', group: 'Create' },
+  { id: 'milling', name: 'Millstone or Crushing Wheels', icon: 'create:crushing_wheel', how: 'A millstone, or a pair of crushing wheels spinning inward. Drop items in from above.', group: 'Create' },
+  { id: 'crushing', name: 'Crushing Wheels', icon: 'create:crushing_wheel', how: 'Two crushing wheels with a one-block gap, spinning toward each other. Drop items into the gap.', group: 'Create' },
   { id: 'mixing', name: 'Mixer + Basin', icon: 'create:mechanical_mixer', how: 'Mechanical Mixer over a Basin.', group: 'Create' },
   { id: 'mixing_heated', name: 'Mixer + Basin, heated', icon: 'create:blaze_burner', how: 'Mixer over a Basin on a Blaze Burner fed with normal fuel.', group: 'Create' },
   { id: 'mixing_superheated', name: 'Mixer + Basin, superheated', icon: 'create:blaze_cake', how: 'Mixer over a Basin on a Blaze Burner fed a Blaze Cake.', group: 'Create' },
@@ -26,6 +28,7 @@ const S: Station[] = [
   { id: 'ie_workbench', name: 'Engineer’s Workbench', icon: 'immersiveengineering:treated_wood_horizontal', how: 'IE workbench with the matching blueprint in its slot (the blueprint is not used up).', group: 'Immersive Engineering' },
   { id: 'ie_alloy_kiln', name: 'Alloy Kiln', icon: 'minecraft:terracotta', how: 'IE Alloy Kiln (multiblock of kiln bricks). Runs on any furnace fuel, no power.', group: 'Immersive Engineering' },
   { id: 'ie_blast_furnace', name: 'Blast Furnace (IE)', icon: 'minecraft:netherrack', how: 'IE crude blast furnace. Runs on coal coke, 60 s per ingot.', group: 'Immersive Engineering' },
+  { id: 'ie_crusher', name: 'Crusher (IE)', icon: 'minecraft:sandstone', how: 'IE Crusher multiblock. Needs power; items go in the top, results come out the front.', group: 'Immersive Engineering' },
   { id: 'ie_metal_press', name: 'Metal Press', icon: 'immersiveengineering:plate_steel', how: 'IE Metal Press multiblock with a mold. Needs power (2,400 FE per press).', group: 'Immersive Engineering' },
   { id: 'rolling', name: 'Rolling Mill', icon: 'createaddition:rolling_mill', how: 'Crafts & Additions Rolling Mill with rotation. Hopper in, hopper out.', group: 'Other mods' },
 ]

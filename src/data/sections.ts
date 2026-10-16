@@ -11,9 +11,9 @@ export interface Section {
 export const SECTIONS: Record<'production' | 'kinetic' | 'electric', Section> = {
   production: {
     eyebrow: 'Ammo & gun parts', title: 'Production lines', icon: 'create:deployer',
-    intro: 'Two production builds and one supply line for the pack’s own sequenced-assembly recipes. They’re kept small because every deployer in this pack costs an IE Electronic Component. Together they use 9 deployers and about 2,200 SU at 32 RPM, which one 64-sail windmill covers.',
+    intro: 'Two production builds for the pack’s own sequenced-assembly recipes and two supply lines. They’re kept small because every deployer in this pack costs an IE Electronic Component. The ammo line, parts ring and Metalworks use 8 deployers and about 2,000 SU at 32 RPM, which one 64-sail windmill covers.',
     flows: [
-      { title: 'Ammo', note: 'Then the ammo line: 3 deployers make 12 standard calibers, .50 BMG, 40mm and 37mm.', rows: [
+      { title: 'Ammo', note: 'Then the ammo line: 2 deployers make 9mm, .45 ACP and the other standard calibers, plus .50 BMG and 40mm; a third deployer adds 37mm shells.', rows: [
         { from: ['minecraft:copper_ingot', 'create:zinc_ingot'], via: 'Alloy Kiln', to: 'create:brass_ingot', label: '2 brass per pair' },
         { from: ['create:brass_ingot'], via: 'IE Metal Press + mold', to: 'deceasedcraft:bullet_casing_9mm_round', label: '4 casings per ingot' },
         { from: ['minecraft:gunpowder'], via: 'craft', to: 'createbigcannons:gunpowder_pinch', label: '4 pinches' },
@@ -26,7 +26,7 @@ export const SECTIONS: Record<'production' | 'kinetic' | 'electric', Section> = 
         { from: ['minecraft:paper', 'minecraft:slime_ball'], via: 'craft', to: 'apocalypsenow:cardboard_box', label: '8 paper + 1 slimeball' },
       ] },
     ],
-    callouts: [{ title: 'Powering these builds', body: 'The ammo line needs 12 SU per RPM, the parts ring 24, the Metalworks 28 and the rolling mill 4: about 2,200 SU at 32 RPM. One 64-sail windmill covers all of it. The IE Metal Press that makes casings runs on electricity: a small thermoelectric row is enough.', tone: 'info' }],
+    callouts: [{ title: 'Powering these builds', body: 'The ammo line needs 8 SU per RPM, the parts ring 24, the Metalworks 28 and the rolling mill 4: about 2,000 SU at 32 RPM. One 64-sail windmill covers all of it. The IE Metal Press that makes casings runs on electricity: a small thermoelectric row is enough.', tone: 'info' }],
   },
   kinetic: {
     eyebrow: 'Stress units (SU) for Create', title: 'Rotational power', icon: 'create:cogwheel',
@@ -61,7 +61,7 @@ export const SECTIONS: Record<'production' | 'kinetic' | 'electric', Section> = 
     tiers: [
       { tier: 'Early', title: 'Thermoelectric row', value: '62 FE/t each', icon: 'immersiveengineering:thermoelectric_generator', points: ['3 steel, 5 constantan plates and 1 LV coil each.', 'Lava and water are never used up.', '8 generators: about 500 FE/t, enough for the Metal Press.'], links: [{ to: '/build/thermo', label: 'Thermoelectric row' }] },
       { tier: 'Mid', title: 'Alternators on the boiler', value: '1,440 FE/t', icon: 'createaddition:alternator', points: ['180 FE/t per alternator at 256 RPM, 8,192 SU each.', 'A level 4 boiler runs 8.', 'Fuel-free option: 20 thermoelectrics give 1,240 FE/t.'], links: [{ to: '/build/altbank', label: 'Alternator bank' }] },
-      { tier: 'Late', title: 'Big banks and reactors', value: '6,480 FE/t', icon: 'bigreactors:reinforced_reactorcasing', points: ['36 alternators on the max boiler.', 'Uranium blocks are 2000 K: 41 FE/t per pair against water.', 'Extreme Reactor once Refined Storage is up.'], links: [{ to: '/build/bigbank', label: 'Big bank' }, { to: '/build/reactor', label: 'Reactor' }] },
+      { tier: 'Late', title: 'Big banks and reactors', value: '14,400 FE/t', icon: 'bigreactors:reinforced_reactorcasing', points: ['36 alternators on the max boiler.', 'Uranium blocks are 2000 K: 41 FE/t per pair against water.', 'Extreme Reactor once Refined Storage is up: 3,600 FE/t (5³), 12,500 (7³), 14,400 with a turbine.'], links: [{ to: '/build/bigbank', label: 'Big bank' }, { to: '/build/reactor', label: 'Reactor' }] },
     ],
     callouts: [
       { title: 'The one formula to know', body: 'A thermoelectric generator gives √(temperature difference) FE/t for every pair of opposite faces where one side is hot and the other cold. That’s with the pack’s ×2 setting. Lava is 1300 K and water 300 K: √1000 ≈ 31 FE/t per pair, up to 3 pairs per generator.', tone: 'info' },
@@ -78,7 +78,8 @@ export const SECTIONS: Record<'production' | 'kinetic' | 'electric', Section> = 
         ['8 alternators on a level 4 boiler', '1,440', '180 coal/h', 'uses the whole 65,536 SU'],
         ['36 alternators on the max boiler', '6,480', '≈ 200 blaze cakes/h', 'uses 294,912 SU'],
         ['IE Diesel Generator', '8,192', '80 mB/s biodiesel', 'pack config doubles the output; fuel use is huge'],
-        ['Extreme Reactor', 'varies', 'uranium ingots', 'needs Refined Storage parts in this pack']] },
+        ['Extreme Reactor 5³ / 7³ passive', '3,600 / 12,500', '6.6 / 21 uranium ingots/h', 'needs Refined Storage parts in this pack'],
+        ['Extreme Reactor 5³ + turbine', '14,400', '5.7 uranium ingots/h', '+ 48 electrum blocks for the coil']] },
       { title: 'Storing it', head: ['Storage', 'Capacity', 'Notes'], rows: [
         ['Crafts & Additions accumulator', '2,048,000 FE per block', 'Blocks join up to 3 wide and 5 tall (45 blocks, ≈ 92 million FE). 512 FE/t in and out.'],
         ['IE LV / MV / HV capacitor', '1M / 4M / 8M FE', 'Good next to the Metal Press so it keeps running at night when the windmill slows down.']] },
